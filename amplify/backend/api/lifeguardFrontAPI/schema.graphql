@@ -1,0 +1,25 @@
+type User @model {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  deviceID: String
+  deviceStatus: String
+  lastLocation: String
+  phoneNumber: String
+  email: String
+  address {
+    streetAddress: String
+    city: String
+    stateProvince: String
+    country: String
+    postalZip: String
+  }
+  healthNotes: String
+}
+
+type Device @model {
+  id: ID!
+  deviceID: String!
+  deviceStatus: String
+  lastLocation: String
+}

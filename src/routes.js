@@ -37,11 +37,18 @@ var routes = [
     layout: "/admin"
   },
   {
-    path: "/register",
+    path: "/register-user",
     name: "Register New User",
     icon: "ni ni-circle-08 text-pink",
     component: Register,
-    layout: "/auth"
+    layout: "/admin"
+  },
+  {
+    path: "/register-device",
+    name: "Pair Device",
+    icon: "ni ni-watch-time text-red",
+    component: Register,
+    layout: "/admin"
   },
   {
     path: "/login",

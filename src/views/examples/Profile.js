@@ -50,7 +50,7 @@ class Profile extends React.Component {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                          src={require("../../assets/img/theme/blank-profile.png")}
                         />
                       </a>
                     </div>
@@ -84,45 +84,39 @@ class Profile extends React.Component {
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div>
                           <span className="heading">22</span>
-                          <span className="description">Friends</span>
+                          <span className="description">Room Number</span>
                         </div>
                         <div>
                           <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
-                          <span className="heading">89</span>
-                          <span className="description">Comments</span>
+                          <span className="description">Incidents</span>
                         </div>
                       </div>
                     </div>
                   </Row>
                   <div className="text-center">
                     <h3>
-                      Jessica Jones
-                      <span className="font-weight-light">, 27</span>
+                      Jane Doe
+                      <span className="font-weight-light">, 89</span>
                     </h3>
                     <div className="h5 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Bucharest, Romania
+                      Vancouver Long Term Care Center
                     </div>
                     <div className="h5 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
+                      <i className="ni ni-pin-3 mr-2" />
+                      Last Known Location
                     </div>
                     <div>
-                      <i className="ni education_hat mr-2" />
-                      University of Computer Science
+                      Room 553
+                    </div>
+                    <div className="h5 mt-4">
+                      <i className="ni ni-check-bold mr-2" style={{"color": "green"}} />
+                      Device #45235 connected and active
                     </div>
                     <hr className="my-4" />
+                    <h2>Health Notes</h2>
                     <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
+                      Patient has dementia. Needs 5mg of oral Donepezil daily after evening meal.
                     </p>
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                      Show more
-                    </a>
                   </div>
                 </CardBody>
               </Card>
@@ -132,7 +126,7 @@ class Profile extends React.Component {
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">My account</h3>
+                      <h3 className="mb-0">Account Information</h3>
                     </Col>
                     <Col className="text-right" xs="4">
                       <Button
@@ -163,7 +157,7 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="lucky.jesse"
+                              defaultValue="lucky.jane"
                               id="input-username"
                               placeholder="Username"
                               type="text"
@@ -181,7 +175,7 @@ class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder="jesse@example.com"
+                              placeholder="janeDoe@example.com"
                               type="email"
                             />
                           </FormGroup>
@@ -198,7 +192,7 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Lucky"
+                              defaultValue="Jane"
                               id="input-first-name"
                               placeholder="First name"
                               type="text"
@@ -215,7 +209,7 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Jesse"
+                              defaultValue="Doe"
                               id="input-last-name"
                               placeholder="Last name"
                               type="text"
@@ -241,7 +235,7 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                              defaultValue="5958 Pandora Avenue"
                               id="input-address"
                               placeholder="Home Address"
                               type="text"
@@ -250,24 +244,43 @@ class Profile extends React.Component {
                         </Col>
                       </Row>
                       <Row>
-                        <Col lg="4">
+                        <Col lg="6">
                           <FormGroup>
                             <label
-                              className="form-control-label"
-                              htmlFor="input-city"
+                                className="form-control-label"
+                                htmlFor="input-city"
                             >
                               City
                             </label>
                             <Input
-                              className="form-control-alternative"
-                              defaultValue="New York"
-                              id="input-city"
-                              placeholder="City"
-                              type="text"
+                                className="form-control-alternative"
+                                defaultValue="Vancouver"
+                                id="input-city"
+                                placeholder="City"
+                                type="text"
                             />
                           </FormGroup>
                         </Col>
-                        <Col lg="4">
+                        <Col lg="6">
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="input-state"
+                            >
+                              State/Province
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                defaultValue="British Columbia"
+                                id="input-city"
+                                placeholder="City"
+                                type="text"
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
@@ -277,14 +290,14 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="United States"
+                              defaultValue="Canada"
                               id="input-country"
                               placeholder="Country"
                               type="text"
                             />
                           </FormGroup>
                         </Col>
-                        <Col lg="4">
+                        <Col lg="6">
                           <FormGroup>
                             <label
                               className="form-control-label"
@@ -294,9 +307,10 @@ class Profile extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
+                              defaultValue="V8C 5E9"
                               id="input-postal-code"
                               placeholder="Postal code"
-                              type="number"
+                              type="text"
                             />
                           </FormGroup>
                         </Col>
@@ -304,16 +318,15 @@ class Profile extends React.Component {
                     </div>
                     <hr className="my-4" />
                     {/* Description */}
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
+                    <h6 className="heading-small text-muted mb-4">About Resident</h6>
                     <div className="pl-lg-4">
                       <FormGroup>
-                        <label>About Me</label>
+                        <label>Health Notes</label>
                         <Input
                           className="form-control-alternative"
-                          placeholder="A few words about you ..."
+                          placeholder="A few health notes for the patient."
                           rows="4"
-                          defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                          Open Source."
+                          defaultValue="Patient has dementia. Needs 5mg of oral Donepezil daily after evening meal."
                           type="textarea"
                         />
                       </FormGroup>
