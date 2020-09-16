@@ -2,18 +2,15 @@ type User @model {
   id: ID!
   firstName: String!
   lastName: String!
-  deviceID: String
-  deviceStatus: String
-  lastLocation: String
+  device: Device @connection(name: "RegisteredDevice")
+  assignedGeolocations: [Geofence] @connection(name: "AssignedGeolocations")
+  vitals: VitalStats @connection(name: "Vitals")
+  facility: String
   phoneNumber: String
   email: String
-  address {
-    streetAddress: String
-    city: String
-    stateProvince: String
-    country: String
-    postalZip: String
-  }
+  emergencyContacts: [EmergencyContact] @connection(name: "EmergencyContacts") 
+  careGivers: [CareGiver] @connection(name: "CareGivers")
+  address: Address @connection(name: "PrimaryAddress")
   healthNotes: String
 }
 
@@ -21,5 +18,48 @@ type Device @model {
   id: ID!
   deviceID: String!
   deviceStatus: String
-  lastLocation: String
+  user: User @connection(name: "RegisteredUser") 
+  currentLocation: [String]
+}
+
+type VitalStats @model {
+  id: ID!
+  heartRate: Int
+}
+
+type Geofence @model {
+  id: ID!
+  locationName: String
+  perimeterCoordinates: [String] 
+}
+
+type EmergencyContact @model {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  user: User connection@(name: "User")
+  relationshipToUser: String
+  phoneNumber: String
+  email: String
+  address: [Address] @connection(name: "PrimaryAddress")
+}
+
+type CareGiver @model {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  user: User connection@(name: "User")
+  relationshipToUser: String
+  phoneNumber: String
+  email: String
+  address: [Address] @connection(name: "PrimaryAddress")
+}
+
+type Address @model {
+  id: ID!
+  streetAddress: String
+  city: String
+  stateProvince: String
+  country: String
+  postalZip: String
 }

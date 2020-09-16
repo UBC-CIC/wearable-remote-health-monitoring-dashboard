@@ -30,7 +30,7 @@ import {
   Col, Media, Badge, UncontrolledTooltip, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from "reactstrap";
 
-class Index extends React.Component {
+class HomePage extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -70,7 +70,7 @@ class Index extends React.Component {
                     <th scope="col">Image</th>
                     <th scope="col">ID</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Health Notes</th>
+                    <th scope="col">Heart Rate (BPM)</th>
                     <th scope="col">Actions</th>
                   </tr>
                   </thead>
@@ -115,9 +115,7 @@ class Index extends React.Component {
                     <td>
                       <div className="d-flex align-items-center">
                         <span className="mr-2">
-                          <ul>
-                          <li>Dementia</li>
-                          </ul>
+                          110
                         </span>
                       </div>
                     </td>
@@ -138,19 +136,19 @@ class Index extends React.Component {
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Action
+                            Locate User
                           </DropdownItem>
                           <DropdownItem
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Another action
+                            Emergency Contact
                           </DropdownItem>
                           <DropdownItem
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Something else here
+                            Resolve Issue
                           </DropdownItem>
                         </DropdownMenu>
                       </UncontrolledDropdown>
@@ -197,9 +195,7 @@ class Index extends React.Component {
                       <div className="d-flex align-items-center">
                         <div className="d-flex align-items-center">
                         <span className="mr-2">
-                          <ul>
-                          <li>Alzheimer's</li>
-                          </ul>
+                          96
                         </span>
                         </div>
                       </div>
@@ -221,19 +217,19 @@ class Index extends React.Component {
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Action
+                            Locate User
                           </DropdownItem>
                           <DropdownItem
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Another action
+                            Emergency Contact
                           </DropdownItem>
                           <DropdownItem
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Something else here
+                            Resolve Issue
                           </DropdownItem>
                         </DropdownMenu>
                       </UncontrolledDropdown>
@@ -280,9 +276,7 @@ class Index extends React.Component {
                       <div className="d-flex align-items-center">
                         <div className="d-flex align-items-center">
                         <span className="mr-2">
-                          <ul>
-                          <li>Alzheimer's</li>
-                          </ul>
+                         85
                         </span>
                         </div>
                       </div>
@@ -304,19 +298,19 @@ class Index extends React.Component {
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Action
+                            Locate User
                           </DropdownItem>
                           <DropdownItem
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Another action
+                            Emergency Contact
                           </DropdownItem>
                           <DropdownItem
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Something else here
+                            Resolve Issue
                           </DropdownItem>
                         </DropdownMenu>
                       </UncontrolledDropdown>
@@ -364,9 +358,7 @@ class Index extends React.Component {
                       <div className="d-flex align-items-center">
                         <div className="d-flex align-items-center">
                         <span className="mr-2">
-                          <ul>
-                          <li>High blood pressure</li>
-                          </ul>
+                         160
                         </span>
                         </div>
                       </div>
@@ -388,19 +380,19 @@ class Index extends React.Component {
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Action
+                            Locate User
                           </DropdownItem>
                           <DropdownItem
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Another action
+                            Emergency Contact
                           </DropdownItem>
                           <DropdownItem
                               href="#pablo"
                               onClick={e => e.preventDefault()}
                           >
-                            Something else here
+                            Resolve Issue
                           </DropdownItem>
                         </DropdownMenu>
                       </UncontrolledDropdown>
@@ -418,4 +410,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+export default HomePage;

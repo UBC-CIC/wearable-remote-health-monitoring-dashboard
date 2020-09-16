@@ -15,18 +15,22 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Index from "./views/Index.js";
+import HomePage from "./views/Pages/HomePage/index.js";
 import Profile from "./views/examples/Profile.js";
 import Register from "./views/examples/Register.js";
 import Login from "./views/examples/Login.js";
 import Tables from "./views/examples/Tables.js";
+import RegisterUser from "./views/examples/RegisterUser";
+import RegisterDevice from "./views/examples/RegisterDevice";
+import Maps from "./views/examples/Maps.js";
 
-var routes = [
+
+let routes = [
   {
     path: "/index",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
-    component: Index,
+    component: HomePage,
     layout: "/admin"
   },
   {
@@ -40,14 +44,21 @@ var routes = [
     path: "/register-user",
     name: "Register New User",
     icon: "ni ni-circle-08 text-pink",
-    component: Register,
+    component: RegisterUser,
     layout: "/admin"
   },
   {
     path: "/register-device",
     name: "Pair Device",
     icon: "ni ni-watch-time text-red",
-    component: Register,
+    component: RegisterDevice,
+    layout: "/admin"
+  },
+  {
+    path: "/create-geofence",
+    name: "Create Geofence",
+    icon: "ni ni-map-big text-green",
+    component: Maps,
     layout: "/admin"
   },
   {
@@ -55,7 +66,7 @@ var routes = [
     name: "Logout",
     icon: "ni ni-key-25 text-info",
     component: Login,
-    layout: "/auth"
+    layout: "/admin"
   }
 ];
 export default routes;

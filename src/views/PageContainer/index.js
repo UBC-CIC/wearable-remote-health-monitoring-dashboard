@@ -26,7 +26,7 @@ import Sidebar from "../../components/Sidebar/Sidebar.js";
 
 import routes from "../../routes.js";
 
-class HomePage extends React.Component {
+class PageContainer extends React.Component {
     componentDidUpdate(e) {
         document.documentElement.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
@@ -89,4 +89,4 @@ class HomePage extends React.Component {
     }
 }
 
-export default HomePage;
+export default PageContainer;
