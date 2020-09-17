@@ -21,7 +21,7 @@ class UserTableItem extends React.Component {
                 statusClass = "bg-success"
                 break;
             }
-            case 2:{
+            case 1:{
                 statusClass = "bg-warning"
                 break;
             }

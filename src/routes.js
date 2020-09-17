@@ -15,14 +15,15 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import HomePage from "./views/Pages/HomePage/index.js";
+import HomePage from "./views/Pages/HomePage/";
 import Profile from "./views/examples/Profile.js";
 import Register from "./views/examples/Register.js";
 import Login from "./views/examples/Login.js";
 import Tables from "./views/examples/Tables.js";
-import RegisterUser from "./views/examples/RegisterUser";
-import RegisterDevice from "./views/examples/RegisterDevice";
+import RegisterUser from "./views/Pages/RegistrationPage/";
+import ManageDevices from "./views/examples/ManageDevices";
 import Maps from "./views/examples/Maps.js";
+import UserManagement from "./views/Pages/UserManagementPage/";
 
 
 let routes = [
@@ -31,42 +32,56 @@ let routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: HomePage,
-    layout: "/admin"
+    layout: "/admin",
+    exposed: true
   },
   {
     path: "/user-profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
-    layout: "/admin"
+    layout: "/admin",
+    exposed: true
   },
   {
     path: "/register-user",
-    name: "Register New User",
+    name: "Register a New User",
     icon: "ni ni-circle-08 text-pink",
     component: RegisterUser,
-    layout: "/admin"
+    layout: "/admin",
+    exposed: false
   },
   {
-    path: "/register-device",
-    name: "Pair Device",
+    path: "/manage-users",
+    name: "Manage Users",
+    icon: "ni ni-circle-08 text-pink",
+    component: UserManagement,
+    layout: "/admin",
+    exposed: true
+  },
+  {
+    path: "/manage-devices",
+    name: "Manage Devices",
     icon: "ni ni-watch-time text-red",
-    component: RegisterDevice,
-    layout: "/admin"
+    component: ManageDevices,
+    layout: "/admin",
+    exposed: true
   },
   {
-    path: "/create-geofence",
-    name: "Create Geofence",
+    path: "/manage-geofencing",
+    name: "Manage Geofencing",
     icon: "ni ni-map-big text-green",
     component: Maps,
-    layout: "/admin"
+    layout: "/admin",
+    exposed: true
   },
   {
     path: "/login",
     name: "Logout",
     icon: "ni ni-key-25 text-info",
     component: Login,
-    layout: "/admin"
+    layout: "/admin",
+    exposed: true
   }
 ];
 export default routes;

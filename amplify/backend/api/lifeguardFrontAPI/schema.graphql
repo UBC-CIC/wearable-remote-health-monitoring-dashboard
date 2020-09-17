@@ -3,19 +3,19 @@ type User @model {
   firstName: String!
   lastName: String!
   profileURL: String!
+  room: String
   age: Int
   device: Device @connection(name: "RegisteredDevice")
   assignedGeofencing: [Geofence] @connection(name: "AssignedGeofencing")
   profileImageURL: String
   vitals: VitalStats @connection(name: "Vitals")
   facility: String
-  room: String
   phoneNumber: String
   email: String
   emergencyContacts: [EmergencyContact] @connection(name: "EmergencyContacts") 
   careGivers: [CareGiver] @connection(name: "CareGivers")
   address: Address @connection(name: "PrimaryAddress")
-  healthNotes: String
+  additionalNotes: String
 }
 
 type Device @model {

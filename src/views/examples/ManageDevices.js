@@ -33,7 +33,7 @@ import {
 // core components
 import UserHeader from "../../components/Headers/UserHeader.js";
 
-class RegisterDevice extends React.Component {
+class ManageDevices extends React.Component {
   render() {
     return (
       <>
@@ -342,4 +342,4 @@ class RegisterDevice extends React.Component {
   }
 }
 
-export default RegisterDevice;
+export default ManageDevices;
