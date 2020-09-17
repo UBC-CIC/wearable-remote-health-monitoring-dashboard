@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import { connect } from "react-redux";
+
 
 import Header from "../../../components/Headers/Header.js";
 
@@ -27,8 +29,10 @@ import {
   Table,
   Container,
   Row,
-  Col, Media, Badge, UncontrolledTooltip, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
+  Col
 } from "reactstrap";
+import UserTableItem from "../../../components/Dashboard/UserTableItem/UserTableItem";
+
 
 class HomePage extends React.Component {
   constructor(props){
@@ -44,6 +48,23 @@ class HomePage extends React.Component {
     });
   };
   render() {
+    const {users} = this.props;
+    // map our list of users to the "Current Status" table
+    const userList = users.map((user) => {
+      return(
+          <UserTableItem
+              key={user.id}
+              name={user.firstName + " " + user.lastName}
+              profileImg={user.imageURL}
+              id={user.id}
+              status={user.status}
+              device={user.device}
+              heartRate={user.vitals.heartRate}
+              profileURL={user.profileURL}
+              emergencyContacts={user.emergencyContacts}
+          />
+          )
+    })
     return (
       <>
         <Header />
@@ -75,329 +96,7 @@ class HomePage extends React.Component {
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                            <span className="mb-0 text-sm">
-                              John Smith
-                            </span>
-                      </Media>
-                    </th>
-                    <td>
-                      <div className="avatar-group">
-                        <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip742438047"
-                            onClick={e => e.preventDefault()}
-                        >
-                          <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("../../../assets/img/theme/team-1-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip742438047"
-                        >
-                          John Doe
-                        </UncontrolledTooltip>
-                      </div>
-                    </td>
-                    <td>12345</td>
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-warning" />
-                        LOST CONTACT
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">
-                          110
-                        </span>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={e => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Locate User
-                          </DropdownItem>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Emergency Contact
-                          </DropdownItem>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Resolve Issue
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                            <span className="mb-0 text-sm">
-                              Jane Doe
-                            </span>
-                      </Media>
-                    </th>
-                    <td>
-                      <div className="avatar-group">
-                        <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip102182364"
-                            onClick={e => e.preventDefault()}
-                        >
-                          <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("../../../assets/img/theme/team-2-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip102182364"
-                        >
-                          Jane Doe
-                        </UncontrolledTooltip>
-                      </div>
-                    </td>
-                    <td>58943</td>
-                    <td>
-                      <Badge color="" className="badge-dot">
-                        <i className="bg-success" />
-                        NORMAL
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <div className="d-flex align-items-center">
-                        <span className="mr-2">
-                          96
-                        </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={e => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Locate User
-                          </DropdownItem>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Emergency Contact
-                          </DropdownItem>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Resolve Issue
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                            <span className="mb-0 text-sm">
-                              Jessica Johnson
-                            </span>
-                      </Media>
-                    </th>
-                    <td>
-                      <div className="avatar-group">
-                        <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip188462246"
-                            onClick={e => e.preventDefault()}
-                        >
-                          <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("../../../assets/img/theme/team-3-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip188462246"
-                        >
-                          Jessica Johnson
-                        </UncontrolledTooltip>
-                      </div>
-                    </td>
-                    <td>10851</td>
-                    <td>
-                      <Badge color="" className="badge-dot mr-4">
-                        <i className="bg-danger" />
-                        OUT OF BOUNDS
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <div className="d-flex align-items-center">
-                        <span className="mr-2">
-                         85
-                        </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={e => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Locate User
-                          </DropdownItem>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Emergency Contact
-                          </DropdownItem>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Resolve Issue
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">
-                      <Media className="align-items-center">
-                            <span className="mb-0 text-sm">
-                              Philip Westinghouse
-                            </span>
-                      </Media>
-                    </th>
-                    <td>
-                      <div className="avatar-group">
-                        <a
-                            className="avatar avatar-sm"
-                            href="#pablo"
-                            id="tooltip875258217"
-                            onClick={e => e.preventDefault()}
-                        >
-                          <img
-                              alt="..."
-                              className="rounded-circle"
-                              src={require("../../../assets/img/theme/team-1-800x800.jpg")}
-                          />
-                        </a>
-                        <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip875258217"
-                        >
-                          Philip Westinghouse
-                        </UncontrolledTooltip>
-                      </div>
-                    </td>
-                    <td>35836</td>
-                    <td>
-                      <Badge color="" className="badge-dot">
-                        <i className="bg-info" />
-                         HEART RATE HIGH
-                      </Badge>
-                    </td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <div className="d-flex align-items-center">
-                        <span className="mr-2">
-                         160
-                        </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="text-right">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={e => e.preventDefault()}
-                        >
-                          <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Locate User
-                          </DropdownItem>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Emergency Contact
-                          </DropdownItem>
-                          <DropdownItem
-                              href="#pablo"
-                              onClick={e => e.preventDefault()}
-                          >
-                            Resolve Issue
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </td>
-                  </tr>
+                  {userList}
                   </tbody>
                 </Table>
 
@@ -410,4 +109,10 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps)(HomePage);

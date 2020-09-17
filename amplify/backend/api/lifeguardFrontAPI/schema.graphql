@@ -2,10 +2,14 @@ type User @model {
   id: ID!
   firstName: String!
   lastName: String!
+  profileURL: String!
+  age: Int
   device: Device @connection(name: "RegisteredDevice")
-  assignedGeolocations: [Geofence] @connection(name: "AssignedGeolocations")
+  assignedGeofencing: [Geofence] @connection(name: "AssignedGeofencing")
+  profileImageURL: String
   vitals: VitalStats @connection(name: "Vitals")
   facility: String
+  room: String
   phoneNumber: String
   email: String
   emergencyContacts: [EmergencyContact] @connection(name: "EmergencyContacts") 
@@ -16,9 +20,9 @@ type User @model {
 
 type Device @model {
   id: ID!
-  deviceID: String!
+  deviceSerial: String
   deviceStatus: String
-  user: User @connection(name: "RegisteredUser") 
+  registeredUser: User @connection(name: "AssociatedUser") 
   currentLocation: [String]
 }
 
@@ -37,7 +41,7 @@ type EmergencyContact @model {
   id: ID!
   firstName: String!
   lastName: String!
-  user: User connection@(name: "User")
+  user: User @connection(name: "User")
   relationshipToUser: String
   phoneNumber: String
   email: String
@@ -48,7 +52,7 @@ type CareGiver @model {
   id: ID!
   firstName: String!
   lastName: String!
-  user: User connection@(name: "User")
+  user: User @connection(name: "User")
   relationshipToUser: String
   phoneNumber: String
   email: String

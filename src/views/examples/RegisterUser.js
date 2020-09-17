@@ -31,112 +31,24 @@ import {
   Col
 } from "reactstrap";
 // core components
-import UserHeader from "../../components/Headers/UserHeader.js";
+import UserRegistrationHeader from "../../components/Headers/UserRegistrationHeader.js";
 
 class RegisterUser extends React.Component {
   render() {
     return (
       <>
-        <UserHeader />
+        <UserRegistrationHeader />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
-            <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-              <Card className="card-profile shadow">
-                <Row className="justify-content-center">
-                  <Col className="order-lg-2" lg="3">
-                    <div className="card-profile-image">
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img
-                          alt="..."
-                          className="rounded-circle"
-                          src={require("../../assets/img/theme/blank-profile.png")}
-                        />
-                      </a>
-                    </div>
-                  </Col>
-                </Row>
-                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                    <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardBody className="pt-0 pt-md-4">
-                  <Row>
-                    <div className="col">
-                      <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                        <div>
-                          <span className="heading">22</span>
-                          <span className="description">Room Number</span>
-                        </div>
-                        <div>
-                          <span className="heading">10</span>
-                          <span className="description">Incidents</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Row>
-                  <div className="text-center">
-                    <h3>
-                      Jane Doe
-                      <span className="font-weight-light">, 89</span>
-                    </h3>
-                    <div className="h5 font-weight-300">
-                      Vancouver Long Term Care Center
-                    </div>
-                    <div className="h5 mt-4">
-                      <i className="ni ni-pin-3 mr-2" />
-                      Last Known Location
-                    </div>
-                    <div>
-                      Room 553
-                    </div>
-                    <div className="h5 mt-4">
-                      <i className="ni ni-check-bold mr-2" style={{"color": "green"}} />
-                      Device #45235 connected and active
-                    </div>
-                    <hr className="my-4" />
-                    <h2>Health Notes</h2>
-                    <p>
-                      Patient has dementia. Needs 5mg of oral Donepezil daily after evening meal.
-                    </p>
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col className="order-xl-1" xl="8">
+            <Col className="order-xl-1" xl="12">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">Account Information</h3>
+                      <h3 className="mb-0">New Account Information</h3>
                     </Col>
                     <Col className="text-right" xs="4">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        Settings
-                      </Button>
                     </Col>
                   </Row>
                 </CardHeader>
@@ -157,7 +69,6 @@ class RegisterUser extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="lucky.jane"
                               id="input-username"
                               placeholder="Username"
                               type="text"
@@ -175,7 +86,7 @@ class RegisterUser extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder="janeDoe@example.com"
+                              placeholder="email@example.com"
                               type="email"
                             />
                           </FormGroup>
@@ -192,7 +103,6 @@ class RegisterUser extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Jane"
                               id="input-first-name"
                               placeholder="First name"
                               type="text"
@@ -209,7 +119,6 @@ class RegisterUser extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Doe"
                               id="input-last-name"
                               placeholder="Last name"
                               type="text"
@@ -235,7 +144,6 @@ class RegisterUser extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="5958 Pandora Avenue"
                               id="input-address"
                               placeholder="Home Address"
                               type="text"
@@ -254,7 +162,6 @@ class RegisterUser extends React.Component {
                             </label>
                             <Input
                                 className="form-control-alternative"
-                                defaultValue="Vancouver"
                                 id="input-city"
                                 placeholder="City"
                                 type="text"
@@ -271,7 +178,6 @@ class RegisterUser extends React.Component {
                             </label>
                             <Input
                                 className="form-control-alternative"
-                                defaultValue="British Columbia"
                                 id="input-city"
                                 placeholder="City"
                                 type="text"
@@ -290,7 +196,6 @@ class RegisterUser extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="Canada"
                               id="input-country"
                               placeholder="Country"
                               type="text"
@@ -307,7 +212,6 @@ class RegisterUser extends React.Component {
                             </label>
                             <Input
                               className="form-control-alternative"
-                              defaultValue="V8C 5E9"
                               id="input-postal-code"
                               placeholder="Postal code"
                               type="text"
@@ -331,6 +235,13 @@ class RegisterUser extends React.Component {
                         />
                       </FormGroup>
                     </div>
+                    <Row>
+                      <Col lg={"12"} className={"d-flex justify-content-center"}>
+                        <Button>
+                          Submit
+                        </Button>
+                      </Col>
+                    </Row>
                   </Form>
                 </CardBody>
               </Card>
