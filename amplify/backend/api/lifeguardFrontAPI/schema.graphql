@@ -1,63 +1,72 @@
-type User @model {
+type User @model
+@key(name: "usersByDevice", fields: ["device"], queryField: "usersByDevice") {
   id: ID!
   firstName: String!
   lastName: String!
   profileURL: String!
+  profileImageURL: String
   room: String
   age: Int
-  device: Device @connection(name: "RegisteredDevice")
-  assignedGeofencing: [Geofence] @connection(name: "AssignedGeofencing")
-  profileImageURL: String
-  vitals: VitalStats @connection(name: "Vitals")
+  device: Device @connection
+  assignedGeofencing: [UserGeo] @connection(keyName: "byUser", fields: ["id"])
   facility: String
   phoneNumber: String
   email: String
-  emergencyContacts: [EmergencyContact] @connection(name: "EmergencyContacts") 
-  careGivers: [CareGiver] @connection(name: "CareGivers")
-  address: Address @connection(name: "PrimaryAddress")
+  emergencyContacts: [Contact] @connection 
+  careGivers: [Contact] @connection
+  address: Address @connection
   additionalNotes: String
 }
 
 type Device @model {
   id: ID!
+  userID: ID!
+  associatedUser: User @connection(fields: ["userID"])
   deviceSerial: String
-  deviceStatus: String
-  registeredUser: User @connection(name: "AssociatedUser") 
+  deviceStatus: String 
   currentLocation: [String]
+  data: [DeviceData] @connection
 }
 
-type VitalStats @model {
+type DeviceData @model
+@key(fields: ["device", "createdAt"]) {
   id: ID!
+  deviceID: ID!
+  device: Device @connection(fields: ["deviceID"])
+  location: [String]
   heartRate: Int
+  createdAt: String!
 }
 
 type Geofence @model {
   id: ID!
   locationName: String
-  perimeterCoordinates: [String] 
+  perimeterCoordinates: [String]
+  users: [UserGeo] @connection(keyName: "byGeofence", fields: ["id"]) 
 }
 
-type EmergencyContact @model {
+type UserGeo @model
+@key(name: "byUser", fields: ["userID", "geofenceID"])
+@key(name: "byGeofence", fields: ["geofenceID", "userID"]) {
+  id: ID!
+  userID: ID!
+  geofenceID: ID!
+  user: User! @connection(fields: ["userID"])
+  geofence: Geofence! @connection(fields: ["geofenceID"])
+}
+
+type Contact @model {
   id: ID!
   firstName: String!
   lastName: String!
-  user: User @connection(name: "User")
+  userID: ID!
+  user: User @connection(fields: ["userID"])
   relationshipToUser: String
   phoneNumber: String
   email: String
-  address: [Address] @connection(name: "PrimaryAddress")
+  address: Address @connection
 }
 
-type CareGiver @model {
-  id: ID!
-  firstName: String!
-  lastName: String!
-  user: User @connection(name: "User")
-  relationshipToUser: String
-  phoneNumber: String
-  email: String
-  address: [Address] @connection(name: "PrimaryAddress")
-}
 
 type Address @model {
   id: ID!

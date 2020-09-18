@@ -34,6 +34,14 @@ import {
 import UserHeader from "../../components/Headers/UserHeader.js";
 
 class Profile extends React.Component {
+
+  componentDidMount() {
+    const {location} = this.props;
+    let userID = location.pathname.replace(/.admin.user-profile./, "");
+    console.log("userID:", userID);
+    // fetchUserProfile(userID)
+  }
+
   render() {
     return (
       <>

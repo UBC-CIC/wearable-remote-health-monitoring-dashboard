@@ -20,7 +20,7 @@ import Profile from "./views/examples/Profile.js";
 import Register from "./views/examples/Register.js";
 import Login from "./views/examples/Login.js";
 import Tables from "./views/examples/Tables.js";
-import RegisterUser from "./views/Pages/RegistrationPage/";
+import RegisterUser from "./views/Pages/UserRegistrationPage/";
 import ManageDevices from "./views/examples/ManageDevices";
 import Maps from "./views/examples/Maps.js";
 import UserManagement from "./views/Pages/UserManagementPage/";

@@ -29,7 +29,7 @@ class UserManagementHeader extends React.Component {
           style={{
             minHeight: "600px",
             backgroundImage:
-              "url(" + require("../../assets/img/theme/profile-drawing.png") + ")",
+              "url(" + require("../../assets/img/theme/users-drawing.png") + ")",
             backgroundSize: "cover",
             backgroundPosition: "center top"
           }}
