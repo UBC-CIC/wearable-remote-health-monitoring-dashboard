@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import {connect} from "react-redux";
 
 // reactstrap components
 import {
@@ -35,17 +36,28 @@ import UserHeader from "../../components/Headers/UserHeader.js";
 
 class Profile extends React.Component {
 
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     const {location} = this.props;
     let userID = location.pathname.replace(/.admin.user-profile./, "");
-    console.log("userID:", userID);
-    // fetchUserProfile(userID)
+    let userProfile = this.findUser(userID);
+    this.state = {
+      userData: userProfile,
+      canEdit: false,
+    }
+  }
+
+  findUser = (id) => {
+    const {users} = this.props;
+    return users.find(user => user.id === id);
   }
 
   render() {
+    const { userData } = this.state;
+
     return (
-      <>
-        <UserHeader />
+      <div>
+        <UserHeader userName={userData.firstName + " " + userData.lastName} />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -73,7 +85,7 @@ class Profile extends React.Component {
                       onClick={e => e.preventDefault()}
                       size="sm"
                     >
-                      Connect
+                      Device Options
                     </Button>
                     <Button
                       className="float-right"
@@ -82,7 +94,7 @@ class Profile extends React.Component {
                       onClick={e => e.preventDefault()}
                       size="sm"
                     >
-                      Message
+                      Delete User
                     </Button>
                   </div>
                 </CardHeader>
@@ -91,30 +103,30 @@ class Profile extends React.Component {
                     <div className="col">
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div>
-                          <span className="heading">22</span>
-                          <span className="description">Room Number</span>
+                          <span className="heading">{userData.room}</span>
+                          <span className="description">Room</span>
                         </div>
                         <div>
-                          <span className="heading">10</span>
-                          <span className="description">Incidents</span>
+                          <span className="heading">{userData.vitals.heartRate + " BPM"}</span>
+                          <span className="description">Heart Rate</span>
                         </div>
                       </div>
                     </div>
                   </Row>
                   <div className="text-center">
                     <h3>
-                      Jane Doe
+                      {userData.firstName + " " + userData.lastName}
                       <span className="font-weight-light">, 89</span>
                     </h3>
                     <div className="h5 font-weight-300">
-                      Vancouver Long Term Care Center
+                      {userData.facility}
                     </div>
                     <div className="h5 mt-4">
                       <i className="ni ni-pin-3 mr-2" />
                       Last Known Location
                     </div>
                     <div>
-                      Room 553
+                      Room {userData.room}
                     </div>
                     <div className="h5 mt-4">
                       <i className="ni ni-check-bold mr-2" style={{"color": "green"}} />
@@ -141,9 +153,9 @@ class Profile extends React.Component {
                         color="primary"
                         href="#pablo"
                         onClick={e => e.preventDefault()}
-                        size="sm"
+                        size="md"
                       >
-                        Settings
+                        Edit Profile
                       </Button>
                     </Col>
                   </Row>
@@ -345,9 +357,15 @@ class Profile extends React.Component {
             </Col>
           </Row>
         </Container>
-      </>
+      </div>
     );
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps) (Profile);

@@ -15,3 +15,12 @@ export const registerNewUser = (payload) => {
         payload: payload
     }
 }
+
+/*
+// Fetch user profile based on given user ID
+export const fetchUserProfile = (payload) => {
+    return {
+        type: "FETCH_USER_PROFILE",
+        payload: payload
+    }
+}*/

@@ -22,6 +22,7 @@ import { Button, Container, Row, Col } from "reactstrap";
 
 class UserHeader extends React.Component {
   render() {
+      const {userName} = this.props;
     return (
       <>
         <div
@@ -40,14 +41,8 @@ class UserHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="12" md="12">
-                <h1 className="display-2 text-white">Jane Doe</h1>
-                <Button
-                  color="info"
-                  href="#pablo"
-                  onClick={e => e.preventDefault()}
-                >
-                  Edit profile
-                </Button>
+                  <h5 className="display-4 text-white">Patient</h5>
+                <h1 className="display-2 text-white">{userName}</h1>
               </Col>
             </Row>
           </Container>
