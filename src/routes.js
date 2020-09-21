@@ -17,12 +17,11 @@
 */
 import HomePage from "./views/Pages/HomePage/";
 import Profile from "./views/Pages/ProfilePage";
-import Register from "./views/examples/Register.js";
 import Login from "./views/examples/Login.js";
-import Tables from "./views/examples/Tables.js";
 import RegisterUser from "./views/Pages/UserRegistrationPage/";
-import ManageDevices from "./views/examples/ManageDevices";
+import Index from "./views/Pages/DeviceManagementPage";
 import Maps from "./views/examples/Maps.js";
+import ManageGeofence from "./views/examples/ManageGeofence.js";
 import UserManagement from "./views/Pages/UserManagementPage/";
 
 
@@ -63,7 +62,7 @@ let routes = [
     path: "/manage-devices",
     name: "Manage Devices",
     icon: "ni ni-watch-time text-red",
-    component: ManageDevices,
+    component: Index,
     layout: "/admin",
     exposed: true
   },
@@ -71,9 +70,17 @@ let routes = [
     path: "/manage-geofencing",
     name: "Manage Geofencing",
     icon: "ni ni-map-big text-green",
-    component: Maps,
+    component: ManageGeofence,
     layout: "/admin",
     exposed: true
+  },
+  {
+    path: "/create-geofence",
+    name: "Create a Geofence",
+    icon: "ni ni-map-big text-green",
+    component: Maps,
+    layout: "/admin",
+    exposed: false
   },
   {
     path: "/login",

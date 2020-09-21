@@ -17,13 +17,29 @@ const initalUsers = [
         vitals: {id: "126", heartRate: 85}, facility: "Vancouver Care Center", room: "103a", phoneNumber: "888-888-8888", email: "example@example.com",
         emergencyContacts: [], careGivers: [],
         address: {id: "4et6", streetAddress: "555 CIC Street", city: "Vancouver", stateProvince: "BC", country: "Canada", postalZip: "V5Z 3E8"}, additionalNotes: ""},
-    {id: "35836", firstName: "Philip", lastName: "Westinghouse", age: 78, device: {},
+    {id: "35836", firstName: "Philip", lastName: "Westinghouse", age: 78, device: {id: "6etr78"},
         assignedGeofencing: [{id: "1239", locationName: "bedroom", perimeterCoordinates:[]}],
         profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileURL: "35836", status: {code: 3, description: "HEART RATE HIGH"},
         vitals: {id: "127", heartRate: 160}, facility: "Vancouver Care Center", room: "208a", phoneNumber: "888-888-8888", email: "example@example.com",
         emergencyContacts: [], careGivers: [],
         address: {id: "4et7", streetAddress: "555 CIC Street", city: "Vancouver", stateProvince: "BC", country: "Canada", postalZip: "V5Z 3E8"}, additionalNotes: ""},
 ];
+
+// delete user from local state
+const deleteUserHelper = (users, payload) => {
+    let newUsers = [...users];
+    const index = newUsers.findIndex(user =>
+        user.id === payload
+    );
+
+    if (index !== -1) {
+        newUsers.splice(index, 1);
+    }
+
+    return newUsers;
+}
+
+
 
 // update user info in local state
 const updateUserHelper = (users, profile) => {
@@ -45,6 +61,9 @@ const userReducer = (users = initalUsers, action) => {
         }
         case "UPDATE_USER_INFORMATION": {
             return updateUserHelper(newUsers, action.payload);
+        }
+        case "DELETE_USER": {
+            return deleteUserHelper(newUsers, action.payload);
         }
         default:
             return newUsers;

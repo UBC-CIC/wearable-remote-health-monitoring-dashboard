@@ -20,7 +20,7 @@ import React from "react";
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
-class UserManagementHeader extends React.Component {
+class GeofenceCreationHeader extends React.Component {
   render() {
     return (
       <>
@@ -29,7 +29,7 @@ class UserManagementHeader extends React.Component {
           style={{
             minHeight: "600px",
             backgroundImage:
-              "url(" + require("../../assets/img/theme/users-drawing.png") + ")",
+              "url(" + require("../../assets/img/theme/globe.jpg") + ")",
             backgroundSize: "cover",
             backgroundPosition: "center top"
           }}
@@ -40,13 +40,7 @@ class UserManagementHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="12" md="12">
-                <h1 className="display-2 text-white">User Management Console</h1>
-                  <Button
-                      color="info"
-                      href="/admin/register-user"
-                  >
-                      Register a New User
-                  </Button>
+                <h1 className="display-2 text-white">Create a Geofence</h1>
               </Col>
             </Row>
           </Container>
@@ -56,4 +50,4 @@ class UserManagementHeader extends React.Component {
   }
 }
 
-export default UserManagementHeader;
+export default GeofenceCreationHeader;

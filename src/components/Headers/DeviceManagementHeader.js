@@ -20,7 +20,7 @@ import React from "react";
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
-class UserManagementHeader extends React.Component {
+class DeviceManagementHeader extends React.Component {
   render() {
     return (
       <>
@@ -29,7 +29,7 @@ class UserManagementHeader extends React.Component {
           style={{
             minHeight: "600px",
             backgroundImage:
-              "url(" + require("../../assets/img/theme/users-drawing.png") + ")",
+              "url(" + require("../../assets/img/theme/apple_watch.jpg") + ")",
             backgroundSize: "cover",
             backgroundPosition: "center top"
           }}
@@ -40,12 +40,18 @@ class UserManagementHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="12" md="12">
-                <h1 className="display-2 text-white">User Management Console</h1>
+                <h1 className="display-2 text-white">Device Management Console</h1>
                   <Button
                       color="info"
-                      href="/admin/register-user"
+                      href="#"
                   >
-                      Register a New User
+                      Add New Device
+                  </Button>
+                  <Button
+                      color="info"
+                      href="#"
+                  >
+                      Pair Device to User
                   </Button>
               </Col>
             </Row>
@@ -56,4 +62,4 @@ class UserManagementHeader extends React.Component {
   }
 }
 
-export default UserManagementHeader;
+export default DeviceManagementHeader;

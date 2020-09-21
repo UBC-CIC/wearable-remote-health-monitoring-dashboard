@@ -33,10 +33,11 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "../../../components/Headers/UserHeader.js";
+import DeleteUserModal from "../../../components/UserProfile/DeleteUserModal/DeleteUserModal";
 // actions
 import {updateUserInformation} from "../../../actions/userActions";
 
-class Index extends React.Component {
+class Profile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -63,6 +64,7 @@ class Index extends React.Component {
       originalProfile: userProfile,
       editMode: false,
       profileInfoEdited: false,
+      deleteModalShow: false,
     }
   }
 
@@ -74,9 +76,9 @@ class Index extends React.Component {
   // Toggles profile edit mode on/off when "Edit/Save" button clicked. If changes were made, transmit them
   toggleEdit = (e) => {
     e.preventDefault();
-    const {editMode} = this.state;
+    const {editMode, profileInfoEdited} = this.state;
     // if save profile button clicked, propagate updated profile information
-    if (editMode) {
+    if (editMode && profileInfoEdited) {
       const {originalProfile, firstName, lastName, age, facility, room, phoneNumber, email,
         streetAddress, city, stateProvince, country, postalZip, additionalNotes, emergencyContacts, careGivers} = this.state;
       const {updateUserInformation: updateUserInfo} = this.props;
@@ -106,9 +108,16 @@ class Index extends React.Component {
     })
   }
 
+  // Triggers the opening/closing of the DeleteUserModal
+  setDeleteModalShow = (bool) => {
+    this.setState({
+      deleteModalShow: bool,
+    });
+  };
+
   render() {
-    const {firstName, lastName, age, facility, room, phoneNumber, email,
-      streetAddress, city, stateProvince, country, postalZip, heartRate, additionalNotes ,editMode } = this.state;
+    const { originalProfile, firstName, lastName, age, facility, room, phoneNumber, email,
+      streetAddress, city, stateProvince, country, postalZip, heartRate, additionalNotes ,editMode, deleteModalShow } = this.state;
 
     return (
       <div>
@@ -145,8 +154,8 @@ class Index extends React.Component {
                     <Button
                       className="float-right"
                       color="warning"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      href="#"
+                      onClick={() => this.setDeleteModalShow(true)}
                       size="sm"
                     >
                       Delete User
@@ -158,11 +167,11 @@ class Index extends React.Component {
                     <div className="col">
                       <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                         <div>
-                          <span className="heading">{room}</span>
+                          <span className="heading">{(room)? room : "N/A"}</span>
                           <span className="description">Room</span>
                         </div>
                         <div>
-                          <span className="heading">{heartRate + " BPM"}</span>
+                          <span className="heading">{(heartRate || heartRate === 0)? heartRate + " BPM": "N/A"}</span>
                           <span className="description">Heart Rate</span>
                         </div>
                       </div>
@@ -171,7 +180,7 @@ class Index extends React.Component {
                   <div className="text-center">
                     <h3>
                       {firstName + " " + lastName}
-                      <span className="font-weight-light">, 89</span>
+                      <span className="font-weight-light">, {(age)? age : "N/A"}</span>
                     </h3>
                     <div className="h5 font-weight-300">
                       {facility}
@@ -486,6 +495,7 @@ class Index extends React.Component {
             </Col>
           </Row>
         </Container>
+        <DeleteUserModal show={deleteModalShow} userID={originalProfile.id} userName={firstName + " " + lastName} onHide={() => this.setDeleteModalShow(false)} />
       </div>
     );
   }
@@ -497,4 +507,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {updateUserInformation}) (Index);
+export default connect(mapStateToProps, {updateUserInformation}) (Profile);

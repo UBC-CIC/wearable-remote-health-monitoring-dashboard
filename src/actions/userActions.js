@@ -24,6 +24,14 @@ export const updateUserInformation = (payload) => {
     }
 }
 
+// Delete user
+export const deleteUser = (payload) => {
+    return {
+        type: "DELETE_USER",
+        payload: payload
+    }
+}
+
 /*
 // Fetch user profile based on given user ID
 export const fetchUserProfile = (payload) => {

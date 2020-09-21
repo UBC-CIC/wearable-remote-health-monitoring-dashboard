@@ -19,78 +19,71 @@ import React from "react";
 
 // reactstrap components
 import {
-  Button,
   Card,
   CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
   Container,
   Row,
   Col, Table
 } from "reactstrap";
 // core components
-import UserManagementHeader from "../../../components/Headers/UserManagementHeader";
+import DeviceManagementHeader from "../../../components/Headers/DeviceManagementHeader.js";
 import {connect} from "react-redux";
-import UserManagementTableItem from "../../../components/UserManagement/UserTableItem/UserTableItem";
+import DeviceTableItem from "../../../components/DeviceManagement/DeviceTableItem/DeviceTableItem";
 
-class UserManagement extends React.Component {
+class DeviceManager extends React.Component {
   render() {
-    const {users} = this.props;
-    // map our list of users to the "Current Status" table
-    const userList = users.map((user) => {
+    const {devices} = this.props;
+    // map our list of devices to the device table
+    const deviceList = devices.map((device) => {
       return(
-          <UserManagementTableItem
-              key={user.id}
-              name={user.firstName + " " + user.lastName}
-              profileImg={user.profileImageURL}
-              id={user.id}
-              room={user.room}
-              device={user.device}
-              profileURL={user.profileURL}
+          <DeviceTableItem
+              key={device.id}
+              id={device.id}
+              devicePaired={device.devicePaired}
+              deviceStatus={device.deviceStatus}
+              associatedUserName={device.associatedUserName}
+              associatedUserID={device.associatedUserID}
           />
       )
     })
     return (
-      <div>
-        <UserManagementHeader />
+      <>
+        <DeviceManagementHeader />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row className="mt-5">
             <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">All Users</h3>
+                  <h3 className="mb-0">All Devices</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                   <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Assigned Room</th>
-                    <th scope="col">Assigned Device</th>
+                    <th scope="col">Device ID</th>
+                    <th scope="col">Paired?</th>
+                    <th scope="col">Device Status</th>
+                    <th scope="col">Associated User</th>
                     <th scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {userList}
+                  {deviceList}
                   </tbody>
                 </Table>
               </Card>
             </Col>
           </Row>
         </Container>
-      </div>
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users,
+    devices: state.devices,
   };
 };
 
-export default connect(mapStateToProps) (UserManagement);
+export default connect(mapStateToProps)(DeviceManager);

@@ -1,8 +1,9 @@
 import * as React from "react";
 import {  withRouter } from 'react-router-dom';
+import DeleteUserModal from "../../../components/UserProfile/DeleteUserModal/DeleteUserModal";
+
 
 import {
-    Badge,
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
@@ -15,6 +16,20 @@ import {
 
 class UserManagementTableItem extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            deleteModalShow: false,
+        }
+    }
+
+    // Triggers the opening/closing of the DeleteUserModal
+    setDeleteModalShow = (bool) => {
+        this.setState({
+            deleteModalShow: bool,
+        });
+    };
+
     profileRouter = () => {
         const {id, history} =  this.props;
         let path = "/admin/user-profile/".concat(id);
@@ -22,7 +37,8 @@ class UserManagementTableItem extends React.Component {
     }
 
     render() {
-        const {name, profileImg, id, room, device, profileURL} = this.props;
+        const {name, profileImg, id, room, device } = this.props;
+        const {deleteModalShow} = this.state;
         if (Object.keys(device).length === 0) {
             device.id = "NONE"
         }
@@ -86,11 +102,12 @@ class UserManagementTableItem extends React.Component {
                                 Locate User
                             </DropdownItem>
                             <DropdownItem
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
+                                href="#"
+                                onClick={() => this.setDeleteModalShow(true)}
                             >
                                 Delete User
                             </DropdownItem>
+                            <DeleteUserModal show={deleteModalShow} userID={id} userName={name} onHide={() => this.setDeleteModalShow(false)} />
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </td>
