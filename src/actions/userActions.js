@@ -16,6 +16,14 @@ export const registerNewUser = (payload) => {
     }
 }
 
+// Updates user information
+export const updateUserInformation = (payload) => {
+    return {
+        type: "UPDATE_USER_INFORMATION",
+        payload: payload
+    }
+}
+
 /*
 // Fetch user profile based on given user ID
 export const fetchUserProfile = (payload) => {

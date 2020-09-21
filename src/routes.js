@@ -16,7 +16,7 @@
 
 */
 import HomePage from "./views/Pages/HomePage/";
-import Profile from "./views/examples/Profile.js";
+import Profile from "./views/Pages/ProfilePage";
 import Register from "./views/examples/Register.js";
 import Login from "./views/examples/Login.js";
 import Tables from "./views/examples/Tables.js";
@@ -41,7 +41,7 @@ let routes = [
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
     layout: "/admin",
-    exposed: true
+    exposed: false
   },
   {
     path: "/register-user",

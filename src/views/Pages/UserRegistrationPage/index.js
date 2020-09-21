@@ -154,7 +154,7 @@ class RegisterUser extends React.Component {
                         </Col>
                       </Row>
                       <Row>
-                        <Col lg="6">
+                        <Col lg="4">
                           <FormGroup>
                             <label
                                 className="form-control-label"
@@ -171,7 +171,7 @@ class RegisterUser extends React.Component {
                             />
                           </FormGroup>
                         </Col>
-                        <Col lg="6">
+                        <Col lg="4">
                           <FormGroup>
                             <label
                                 className="form-control-label"
@@ -185,6 +185,23 @@ class RegisterUser extends React.Component {
                                 placeholder="Vancouver Care Center"
                                 type="text"
                                 onChange={this.handleChange}
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg="4">
+                          <FormGroup>
+                            <label
+                                className="form-control-label"
+                                htmlFor="room"
+                            >
+                              Assigned Room
+                            </label>
+                            <Input
+                                className="form-control-alternative"
+                                id="room"
+                                placeholder="100a"
+                                onChange={this.handleChange}
+                                type="text"
                             />
                           </FormGroup>
                         </Col>
@@ -239,7 +256,7 @@ class RegisterUser extends React.Component {
                               className="form-control-label"
                               htmlFor="streetAddress"
                             >
-                              Address
+                              Street Address
                             </label>
                             <Input
                               className="form-control-alternative"
@@ -329,9 +346,13 @@ class RegisterUser extends React.Component {
                     <h6 className="heading-small text-muted mb-4">About User</h6>
                     <div className="pl-lg-4">
                       <FormGroup>
-                        <label>Additional Notes</label>
+                        <label
+                            className="form-control-label"
+                            htmlFor="additionalNotes"
+                        >Additional Notes</label>
                         <Input
                           className="form-control-alternative"
+                          id="additionalNotes"
                           placeholder="A few health notes for the patient."
                           rows="4"
                           type="textarea"
