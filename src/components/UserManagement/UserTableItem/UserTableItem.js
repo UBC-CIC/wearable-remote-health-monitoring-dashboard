@@ -39,9 +39,6 @@ class UserManagementTableItem extends React.Component {
     render() {
         const {name, profileImg, id, room, device } = this.props;
         const {deleteModalShow} = this.state;
-        if (Object.keys(device).length === 0) {
-            device.id = "NONE"
-        }
         return (
             <tr>
                 <th scope="row">
@@ -75,7 +72,7 @@ class UserManagementTableItem extends React.Component {
                 </td>
                 <td>{id}</td>
                 <td>{room}</td>
-                <td>{device.id}</td>
+                <td>{(Object.keys(device).length === 0)? "NONE" : device.id}</td>
                 <td className="text-right">
                     <UncontrolledDropdown>
                         <DropdownToggle

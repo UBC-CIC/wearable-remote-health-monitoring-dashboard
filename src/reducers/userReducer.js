@@ -1,7 +1,7 @@
-const initalUsers = [
+const initialUsers = [
     {id: "12345", firstName: "John", lastName: "Smith", age: 75, device: {id: "4etr32"},
         assignedGeofencing: [{id: "1234", locationName: "bedroom", perimeterCoordinates:[]}],
-        profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileURL: "12345", status: {code: 1, description: "DEVICE NOT CONNECTED"},
+        profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileURL: "12345", status: {code: 1, description: "DEVICE DISCONNECTED"},
         vitals: {id: "123", heartRate: 0}, facility: "Vancouver Care Center", room: "105e", phoneNumber: "888-888-8888", email: "example@example.com",
     emergencyContacts: [], careGivers: [],
         address: {id: "4et4", streetAddress: "555 CIC Street", city: "Vancouver", stateProvince: "BC", country: "Canada", postalZip: "V5Z 3E8"}, additionalNotes: ""},
@@ -53,7 +53,31 @@ const updateUserHelper = (users, profile) => {
     return newUsers;
 }
 
-const userReducer = (users = initalUsers, action) => {
+// associate a device with a user
+const deviceAssociationHelper = (users, device) => {
+    users.forEach(user => {
+        if (user.id === device.associatedUserID) {
+            user.device = device;
+            user.status = {code: 0, description: "NORMAL"};
+        }
+    })
+
+    return users;
+}
+
+// remove paired device from targeted user
+const removeDeviceHelper = (users, target) => {
+    users.forEach(user => {
+        if (user.id === target.userID) {
+            user.device = {};
+            user.status  = {code: 1, description: "NO DEVICE CONNECTED"};
+        }
+    })
+
+    return users;
+}
+
+const userReducer = (users = initialUsers, action) => {
     let newUsers = [...users];
     switch (action.type) {
         case "REGISTER_NEW_USER": {
@@ -64,6 +88,12 @@ const userReducer = (users = initalUsers, action) => {
         }
         case "DELETE_USER": {
             return deleteUserHelper(newUsers, action.payload);
+        }
+        case "REGISTER_NEW_DEVICE": {
+            return deviceAssociationHelper(newUsers, action.payload);
+        }
+        case "UNPAIR_DEVICE": {
+            return removeDeviceHelper(newUsers, action.payload);
         }
         default:
             return newUsers;

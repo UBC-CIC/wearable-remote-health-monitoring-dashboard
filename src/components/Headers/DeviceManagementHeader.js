@@ -16,14 +16,34 @@
 
 */
 import React from "react";
+import RegisterDeviceModal from "../DeviceManagement/RegisterDeviceModal/RegisterDeviceModal";
+
+
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
 class DeviceManagementHeader extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            registerDeviceModalShow: false,
+        }
+    }
+
+    // Triggers the opening/closing of the newDeviceModal
+    setRegisterDeviceModalShow = (bool) => {
+        this.setState({
+            registerDeviceModalShow: bool,
+        });
+    };
+
+
   render() {
+      const {registerDeviceModalShow} = this.state;
     return (
-      <>
+      <div>
         <div
           className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
           style={{
@@ -44,20 +64,16 @@ class DeviceManagementHeader extends React.Component {
                   <Button
                       color="info"
                       href="#"
+                      onClick={() => this.setRegisterDeviceModalShow(true)}
                   >
-                      Add New Device
-                  </Button>
-                  <Button
-                      color="info"
-                      href="#"
-                  >
-                      Pair Device to User
+                      Register a Device
                   </Button>
               </Col>
             </Row>
           </Container>
         </div>
-      </>
+          <RegisterDeviceModal show={registerDeviceModalShow} onHide={() => this.setRegisterDeviceModalShow(false)} />
+      </div>
     );
   }
 }

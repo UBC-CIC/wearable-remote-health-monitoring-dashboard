@@ -31,8 +31,25 @@ import {connect} from "react-redux";
 import DeviceTableItem from "../../../components/DeviceManagement/DeviceTableItem/DeviceTableItem";
 
 class DeviceManager extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      unpairDeviceModalShow: false,
+    }
+  }
+
+  // Triggers the opening/closing of the unpairDeviceModal
+  setUnpairDeviceModalShow = (bool) => {
+    this.setState({
+      unpairDeviceModalShow: bool,
+    });
+  };
+
+
   render() {
     const {devices} = this.props;
+    const { unpairDeviceModalShow } = this.state;
     // map our list of devices to the device table
     const deviceList = devices.map((device) => {
       return(
@@ -47,7 +64,7 @@ class DeviceManager extends React.Component {
       )
     })
     return (
-      <>
+      <div>
         <DeviceManagementHeader />
         {/* Page content */}
         <Container className="mt--7" fluid>
@@ -55,13 +72,12 @@ class DeviceManager extends React.Component {
             <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">All Devices</h3>
+                  <h3 className="mb-0">All Registered Devices</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                   <tr>
                     <th scope="col">Device ID</th>
-                    <th scope="col">Paired?</th>
                     <th scope="col">Device Status</th>
                     <th scope="col">Associated User</th>
                     <th scope="col">Actions</th>
@@ -75,7 +91,7 @@ class DeviceManager extends React.Component {
             </Col>
           </Row>
         </Container>
-      </>
+      </div>
     );
   }
 }

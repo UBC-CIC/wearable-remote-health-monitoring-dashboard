@@ -16,25 +16,38 @@
 
 */
 import React from "react";
+import { connect } from "react-redux";
 
 // reactstrap components
 import {
   Card,
-  CardBody,
-  CardTitle,
   Container,
   Row,
   Col,
   CardHeader,
   Table,
   Media,
-  UncontrolledTooltip, Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
+   Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from "reactstrap";
+import AlertTableItem from "../Dashboard/AlertTableItem/AlertTableItem";
 
 class Header extends React.Component {
   render() {
+    //const {users} = this.props;
+    // map our list of users to the "Current Status" table
+    /*const userList = users.map((user) => {
+      return(
+          <AlertTableItem
+              key={user.id}
+              name={user.firstName + " " + user.lastName}
+              id={user.id}
+              status={user.status}
+              heartRate={user.vitals.heartRate}
+          />
+      )
+    })*/
     return (
-      <>
+      <div>
         <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
           <Container fluid>
             <div className="header-body">
@@ -237,22 +250,19 @@ class Header extends React.Component {
 
                   </Card>
                 </Col>
-                <Col lg="6" xl="3">
-
-                </Col>
-                <Col lg="6" xl="3">
-
-                </Col>
-                <Col lg="6" xl="3">
-
-                </Col>
               </Row>
             </div>
           </Container>
         </div>
-      </>
+      </div>
     );
   }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps)(Header);

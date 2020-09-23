@@ -1,10 +1,10 @@
 
 
-const initalAlerts = [];
+const initialAlerts = [];
 
 
 
-const alertReducer = (alerts = initalAlerts, action) => {
+const alertReducer = (alerts = initialAlerts, action) => {
     return alerts;
 }
 

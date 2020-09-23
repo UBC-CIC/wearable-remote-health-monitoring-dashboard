@@ -16,11 +16,21 @@
 
 */
 import React from "react";
+import {withRouter} from "react-router-dom";
+
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
 class UserManagementHeader extends React.Component {
+
+   onClick = (e) => {
+       e.preventDefault();
+       const {history} = this.props;
+       let path = "/admin/register-user";
+       history.push(path);
+   }
+
   render() {
     return (
       <>
@@ -43,7 +53,8 @@ class UserManagementHeader extends React.Component {
                 <h1 className="display-2 text-white">User Management Console</h1>
                   <Button
                       color="info"
-                      href="/admin/register-user"
+                      href="#"
+                      onClick={this.onClick}
                   >
                       Register a New User
                   </Button>
@@ -56,4 +67,4 @@ class UserManagementHeader extends React.Component {
   }
 }
 
-export default UserManagementHeader;
+export default withRouter(UserManagementHeader);
