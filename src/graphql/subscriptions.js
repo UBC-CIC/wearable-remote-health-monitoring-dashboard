@@ -7,23 +7,18 @@ export const onCreateUser = /* GraphQL */ `
       id
       firstName
       lastName
-      profileURL
       profileImageURL
       room
       age
-      deviceID
       device {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -31,9 +26,7 @@ export const onCreateUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
@@ -54,42 +47,39 @@ export const onCreateUser = /* GraphQL */ `
       phoneNumber
       email
       emergencyContacts {
-        items {
-          id
-          firstName
-          lastName
-          userID
-          relationshipToUser
-          phoneNumber
-          email
-          createdAt
-          updatedAt
+        firstName
+        lastName
+        relationshipToUser
+        phoneNumber
+        email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
         }
-        nextToken
       }
       careGivers {
-        items {
-          id
-          firstName
-          lastName
-          userID
-          relationshipToUser
-          phoneNumber
-          email
-          createdAt
-          updatedAt
+        firstName
+        lastName
+        relationshipToUser
+        phoneNumber
+        email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
         }
-        nextToken
       }
       address {
-        id
         streetAddress
         city
         stateProvince
         country
         postalZip
-        createdAt
-        updatedAt
       }
       additionalNotes
       createdAt
@@ -103,23 +93,18 @@ export const onUpdateUser = /* GraphQL */ `
       id
       firstName
       lastName
-      profileURL
       profileImageURL
       room
       age
-      deviceID
       device {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -127,9 +112,7 @@ export const onUpdateUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
@@ -150,42 +133,39 @@ export const onUpdateUser = /* GraphQL */ `
       phoneNumber
       email
       emergencyContacts {
-        items {
-          id
-          firstName
-          lastName
-          userID
-          relationshipToUser
-          phoneNumber
-          email
-          createdAt
-          updatedAt
+        firstName
+        lastName
+        relationshipToUser
+        phoneNumber
+        email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
         }
-        nextToken
       }
       careGivers {
-        items {
-          id
-          firstName
-          lastName
-          userID
-          relationshipToUser
-          phoneNumber
-          email
-          createdAt
-          updatedAt
+        firstName
+        lastName
+        relationshipToUser
+        phoneNumber
+        email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
         }
-        nextToken
       }
       address {
-        id
         streetAddress
         city
         stateProvince
         country
         postalZip
-        createdAt
-        updatedAt
       }
       additionalNotes
       createdAt
@@ -199,23 +179,18 @@ export const onDeleteUser = /* GraphQL */ `
       id
       firstName
       lastName
-      profileURL
       profileImageURL
       room
       age
-      deviceID
       device {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -223,9 +198,7 @@ export const onDeleteUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
@@ -246,42 +219,39 @@ export const onDeleteUser = /* GraphQL */ `
       phoneNumber
       email
       emergencyContacts {
-        items {
-          id
-          firstName
-          lastName
-          userID
-          relationshipToUser
-          phoneNumber
-          email
-          createdAt
-          updatedAt
+        firstName
+        lastName
+        relationshipToUser
+        phoneNumber
+        email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
         }
-        nextToken
       }
       careGivers {
-        items {
-          id
-          firstName
-          lastName
-          userID
-          relationshipToUser
-          phoneNumber
-          email
-          createdAt
-          updatedAt
+        firstName
+        lastName
+        relationshipToUser
+        phoneNumber
+        email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
         }
-        nextToken
       }
       address {
-        id
         streetAddress
         city
         stateProvince
         country
         postalZip
-        createdAt
-        updatedAt
       }
       additionalNotes
       createdAt
@@ -293,22 +263,16 @@ export const onCreateDevice = /* GraphQL */ `
   subscription OnCreateDevice {
     onCreateDevice {
       id
-      userID
       associatedUser {
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -319,33 +283,35 @@ export const onCreateDevice = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
         updatedAt
       }
-      deviceSerial
       deviceStatus
-      currentLocation
       data {
         items {
           id
           deviceID
-          location
           heartRate
           createdAt
           updatedAt
@@ -361,22 +327,16 @@ export const onUpdateDevice = /* GraphQL */ `
   subscription OnUpdateDevice {
     onUpdateDevice {
       id
-      userID
       associatedUser {
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -387,33 +347,35 @@ export const onUpdateDevice = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
         updatedAt
       }
-      deviceSerial
       deviceStatus
-      currentLocation
       data {
         items {
           id
           deviceID
-          location
           heartRate
           createdAt
           updatedAt
@@ -429,22 +391,16 @@ export const onDeleteDevice = /* GraphQL */ `
   subscription OnDeleteDevice {
     onDeleteDevice {
       id
-      userID
       associatedUser {
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -455,33 +411,35 @@ export const onDeleteDevice = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
         updatedAt
       }
-      deviceSerial
       deviceStatus
-      currentLocation
       data {
         items {
           id
           deviceID
-          location
           heartRate
           createdAt
           updatedAt
@@ -500,16 +458,13 @@ export const onCreateDeviceData = /* GraphQL */ `
       deviceID
       device {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -517,16 +472,17 @@ export const onCreateDeviceData = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
         createdAt
         updatedAt
       }
-      location
+      location {
+        Latitude
+        Longitude
+      }
       heartRate
       createdAt
       updatedAt
@@ -540,16 +496,13 @@ export const onUpdateDeviceData = /* GraphQL */ `
       deviceID
       device {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -557,16 +510,17 @@ export const onUpdateDeviceData = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
         createdAt
         updatedAt
       }
-      location
+      location {
+        Latitude
+        Longitude
+      }
       heartRate
       createdAt
       updatedAt
@@ -580,16 +534,13 @@ export const onDeleteDeviceData = /* GraphQL */ `
       deviceID
       device {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -597,16 +548,17 @@ export const onDeleteDeviceData = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
         createdAt
         updatedAt
       }
-      location
+      location {
+        Latitude
+        Longitude
+      }
       heartRate
       createdAt
       updatedAt
@@ -618,7 +570,11 @@ export const onCreateGeofence = /* GraphQL */ `
     onCreateGeofence {
       id
       locationName
-      perimeterCoordinates
+      centerpointCoordinates {
+        Latitude
+        Longitude
+      }
+      radius
       users {
         items {
           id
@@ -639,7 +595,11 @@ export const onUpdateGeofence = /* GraphQL */ `
     onUpdateGeofence {
       id
       locationName
-      perimeterCoordinates
+      centerpointCoordinates {
+        Latitude
+        Longitude
+      }
+      radius
       users {
         items {
           id
@@ -660,7 +620,11 @@ export const onDeleteGeofence = /* GraphQL */ `
     onDeleteGeofence {
       id
       locationName
-      perimeterCoordinates
+      centerpointCoordinates {
+        Latitude
+        Longitude
+      }
+      radius
       users {
         items {
           id
@@ -686,17 +650,12 @@ export const onCreateUserGeo = /* GraphQL */ `
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -707,20 +666,25 @@ export const onCreateUserGeo = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
@@ -729,7 +693,11 @@ export const onCreateUserGeo = /* GraphQL */ `
       geofence {
         id
         locationName
-        perimeterCoordinates
+        centerpointCoordinates {
+          Latitude
+          Longitude
+        }
+        radius
         users {
           nextToken
         }
@@ -751,17 +719,12 @@ export const onUpdateUserGeo = /* GraphQL */ `
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -772,20 +735,25 @@ export const onUpdateUserGeo = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
@@ -794,7 +762,11 @@ export const onUpdateUserGeo = /* GraphQL */ `
       geofence {
         id
         locationName
-        perimeterCoordinates
+        centerpointCoordinates {
+          Latitude
+          Longitude
+        }
+        radius
         users {
           nextToken
         }
@@ -816,17 +788,12 @@ export const onDeleteUserGeo = /* GraphQL */ `
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -837,20 +804,25 @@ export const onDeleteUserGeo = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
@@ -859,262 +831,17 @@ export const onDeleteUserGeo = /* GraphQL */ `
       geofence {
         id
         locationName
-        perimeterCoordinates
+        centerpointCoordinates {
+          Latitude
+          Longitude
+        }
+        radius
         users {
           nextToken
         }
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateContact = /* GraphQL */ `
-  subscription OnCreateContact {
-    onCreateContact {
-      id
-      firstName
-      lastName
-      userID
-      user {
-        id
-        firstName
-        lastName
-        profileURL
-        profileImageURL
-        room
-        age
-        deviceID
-        device {
-          id
-          userID
-          deviceSerial
-          deviceStatus
-          currentLocation
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        emergencyContacts {
-          nextToken
-        }
-        careGivers {
-          nextToken
-        }
-        address {
-          id
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-          createdAt
-          updatedAt
-        }
-        additionalNotes
-        createdAt
-        updatedAt
-      }
-      relationshipToUser
-      phoneNumber
-      email
-      address {
-        id
-        streetAddress
-        city
-        stateProvince
-        country
-        postalZip
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateContact = /* GraphQL */ `
-  subscription OnUpdateContact {
-    onUpdateContact {
-      id
-      firstName
-      lastName
-      userID
-      user {
-        id
-        firstName
-        lastName
-        profileURL
-        profileImageURL
-        room
-        age
-        deviceID
-        device {
-          id
-          userID
-          deviceSerial
-          deviceStatus
-          currentLocation
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        emergencyContacts {
-          nextToken
-        }
-        careGivers {
-          nextToken
-        }
-        address {
-          id
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-          createdAt
-          updatedAt
-        }
-        additionalNotes
-        createdAt
-        updatedAt
-      }
-      relationshipToUser
-      phoneNumber
-      email
-      address {
-        id
-        streetAddress
-        city
-        stateProvince
-        country
-        postalZip
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteContact = /* GraphQL */ `
-  subscription OnDeleteContact {
-    onDeleteContact {
-      id
-      firstName
-      lastName
-      userID
-      user {
-        id
-        firstName
-        lastName
-        profileURL
-        profileImageURL
-        room
-        age
-        deviceID
-        device {
-          id
-          userID
-          deviceSerial
-          deviceStatus
-          currentLocation
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        emergencyContacts {
-          nextToken
-        }
-        careGivers {
-          nextToken
-        }
-        address {
-          id
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-          createdAt
-          updatedAt
-        }
-        additionalNotes
-        createdAt
-        updatedAt
-      }
-      relationshipToUser
-      phoneNumber
-      email
-      address {
-        id
-        streetAddress
-        city
-        stateProvince
-        country
-        postalZip
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateAddress = /* GraphQL */ `
-  subscription OnCreateAddress {
-    onCreateAddress {
-      id
-      streetAddress
-      city
-      stateProvince
-      country
-      postalZip
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateAddress = /* GraphQL */ `
-  subscription OnUpdateAddress {
-    onUpdateAddress {
-      id
-      streetAddress
-      city
-      stateProvince
-      country
-      postalZip
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteAddress = /* GraphQL */ `
-  subscription OnDeleteAddress {
-    onDeleteAddress {
-      id
-      streetAddress
-      city
-      stateProvince
-      country
-      postalZip
       createdAt
       updatedAt
     }

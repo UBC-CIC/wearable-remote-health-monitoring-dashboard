@@ -1,48 +1,57 @@
-type User @model
-@key(name: "usersByDevice", fields: ["deviceID"], queryField: "usersByDevice") {
+type User @model {
   id: ID!
   firstName: String!
   lastName: String!
-  profileURL: String!
-  profileImageURL: String
-  room: String
   age: Int
-  deviceID: ID
+  profileImageURL: String
+  room: Room @connection
   device: Device @connection
   assignedGeofencing: [UserGeo] @connection(keyName: "byUser", fields: ["id"])
   facility: String
   phoneNumber: String
   email: String
-  emergencyContacts: [Contact] @connection 
-  careGivers: [Contact] @connection
-  address: Address @connection
+  address: Address
+  emergencyContacts: [Contact]  
+  careGivers: [Contact] 
   additionalNotes: String
+}
+
+type Room @model 
+@key(fields: ["roomNumber"]) {
+  id: ID!
+  roomNumber: String
+  name: String
+  location: LatLon
+  locationRadius: String
+  users: [User] @connection
 }
 
 type Device @model {
   id: ID!
-  userID: ID!
-  associatedUser: User @connection(fields: ["userID"])
-  deviceSerial: String
+  associatedUser: User @connection
   deviceStatus: String 
-  currentLocation: [String]
   data: [DeviceData] @connection
 }
 
 type DeviceData @model
-@key(fields: ["deviceID", "createdAt"]) {
+@key(name: "byDeviceID", fields: ["deviceID", "createdAt"])
+@key(name: "byDeviceAndObservationType", fields: ["deviceID", "observationType", "createdAt"]) {
   id: ID!
   deviceID: ID!
   device: Device @connection(fields: ["deviceID"])
-  location: [String]
-  heartRate: Int
+  location: LatLon
+  observationType: String
+  observationUnit: String
+  observationDescription: String
+  observationValue: String
   createdAt: String!
 }
 
 type Geofence @model {
   id: ID!
   locationName: String
-  perimeterCoordinates: [String]
+  centerpointCoordinates: LatLon
+  radius: Int
   users: [UserGeo] @connection(keyName: "byGeofence", fields: ["id"]) 
 }
 
@@ -56,24 +65,26 @@ type UserGeo @model
   geofence: Geofence! @connection(fields: ["geofenceID"])
 }
 
-type Contact @model {
-  id: ID!
+type LatLon {
+  Latitude: String!
+  Longitude: String!
+}
+
+type Contact {
   firstName: String!
   lastName: String!
-  userID: ID!
-  user: User @connection(fields: ["userID"])
   relationshipToUser: String
   phoneNumber: String
   email: String
-  address: Address @connection
+  address: Address
 }
 
 
-type Address @model {
-  id: ID!
+type Address {
   streetAddress: String
   city: String
   stateProvince: String
   country: String
   postalZip: String
 }
+

@@ -40,7 +40,7 @@ class UserRegistrationHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="12" md="12">
-                <h1 className="display-2 text-white">Register a new user!</h1>
+                <h1 className="display-2 text-white">Register a New User</h1>
               </Col>
             </Row>
           </Container>

@@ -7,23 +7,18 @@ export const getUser = /* GraphQL */ `
       id
       firstName
       lastName
-      profileURL
       profileImageURL
       room
       age
-      deviceID
       device {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -31,9 +26,7 @@ export const getUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
@@ -54,42 +47,39 @@ export const getUser = /* GraphQL */ `
       phoneNumber
       email
       emergencyContacts {
-        items {
-          id
-          firstName
-          lastName
-          userID
-          relationshipToUser
-          phoneNumber
-          email
-          createdAt
-          updatedAt
+        firstName
+        lastName
+        relationshipToUser
+        phoneNumber
+        email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
         }
-        nextToken
       }
       careGivers {
-        items {
-          id
-          firstName
-          lastName
-          userID
-          relationshipToUser
-          phoneNumber
-          email
-          createdAt
-          updatedAt
+        firstName
+        lastName
+        relationshipToUser
+        phoneNumber
+        email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
         }
-        nextToken
       }
       address {
-        id
         streetAddress
         city
         stateProvince
         country
         postalZip
-        createdAt
-        updatedAt
       }
       additionalNotes
       createdAt
@@ -108,17 +98,12 @@ export const listUsers = /* GraphQL */ `
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -129,20 +114,25 @@ export const listUsers = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
@@ -156,22 +146,16 @@ export const getDevice = /* GraphQL */ `
   query GetDevice($id: ID!) {
     getDevice(id: $id) {
       id
-      userID
       associatedUser {
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -182,33 +166,35 @@ export const getDevice = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
         updatedAt
       }
-      deviceSerial
       deviceStatus
-      currentLocation
       data {
         items {
           id
           deviceID
-          location
           heartRate
           createdAt
           updatedAt
@@ -229,16 +215,13 @@ export const listDevices = /* GraphQL */ `
     listDevices(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -246,9 +229,7 @@ export const listDevices = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
@@ -266,16 +247,13 @@ export const getDeviceData = /* GraphQL */ `
       deviceID
       device {
         id
-        userID
         associatedUser {
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -283,16 +261,17 @@ export const getDeviceData = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        deviceSerial
         deviceStatus
-        currentLocation
         data {
           nextToken
         }
         createdAt
         updatedAt
       }
-      location
+      location {
+        Latitude
+        Longitude
+      }
       heartRate
       createdAt
       updatedAt
@@ -321,14 +300,14 @@ export const listDeviceDatas = /* GraphQL */ `
         deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
-        location
+        location {
+          Latitude
+          Longitude
+        }
         heartRate
         createdAt
         updatedAt
@@ -342,7 +321,11 @@ export const getGeofence = /* GraphQL */ `
     getGeofence(id: $id) {
       id
       locationName
-      perimeterCoordinates
+      centerpointCoordinates {
+        Latitude
+        Longitude
+      }
+      radius
       users {
         items {
           id
@@ -368,7 +351,11 @@ export const listGeofences = /* GraphQL */ `
       items {
         id
         locationName
-        perimeterCoordinates
+        centerpointCoordinates {
+          Latitude
+          Longitude
+        }
+        radius
         users {
           nextToken
         }
@@ -389,17 +376,12 @@ export const getUserGeo = /* GraphQL */ `
         id
         firstName
         lastName
-        profileURL
         profileImageURL
         room
         age
-        deviceID
         device {
           id
-          userID
-          deviceSerial
           deviceStatus
-          currentLocation
           createdAt
           updatedAt
         }
@@ -410,20 +392,25 @@ export const getUserGeo = /* GraphQL */ `
         phoneNumber
         email
         emergencyContacts {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         careGivers {
-          nextToken
+          firstName
+          lastName
+          relationshipToUser
+          phoneNumber
+          email
         }
         address {
-          id
           streetAddress
           city
           stateProvince
           country
           postalZip
-          createdAt
-          updatedAt
         }
         additionalNotes
         createdAt
@@ -432,7 +419,11 @@ export const getUserGeo = /* GraphQL */ `
       geofence {
         id
         locationName
-        perimeterCoordinates
+        centerpointCoordinates {
+          Latitude
+          Longitude
+        }
+        radius
         users {
           nextToken
         }
@@ -459,11 +450,9 @@ export const listUserGeos = /* GraphQL */ `
           id
           firstName
           lastName
-          profileURL
           profileImageURL
           room
           age
-          deviceID
           facility
           phoneNumber
           email
@@ -474,225 +463,10 @@ export const listUserGeos = /* GraphQL */ `
         geofence {
           id
           locationName
-          perimeterCoordinates
+          radius
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getContact = /* GraphQL */ `
-  query GetContact($id: ID!) {
-    getContact(id: $id) {
-      id
-      firstName
-      lastName
-      userID
-      user {
-        id
-        firstName
-        lastName
-        profileURL
-        profileImageURL
-        room
-        age
-        deviceID
-        device {
-          id
-          userID
-          deviceSerial
-          deviceStatus
-          currentLocation
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        emergencyContacts {
-          nextToken
-        }
-        careGivers {
-          nextToken
-        }
-        address {
-          id
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-          createdAt
-          updatedAt
-        }
-        additionalNotes
-        createdAt
-        updatedAt
-      }
-      relationshipToUser
-      phoneNumber
-      email
-      address {
-        id
-        streetAddress
-        city
-        stateProvince
-        country
-        postalZip
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listContacts = /* GraphQL */ `
-  query ListContacts(
-    $filter: ModelContactFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listContacts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        firstName
-        lastName
-        userID
-        user {
-          id
-          firstName
-          lastName
-          profileURL
-          profileImageURL
-          room
-          age
-          deviceID
-          facility
-          phoneNumber
-          email
-          additionalNotes
-          createdAt
-          updatedAt
-        }
-        relationshipToUser
-        phoneNumber
-        email
-        address {
-          id
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getAddress = /* GraphQL */ `
-  query GetAddress($id: ID!) {
-    getAddress(id: $id) {
-      id
-      streetAddress
-      city
-      stateProvince
-      country
-      postalZip
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listAddresss = /* GraphQL */ `
-  query ListAddresss(
-    $filter: ModelAddressFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listAddresss(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        streetAddress
-        city
-        stateProvince
-        country
-        postalZip
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const usersByDevice = /* GraphQL */ `
-  query UsersByDevice(
-    $deviceID: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    usersByDevice(
-      deviceID: $deviceID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        firstName
-        lastName
-        profileURL
-        profileImageURL
-        room
-        age
-        deviceID
-        device {
-          id
-          userID
-          deviceSerial
-          deviceStatus
-          currentLocation
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        emergencyContacts {
-          nextToken
-        }
-        careGivers {
-          nextToken
-        }
-        address {
-          id
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-          createdAt
-          updatedAt
-        }
-        additionalNotes
         createdAt
         updatedAt
       }

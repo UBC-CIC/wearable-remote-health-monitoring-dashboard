@@ -455,7 +455,7 @@ class Profile extends React.Component {
                                 className="form-control-label"
                                 htmlFor="postalZip"
                             >
-                              Postal code
+                              Postal/Zip Code
                             </label>
                             <Input
                                 className="form-control-alternative"

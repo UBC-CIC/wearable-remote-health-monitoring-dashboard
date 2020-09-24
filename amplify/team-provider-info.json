@@ -1,15 +1,15 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-lifeguarddemo-dev-152723-authRole",
-      "UnauthRoleArn": "arn:aws:iam::311340175188:role/amplify-lifeguarddemo-dev-152723-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::311340175188:role/amplify-lifeguarddemo-dev-152723-authRole",
+      "AuthRoleName": "amplify-lifeguarddemo-dev-144941-authRole",
+      "UnauthRoleArn": "arn:aws:iam::647309382230:role/amplify-lifeguarddemo-dev-144941-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::647309382230:role/amplify-lifeguarddemo-dev-144941-authRole",
       "Region": "ca-central-1",
-      "DeploymentBucketName": "amplify-lifeguarddemo-dev-152723-deployment",
-      "UnauthRoleName": "amplify-lifeguarddemo-dev-152723-unauthRole",
-      "StackName": "amplify-lifeguarddemo-dev-152723",
-      "StackId": "arn:aws:cloudformation:ca-central-1:311340175188:stack/amplify-lifeguarddemo-dev-152723/76b80910-f6d9-11ea-a8aa-0a953dff3d1c",
-      "AmplifyAppId": "d2okqz1chmq18h"
+      "DeploymentBucketName": "amplify-lifeguarddemo-dev-144941-deployment",
+      "UnauthRoleName": "amplify-lifeguarddemo-dev-144941-unauthRole",
+      "StackName": "amplify-lifeguarddemo-dev-144941",
+      "StackId": "arn:aws:cloudformation:ca-central-1:647309382230:stack/amplify-lifeguarddemo-dev-144941/b0649a70-fde6-11ea-895b-029ddcace522",
+      "AmplifyAppId": "dmgnb1vcn8dmw"
     }
   }
 }
