@@ -4,6 +4,7 @@ type User @model {
   lastName: String!
   age: Int
   profileImageURL: String
+  profileImageS3Key: String
   room: Room @connection
   device: Device @connection
   assignedGeofencing: [UserGeo] @connection(keyName: "byUser", fields: ["id"])
@@ -17,7 +18,7 @@ type User @model {
 }
 
 type Room @model 
-@key(fields: ["roomNumber"]) {
+@key(name: "byRoomNumber", fields: ["roomNumber"]) {
   id: ID!
   roomNumber: String
   name: String
@@ -42,8 +43,8 @@ type DeviceData @model
   location: LatLon
   observationType: String
   observationUnit: String
-  observationDescription: String
   observationValue: String
+  observationDescription: String
   createdAt: String!
 }
 
@@ -87,4 +88,5 @@ type Address {
   country: String
   postalZip: String
 }
+
 

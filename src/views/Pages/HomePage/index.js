@@ -31,16 +31,22 @@ import {
   Row,
   Col
 } from "reactstrap";
+// other imports
 import UserTableItem from "../../../components/Dashboard/UserTableItem/UserTableItem";
+import {fetchUsers} from "../../../actions/userActions"
 
 
 class HomePage extends React.Component {
+
   constructor(props){
     super(props);
     this.state = {
       activeNav: 1,
     };
+    const {fetchUsers} = this.props;
+    fetchUsers();
   }
+
   toggleNavs = (e, index) => {
     e.preventDefault();
     this.setState({
@@ -115,4 +121,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps, {fetchUsers})(HomePage);

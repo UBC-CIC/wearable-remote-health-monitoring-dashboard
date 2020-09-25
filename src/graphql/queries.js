@@ -7,18 +7,33 @@ export const getUser = /* GraphQL */ `
       id
       firstName
       lastName
-      profileImageURL
-      room
       age
+      profileImageURL
+      profileImageS3Key
+      room {
+        id
+        roomNumber
+        name
+        location {
+          Latitude
+          Longitude
+        }
+        locationRadius
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       device {
         id
         associatedUser {
           id
           firstName
           lastName
-          profileImageURL
-          room
           age
+          profileImageURL
+          profileImageS3Key
           facility
           phoneNumber
           email
@@ -46,6 +61,13 @@ export const getUser = /* GraphQL */ `
       facility
       phoneNumber
       email
+      address {
+        streetAddress
+        city
+        stateProvince
+        country
+        postalZip
+      }
       emergencyContacts {
         firstName
         lastName
@@ -74,13 +96,6 @@ export const getUser = /* GraphQL */ `
           postalZip
         }
       }
-      address {
-        streetAddress
-        city
-        stateProvince
-        country
-        postalZip
-      }
       additionalNotes
       createdAt
       updatedAt
@@ -98,9 +113,17 @@ export const listUsers = /* GraphQL */ `
         id
         firstName
         lastName
-        profileImageURL
-        room
         age
+        profileImageURL
+        profileImageS3Key
+        room {
+          id
+          roomNumber
+          name
+          locationRadius
+          createdAt
+          updatedAt
+        }
         device {
           id
           deviceStatus
@@ -113,6 +136,13 @@ export const listUsers = /* GraphQL */ `
         facility
         phoneNumber
         email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
+        }
         emergencyContacts {
           firstName
           lastName
@@ -127,14 +157,66 @@ export const listUsers = /* GraphQL */ `
           phoneNumber
           email
         }
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
         additionalNotes
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getRoom = /* GraphQL */ `
+  query GetRoom($id: ID!) {
+    getRoom(id: $id) {
+      id
+      roomNumber
+      name
+      location {
+        Latitude
+        Longitude
+      }
+      locationRadius
+      users {
+        items {
+          id
+          firstName
+          lastName
+          age
+          profileImageURL
+          profileImageS3Key
+          facility
+          phoneNumber
+          email
+          additionalNotes
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRooms = /* GraphQL */ `
+  query ListRooms(
+    $filter: ModelRoomFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        roomNumber
+        name
+        location {
+          Latitude
+          Longitude
+        }
+        locationRadius
+        users {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -150,9 +232,17 @@ export const getDevice = /* GraphQL */ `
         id
         firstName
         lastName
-        profileImageURL
-        room
         age
+        profileImageURL
+        profileImageS3Key
+        room {
+          id
+          roomNumber
+          name
+          locationRadius
+          createdAt
+          updatedAt
+        }
         device {
           id
           deviceStatus
@@ -165,6 +255,13 @@ export const getDevice = /* GraphQL */ `
         facility
         phoneNumber
         email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
+        }
         emergencyContacts {
           firstName
           lastName
@@ -179,13 +276,6 @@ export const getDevice = /* GraphQL */ `
           phoneNumber
           email
         }
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
         additionalNotes
         createdAt
         updatedAt
@@ -195,7 +285,10 @@ export const getDevice = /* GraphQL */ `
         items {
           id
           deviceID
-          heartRate
+          observationType
+          observationUnit
+          observationValue
+          observationDescription
           createdAt
           updatedAt
         }
@@ -219,9 +312,9 @@ export const listDevices = /* GraphQL */ `
           id
           firstName
           lastName
-          profileImageURL
-          room
           age
+          profileImageURL
+          profileImageS3Key
           facility
           phoneNumber
           email
@@ -241,8 +334,8 @@ export const listDevices = /* GraphQL */ `
   }
 `;
 export const getDeviceData = /* GraphQL */ `
-  query GetDeviceData($deviceID: ID!, $createdAt: String!) {
-    getDeviceData(deviceID: $deviceID, createdAt: $createdAt) {
+  query GetDeviceData($id: ID!) {
+    getDeviceData(id: $id) {
       id
       deviceID
       device {
@@ -251,9 +344,9 @@ export const getDeviceData = /* GraphQL */ `
           id
           firstName
           lastName
-          profileImageURL
-          room
           age
+          profileImageURL
+          profileImageS3Key
           facility
           phoneNumber
           email
@@ -272,7 +365,10 @@ export const getDeviceData = /* GraphQL */ `
         Latitude
         Longitude
       }
-      heartRate
+      observationType
+      observationUnit
+      observationValue
+      observationDescription
       createdAt
       updatedAt
     }
@@ -280,21 +376,11 @@ export const getDeviceData = /* GraphQL */ `
 `;
 export const listDeviceDatas = /* GraphQL */ `
   query ListDeviceDatas(
-    $deviceID: ID
-    $createdAt: ModelStringKeyConditionInput
     $filter: ModelDeviceDataFilterInput
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
-    listDeviceDatas(
-      deviceID: $deviceID
-      createdAt: $createdAt
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
+    listDeviceDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         deviceID
@@ -308,7 +394,10 @@ export const listDeviceDatas = /* GraphQL */ `
           Latitude
           Longitude
         }
-        heartRate
+        observationType
+        observationUnit
+        observationValue
+        observationDescription
         createdAt
         updatedAt
       }
@@ -376,9 +465,17 @@ export const getUserGeo = /* GraphQL */ `
         id
         firstName
         lastName
-        profileImageURL
-        room
         age
+        profileImageURL
+        profileImageS3Key
+        room {
+          id
+          roomNumber
+          name
+          locationRadius
+          createdAt
+          updatedAt
+        }
         device {
           id
           deviceStatus
@@ -391,6 +488,13 @@ export const getUserGeo = /* GraphQL */ `
         facility
         phoneNumber
         email
+        address {
+          streetAddress
+          city
+          stateProvince
+          country
+          postalZip
+        }
         emergencyContacts {
           firstName
           lastName
@@ -404,13 +508,6 @@ export const getUserGeo = /* GraphQL */ `
           relationshipToUser
           phoneNumber
           email
-        }
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
         }
         additionalNotes
         createdAt
@@ -450,9 +547,9 @@ export const listUserGeos = /* GraphQL */ `
           id
           firstName
           lastName
-          profileImageURL
-          room
           age
+          profileImageURL
+          profileImageS3Key
           facility
           phoneNumber
           email

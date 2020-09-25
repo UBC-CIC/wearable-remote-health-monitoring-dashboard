@@ -3,10 +3,30 @@ import { createUser} from '../graphql/mutations';
 import { listUsers} from '../graphql/queries';
 
 
+export const fetchUsers = () => {
+    return (dispatch) => {
+        dispatch(fetchUsersRequest());
+        API.graphql(graphqlOperation(listUsers)).then((response) => {
+            console.log("userData: ", response);
+            const users = response.data.listUsers.items;
+            console.log("users fetched: ", users);
+            dispatch(fetchUsersSuccess(users));
+        }).catch((err) => {
+            console.log("Error fetching users: ", err);
+        })
+    }
+}
 
-export const getUsers = () => {
+export const fetchUsersRequest = () => {
     return {
-        type: "GET_USERS",
+        type: "FETCH_USERS_REQUEST",
+    }
+}
+
+export const fetchUsersSuccess = (payload) => {
+    return {
+        type: "FETCH_USERS_SUCCESS",
+        payload: payload
     }
 }
 
