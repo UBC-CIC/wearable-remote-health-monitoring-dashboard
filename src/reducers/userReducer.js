@@ -1,4 +1,4 @@
-const initialUsers = [
+/*const initialUsers = [
     {id: "12345", firstName: "John", lastName: "Smith", age: 75, device: {id: "4etr32"},
         assignedGeofencing: [{id: "1234", locationName: "bedroom", perimeterCoordinates:[]}],
         profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileURL: "12345", status: {code: 1, description: "DEVICE DISCONNECTED"},
@@ -23,7 +23,10 @@ const initialUsers = [
         vitals: {id: "127", heartRate: 160}, facility: "Vancouver Care Center", room: "208a", phoneNumber: "888-888-8888", email: "example@example.com",
         emergencyContacts: [], careGivers: [],
         address: {id: "4et7", streetAddress: "555 CIC Street", city: "Vancouver", stateProvince: "BC", country: "Canada", postalZip: "V5Z 3E8"}, additionalNotes: ""},
-];
+];*/
+
+const initialUsers = [];
+
 
 // delete user from local state
 const deleteUserHelper = (users, payload) => {
@@ -80,6 +83,9 @@ const removeDeviceHelper = (users, target) => {
 const userReducer = (users = initialUsers, action) => {
     let newUsers = [...users];
     switch (action.type) {
+        case "FETCH_USERS_SUCCESS": {
+            return action.payload;
+        }
         case "REGISTER_NEW_USER": {
             return newUsers.concat(action.payload);
         }

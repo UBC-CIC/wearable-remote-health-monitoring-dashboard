@@ -6,12 +6,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import reducers from "./reducers";
 import "./assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/scss/argon-dashboard-react.scss";
-import HomePage from "./views/PageContainer";
 import Amplify from "aws-amplify";
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
@@ -24,10 +23,7 @@ const store = createStore(
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <Switch>
-                <Route path={"/"} render={props => <HomePage {...props}/>} />
-            </Switch>
-            {/* <App /> */}
+            <App />
         </BrowserRouter>
     </Provider>,
     document.getElementById("root")

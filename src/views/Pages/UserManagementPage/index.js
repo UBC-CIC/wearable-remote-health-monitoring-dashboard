@@ -41,7 +41,7 @@ class UserManagement extends React.Component {
               name={user.firstName + " " + user.lastName}
               profileImg={user.profileImageURL}
               id={user.id}
-              room={user.room}
+              room={user.room.roomNumber}
               device={user.device}
               profileURL={user.profileURL}
           />

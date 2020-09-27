@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import { connect } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -24,9 +25,13 @@ import AdminNavbar from "../../components/Navbars/AdminNavbar.js";
 import AdminFooter from "../../components/Footers/AdminFooter.js";
 import Sidebar from "../../components/Sidebar/Sidebar.js";
 
+
+
 import routes from "../../routes.js";
 
 class PageContainer extends React.Component {
+
+
     componentDidUpdate(e) {
         document.documentElement.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
@@ -60,8 +65,9 @@ class PageContainer extends React.Component {
         return "Brand";
     };
     render() {
+        let rts = this.getRoutes(routes);
         return (
-            <>
+            <div>
                 <Sidebar
                     {...this.props}
                     routes={routes}
@@ -77,16 +83,23 @@ class PageContainer extends React.Component {
                         brandText={this.getBrandText(this.props.location.pathname)}
                     />
                     <Switch>
-                        {this.getRoutes(routes)}
+                        {rts}
                         <Redirect from="*" to="/admin/index" />
                     </Switch>
                     <Container fluid>
                         <AdminFooter />
                     </Container>
                 </div>
-            </>
+            </div>
         );
     }
 }
 
-export default PageContainer;
+const mapStateToProps = (state) => {
+    return {
+        users: state.users,
+        isLoading: state.applicationStatus.startupLoading,
+    };
+};
+
+export default connect(mapStateToProps)(PageContainer);

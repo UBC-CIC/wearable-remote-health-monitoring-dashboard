@@ -72,7 +72,7 @@ class UserManagementTableItem extends React.Component {
                 </td>
                 <td>{id}</td>
                 <td>{room}</td>
-                <td>{(Object.keys(device).length === 0)? "NONE" : device.id}</td>
+                <td>{(device === null)? "NONE" : device.id}</td>
                 <td className="text-right">
                     <UncontrolledDropdown>
                         <DropdownToggle

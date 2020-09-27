@@ -16,7 +16,7 @@ class UserTableItem extends React.Component {
     render() {
         const {name, profileImg, id, status, heartRate } = this.props;
         let statusClass = "bg-success";
-        switch (status.code) {
+        /*switch (status.code) {
             case -1:{
                 statusClass = "bg-warning"
                 break;
@@ -39,7 +39,7 @@ class UserTableItem extends React.Component {
             }
             default:
                 break;
-        }
+        }*/
         return (
             <tr>
                 <th scope="row">
@@ -71,11 +71,10 @@ class UserTableItem extends React.Component {
                         </UncontrolledTooltip>
                     </div>
                 </td>
-                <td>{id}</td>
                 <td>
                     <Badge color="" className="badge-dot mr-4">
                         <i className={statusClass} />
-                        {status.description}
+                        {/*status.description*/} Not yet implemented
                     </Badge>
                 </td>
                 <td>

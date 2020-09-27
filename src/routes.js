@@ -23,6 +23,7 @@ import Index from "./views/Pages/DeviceManagementPage";
 import Maps from "./views/examples/Maps.js";
 import ManageGeofence from "./views/examples/ManageGeofence.js";
 import UserManagement from "./views/Pages/UserManagementPage/";
+import LoadingPage from "./views/Pages/LoadingPage";
 
 
 let routes = [
@@ -89,6 +90,14 @@ let routes = [
     component: Login,
     layout: "/admin",
     exposed: true
+  },
+  {
+    path: "/loading",
+    name: "Loading",
+    icon: "ni ni-key-25 text-info",
+    component: LoadingPage,
+    layout: "/admin",
+    exposed: false
   }
 ];
 export default routes;

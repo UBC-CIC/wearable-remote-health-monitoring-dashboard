@@ -33,7 +33,6 @@ import {
 } from "reactstrap";
 // other imports
 import UserTableItem from "../../../components/Dashboard/UserTableItem/UserTableItem";
-import {fetchUsers} from "../../../actions/userActions"
 
 
 class HomePage extends React.Component {
@@ -43,8 +42,6 @@ class HomePage extends React.Component {
     this.state = {
       activeNav: 1,
     };
-    const {fetchUsers} = this.props;
-    fetchUsers();
   }
 
   toggleNavs = (e, index) => {
@@ -65,7 +62,7 @@ class HomePage extends React.Component {
               id={user.id}
               status={user.status}
               device={user.device}
-              heartRate={user.vitals.heartRate}
+              heartRate={0}
               profileURL={user.profileURL}
               emergencyContacts={user.emergencyContacts}
           />
@@ -95,7 +92,6 @@ class HomePage extends React.Component {
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Image</th>
-                    <th scope="col">ID</th>
                     <th scope="col">Status</th>
                     <th scope="col">Heart Rate (BPM)</th>
                     <th scope="col">Actions</th>
@@ -121,4 +117,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {fetchUsers})(HomePage);
+export default connect(mapStateToProps)(HomePage);
