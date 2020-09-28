@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import { Spinner } from 'reactstrap';
+import {CircularProgress} from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import "./LoadingPage.css";
 
 
 class LoadingPage extends React.Component {
@@ -14,21 +15,20 @@ class LoadingPage extends React.Component {
             history.push("/admin/index");
         }
         return(
-            <div>
-                <div className={"row"}>
-                    <div className={"col d-flex justify-content-center"}>
-                        Application is Loading...
+            <div className={"container"}>
+                <div className={"row loadRow-1"}>
+                    <div className={"col d-flex justify-content-center align-items-end"}>
+                        <h1 className={"display-3"}>Application is Loading...</h1>
                     </div>
                 </div>
-                <div className={"row"}>
-                    <div className={"col d-flex justify-content-center"}>
-                        <Spinner color="info" />
+                <div className={"row loadRow-2"}>
+                    <div className={"col d-flex justify-content-center align-items-center"}>
+                        <CircularProgress />
                     </div>
                 </div>
             </div>
         )
     }
-
 }
 
 const mapStateToProps = (state) => {
@@ -37,4 +37,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, null)(LoadingPage));
+export default withRouter(connect(mapStateToProps)(LoadingPage));

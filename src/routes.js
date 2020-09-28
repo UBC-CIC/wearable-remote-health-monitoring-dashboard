@@ -19,7 +19,7 @@ import HomePage from "./views/Pages/HomePage/";
 import Profile from "./views/Pages/ProfilePage";
 import Login from "./views/examples/Login.js";
 import RegisterUser from "./views/Pages/UserRegistrationPage/";
-import Index from "./views/Pages/DeviceManagementPage";
+import DeviceManager from "./views/Pages/DeviceManagementPage";
 import Maps from "./views/examples/Maps.js";
 import ManageGeofence from "./views/examples/ManageGeofence.js";
 import UserManagement from "./views/Pages/UserManagementPage/";
@@ -63,7 +63,7 @@ let routes = [
     path: "/manage-devices",
     name: "Manage Devices",
     icon: "ni ni-watch-time text-red",
-    component: Index,
+    component: DeviceManager,
     layout: "/admin",
     exposed: true
   },

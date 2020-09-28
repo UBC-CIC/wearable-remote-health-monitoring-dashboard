@@ -7,26 +7,27 @@ import LoadingPage from "./views/Pages/LoadingPage";
 
 // actions
 import {fetchUsers} from "./actions/userActions";
+import {fetchRooms} from "./actions/roomActions";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    const {fetchUsers} = this.props;
+    const {fetchUsers, fetchRooms} = this.props;
     fetchUsers();
+    fetchRooms();
   }
 
   render() {
     const {isLoading} = this.props;
     if (isLoading) {
-        return(<div>
+        return(<div className={"container"}>
           <LoadingPage />
         </div>)
     } else {
       return (
           <div>
             <Switch>
-              <Route path={"/admin/loading"} component={<LoadingPage/>}/>
               <Route path={"/"} render={props => <PageContainer {...props}/>}/>
             </Switch>
           </div>
@@ -43,4 +44,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {fetchUsers})(App);
+export default connect(mapStateToProps, {fetchUsers, fetchRooms})(App);

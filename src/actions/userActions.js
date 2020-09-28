@@ -8,9 +8,7 @@ export const fetchUsers = () => {
     return (dispatch) => {
         dispatch({ type: "FETCH_USERS_REQUEST" });
         API.graphql(graphqlOperation(listUsers)).then((response) => {
-            console.log("userData: ", response);
             const users = response.data.listUsers.items;
-            console.log("users fetched: ", users);
             dispatch(fetchUsersSuccess(users));
         }).catch((err) => {
             console.log("Error fetching users: ", err);
@@ -20,10 +18,10 @@ export const fetchUsers = () => {
 }
 
 // NOT YET IMPLEMENTED: respond to failure condition
-export const fetchUsersFailure = (payload) => {
+export const fetchUsersFailure = (error) => {
     return {
         type: "FETCH_USERS_FAILURE",
-        payload: payload
+        payload: error
     }
 }
 
@@ -36,14 +34,39 @@ export const fetchUsersSuccess = (payload) => {
 }
 // =================================================================================================
 
+// ===============================---ADDING NEW USER---=============================================
 
-// Saves newly registered user to local store
+// add new user locally and upload to DynamoDB, sets loading flag
 export const registerNewUser = (payload) => {
-    return {
-        type: "REGISTER_NEW_USER",
-        payload: payload
+    return (dispatch) => {
+        dispatch({ type: "ADD_NEW_USER_REQUEST", payload: payload });
+        API.graphql(graphqlOperation(createUser, {input: payload})).then((response) => {
+            console.log("response", response);
+            dispatch(addNewUserSuccess());
+        }).catch((err) => {
+            console.log("Error registering new user: ", err);
+            dispatch(registerNewUserFailure(err));
+        })
     }
 }
+
+// NOT YET IMPLEMENTED: respond to failure condition
+export const registerNewUserFailure = (error) => {
+    return {
+        type: "ADD_NEW_USER_FAILURE",
+        payload: error
+    }
+}
+
+// Removes loading flag
+export const addNewUserSuccess = () => {
+    return {
+        type: "ADD_NEW_USER_REQUEST",
+    }
+}
+
+
+// =================================================================================================
 
 // Updates user information
 export const updateUserInformation = (payload) => {

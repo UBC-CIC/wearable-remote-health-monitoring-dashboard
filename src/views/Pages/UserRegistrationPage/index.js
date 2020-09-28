@@ -48,6 +48,7 @@ class RegisterUser extends React.Component {
       age: 0,
       facility: "",
       room: "",
+      availableRooms: [],
       phoneNumber: "",
       email: "",
       streetAddress: "",
@@ -58,6 +59,27 @@ class RegisterUser extends React.Component {
       additionalNotes: "",
       emergencyContacts: [],
       careGivers: [],
+    }
+  }
+
+  componentDidMount() {
+    this.populateFormFields();
+  }
+
+  //  check for available rooms, populate rooms field
+  populateFormFields = () => {
+    const {rooms} = this.props;
+    let availableRooms = [...rooms];
+
+    // save the available rooms to the local state
+    this.setState({
+      availableRooms: availableRooms,
+    });
+    // set default value for select input (handleChange isn't triggered if first option is selected)
+    if (availableRooms.length >= 1) {
+      this.setState({
+        room: availableRooms[0].id,
+      });
     }
   }
 
@@ -75,14 +97,13 @@ class RegisterUser extends React.Component {
     const {registerNewUser: registerUser, history} = this.props;
     let newUserID = uuidv4();
     let newUser = {
-      id: newUserID, firstName: firstName, lastName: lastName, age: age, profileURL: newUserID,
-      facility: facility, room: room, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
-        city: city, stateProvince: stateProvince, country: country, postalZip: postalZip}, device: {},
-      assignedGeofencing: [], profileImageURL: "https://i.imgur.com/6HAYO4e.png", status: {code: 1, description: "DEVICE NOT CONNECTED"},
-      vitals: {}, additionalNotes: additionalNotes, emergencyContacts: emergencyContacts, careGivers: careGivers
+      id: newUserID, firstName: firstName, lastName: lastName, age: age,
+      facility: facility, userRoomId: room, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
+        city: city, stateProvince: stateProvince, country: country, postalZip: postalZip},
+      profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileImageS3Key: "", additionalNotes: additionalNotes, emergencyContacts: emergencyContacts, careGivers: careGivers
     }
 
-    // submit new user info for registration and local state storage in redux
+    // submit new user info for registration and local state storage in redux and in DynamoDB
     registerUser(newUser);
     // return to user management page after submit
     history.push("/admin/manage-users");
@@ -90,8 +111,14 @@ class RegisterUser extends React.Component {
 
 
   render() {
+    const {rooms} = this.props;
+    let roomsList = rooms.map(room => {
+      return(
+          <option key={room.id} value={room.id}>{room.roomNumber}</option>
+      )
+    });
     return (
-      <>
+      <div>
         <UserRegistrationHeader />
         {/* Page content */}
         <Container className="mt--7" fluid>
@@ -198,10 +225,13 @@ class RegisterUser extends React.Component {
                             <Input
                                 className="form-control-alternative"
                                 id="room"
-                                placeholder="100a"
+                                type="select"
                                 onChange={this.handleChange}
-                                type="text"
-                            />
+                                required={true}
+                            >
+                              <option disabled>Room</option>
+                              {roomsList}
+                            </Input>
                           </FormGroup>
                         </Col>
                       </Row>
@@ -372,7 +402,7 @@ class RegisterUser extends React.Component {
             </Col>
           </Row>
         </Container>
-      </>
+      </div>
     );
   }
 }
@@ -380,6 +410,7 @@ class RegisterUser extends React.Component {
 const mapStateToProps = (state) => {
   return {
     users: state.users,
+    rooms: state.rooms,
   };
 };
 
