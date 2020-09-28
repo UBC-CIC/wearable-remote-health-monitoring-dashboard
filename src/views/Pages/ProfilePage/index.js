@@ -43,7 +43,6 @@ class Profile extends React.Component {
     super(props);
     const {location} = this.props;
     let userID = location.pathname.replace(/.admin.user-profile./, "");
-    console.log("userProfile found: ", userID);
     let userProfile = this.findUser(userID);
     this.state = {
         firstName: userProfile.firstName,

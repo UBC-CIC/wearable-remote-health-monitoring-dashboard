@@ -32,34 +32,17 @@ import DeviceTableItem from "../../../components/DeviceManagement/DeviceTableIte
 
 class DeviceManager extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      unpairDeviceModalShow: false,
-    }
-  }
-
-  // Triggers the opening/closing of the unpairDeviceModal
-  setUnpairDeviceModalShow = (bool) => {
-    this.setState({
-      unpairDeviceModalShow: bool,
-    });
-  };
-
 
   render() {
     const {devices} = this.props;
-    const { unpairDeviceModalShow } = this.state;
     // map our list of devices to the device table
     const deviceList = devices.map((device) => {
       return(
           <DeviceTableItem
               key={device.id}
-              id={device.id}
-              devicePaired={device.devicePaired}
-              deviceStatus={device.deviceStatus}
-              associatedUserName={device.associatedUserName}
-              associatedUserID={device.associatedUserID}
+              device={device}
+              associatedUserName={(!device.associatedUser)? "NONE" : device.associatedUser.firstName + " " + device.associatedUser.lastName}
+              associatedUserID={(!device.associatedUser)? "NONE" : device.associatedUser.id}
           />
       )
     })
@@ -72,7 +55,7 @@ class DeviceManager extends React.Component {
             <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">All Registered Devices</h3>
+                  <h3 className="mb-0">All Devices</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">

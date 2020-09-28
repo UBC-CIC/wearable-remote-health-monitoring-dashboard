@@ -6,6 +6,7 @@ import {
     UncontrolledDropdown,
 } from "reactstrap";
 import UnpairDeviceModal from "../UnpairDeviceModal/UnpairDeviceModal";
+import PairDeviceModal from "../PairDeviceModal/PairDeviceModal";
 
 
 class DeviceTableItem extends React.Component {
@@ -14,6 +15,17 @@ class DeviceTableItem extends React.Component {
         super(props);
         this.state = {
             unpairDeviceModalShow: false,
+            pairDeviceModalShow: false,
+            userAssociated: false,
+        }
+    }
+
+    componentDidMount() {
+        const {associatedUserID} = this.props;
+        if (associatedUserID !== "NONE") {
+            this.setState({
+                userAssociated: true,
+            })
         }
     }
 
@@ -24,16 +36,23 @@ class DeviceTableItem extends React.Component {
         });
     };
 
+    // Triggers the opening/closing of the pairDeviceModal
+    setPairDeviceModalShow = (bool) => {
+        this.setState({
+            pairDeviceModalShow: bool,
+        });
+    };
+
 
     render() {
-        const {id, deviceStatus, associatedUserID, associatedUserName} = this.props;
-        const {unpairDeviceModalShow} = this.state;
+        const {device, associatedUserID, associatedUserName} = this.props;
+        const {unpairDeviceModalShow, pairDeviceModalShow, userAssociated} = this.state;
         return(
             <tr>
                 <th scope="row">
-                    {id}
+                    {device.id}
                 </th>
-                <td>{deviceStatus}</td>
+                <td>{(device.deviceStatus === null)? "N/A" : device.deviceStatus}</td>
                 <td>{associatedUserName + ": " + associatedUserID}</td>
                 <td className="text-right">
                     <UncontrolledDropdown>
@@ -48,15 +67,25 @@ class DeviceTableItem extends React.Component {
                             <i className="fas fa-ellipsis-v" />
                         </DropdownToggle>
                         <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem
+                            {(userAssociated)?
+                                <DropdownItem
                                 href=""
                                 onClick={() => this.setUnpairDeviceModalShow(true)}
                             >
                                 Unpair Device
                             </DropdownItem>
+                                :
+                                <DropdownItem
+                                    href=""
+                                    onClick={() => this.setPairDeviceModalShow(true)}
+                                >
+                                    Pair Device
+                                </DropdownItem>
+                            }
                         </DropdownMenu>
                     </UncontrolledDropdown>
-                    <UnpairDeviceModal show={unpairDeviceModalShow} deviceID={id} userName={associatedUserName} userID={associatedUserID} onHide={() => this.setUnpairDeviceModalShow(false)} />
+                    <PairDeviceModal show={pairDeviceModalShow} device={device} onHide={() => this.setPairDeviceModalShow(false)} />
+                    <UnpairDeviceModal show={unpairDeviceModalShow} deviceID={device.id} userName={associatedUserName} userID={associatedUserID} onHide={() => this.setUnpairDeviceModalShow(false)} />
                 </td>
             </tr>
         )

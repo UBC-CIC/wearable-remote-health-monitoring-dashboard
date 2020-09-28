@@ -229,7 +229,7 @@ class RegisterUser extends React.Component {
                                 onChange={this.handleChange}
                                 required={true}
                             >
-                              <option disabled>Room</option>
+                              <option disabled>Room Number</option>
                               {roomsList}
                             </Input>
                           </FormGroup>

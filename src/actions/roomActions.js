@@ -1,7 +1,7 @@
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { listRooms } from '../graphql/queries';
 
-// =============================---FETCHING ROOMS---=============================================
+// ===================================---FETCHING ROOMS---=======================================
 // Fetch rooms from AWS, set loading flag
 export const fetchRooms = () => {
     return (dispatch) => {
@@ -24,7 +24,7 @@ export const fetchRoomsFailure = (error) => {
     }
 }
 
-// Success condition, update local state with fetched room data, remove loading flag
+// Success condition, update local state with fetched room data
 export const fetchRoomsSuccess = (payload) => {
     return {
         type: "FETCH_ROOMS_SUCCESS",

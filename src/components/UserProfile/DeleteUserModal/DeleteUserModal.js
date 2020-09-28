@@ -1,7 +1,7 @@
 import * as React from "react";
 import Modal from "react-bootstrap/Modal";
 import {Button, Input} from "reactstrap";
-import {deleteUser} from "../../../actions/userActions"
+import {deleteUserRequest} from "../../../actions/userActions"
 import { connect } from "react-redux";
 import {withRouter} from "react-router-dom";
 
@@ -40,8 +40,8 @@ class DeleteUserModal extends React.Component {
     }
 
     onProceed = () => {
-        const {deleteUser, userID, history} = this.props;
-        deleteUser(userID);
+        const {deleteUserRequest, userID, history} = this.props;
+        deleteUserRequest(userID);
         // redirect to user management page after deleting user
         let path = '/admin/manage-users';
         history.push(path);
@@ -119,7 +119,7 @@ class DeleteUserModal extends React.Component {
 }
 
 const mapDispatchToProps = {
-    deleteUser,
+    deleteUserRequest,
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(DeleteUserModal));

@@ -57,14 +57,12 @@ const updateUserHelper = (users, profile) => {
 }
 
 // associate a device with a user
-const deviceAssociationHelper = (users, device) => {
+const deviceAssociationHelper = (users, payload) => {
     users.forEach(user => {
-        if (user.id === device.associatedUserID) {
-            user.device = device;
-            user.status = {code: 0, description: "NORMAL"};
+        if (user.id === payload.device.id) {
+            user.device = payload.device;
         }
     })
-
     return users;
 }
 
@@ -95,7 +93,7 @@ const userReducer = (users = initialUsers, action) => {
         case "DELETE_USER": {
             return deleteUserHelper(newUsers, action.payload);
         }
-        case "REGISTER_NEW_DEVICE": {
+        case "ASSOCIATE_NEW_DEVICE": {
             return deviceAssociationHelper(newUsers, action.payload);
         }
         case "UNPAIR_DEVICE": {

@@ -1,8 +1,8 @@
-import Amplify, { API, graphqlOperation } from 'aws-amplify';
-import { createUser} from '../graphql/mutations';
+import { API, graphqlOperation } from 'aws-amplify';
+import { createUser, deleteUser} from '../graphql/mutations';
 import { listUsers} from '../graphql/queries';
 
-// =============================---FETCHING USERS---=============================================
+// ===================================---FETCHING USERS---=======================================
 // Fetch users from AWS, set loading flag
 export const fetchUsers = () => {
     return (dispatch) => {
@@ -32,16 +32,14 @@ export const fetchUsersSuccess = (payload) => {
         payload: payload
     }
 }
-// =================================================================================================
 
-// ===============================---ADDING NEW USER---=============================================
+// =====================================---ADDING NEW USER---=======================================
 
 // add new user locally and upload to DynamoDB, sets loading flag
 export const registerNewUser = (payload) => {
     return (dispatch) => {
         dispatch({ type: "ADD_NEW_USER_REQUEST", payload: payload });
         API.graphql(graphqlOperation(createUser, {input: payload})).then((response) => {
-            console.log("response", response);
             dispatch(addNewUserSuccess());
         }).catch((err) => {
             console.log("Error registering new user: ", err);
@@ -61,7 +59,7 @@ export const registerNewUserFailure = (error) => {
 // Removes loading flag
 export const addNewUserSuccess = () => {
     return {
-        type: "ADD_NEW_USER_REQUEST",
+        type: "ADD_NEW_USER_SUCCESS",
     }
 }
 
@@ -75,20 +73,35 @@ export const updateUserInformation = (payload) => {
         payload: payload
     }
 }
+// =====================================---DELETING A USER---=======================================
 
-// Delete user
-export const deleteUser = (payload) => {
-    return {
-        type: "DELETE_USER",
-        payload: payload
+// Delete user locally, and from DynamoDB. Also delete user profile image from S3 [future addition]
+export const deleteUserRequest = (payload) => {
+    return (dispatch) => {
+        dispatch({ type: "DELETE_USER", payload: payload});
+        API.graphql(graphqlOperation(deleteUser, {input: {id: payload}})).then((response) => {
+            dispatch(deleteUserSuccess());
+        }).catch((err) => {
+            console.log("Error deleting user: ", err);
+            dispatch(deleteUserFailure(err));
+        })
     }
 }
 
-/*
-// Fetch user profile based on given user ID
-export const fetchUserProfile = (payload) => {
+// NOT YET IMPLEMENTED: respond to failure condition
+export const deleteUserFailure = (error) => {
     return {
-        type: "FETCH_USER_PROFILE",
-        payload: payload
+        type: "DELETE_USER_FAILURE",
+        payload: error
     }
-}*/
+}
+
+// NOT YET IMPLEMENTED: creates a successful deletion notification
+export const deleteUserSuccess = () => {
+    return {
+        type: "DELETE_USER_SUCCESS",
+    }
+}
+
+// =================================================================================================
+

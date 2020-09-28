@@ -2,20 +2,17 @@ import * as React from "react";
 import Modal from "react-bootstrap/Modal";
 import {Button, FormGroup, Input} from "reactstrap";
 import { connect } from "react-redux";
-import { registerNewDevice } from "../../../actions/deviceActions";
+import { associateDeviceWithUser } from "../../../actions/deviceActions";
 
 
 
-class RegisterDeviceModal extends React.Component {
+class PairDeviceModal extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            deviceID: "",
-            deviceIDUnique: false,
             availableUsers: [],
             selectedUser: {},
-            defaultUser: "",
         }
     }
 
@@ -40,7 +37,7 @@ class RegisterDeviceModal extends React.Component {
         // set default value for select input (handleChange isn't triggered if first option is selected)
         if (availableUsers.length >= 1) {
             this.setState({
-                selectedUserID: availableUsers[0].id,
+                selectedUser: availableUsers[0],
             });
         }
     }
@@ -52,33 +49,16 @@ class RegisterDeviceModal extends React.Component {
         this.setState({
             [e.target.id]: e.target.value,
         })
-        if(e.target.id === "deviceID") {
-            let isUnique = this.deviceUnique(e.target.value);
-            this.setState({
-                deviceIDUnique: isUnique,
-            })
-        }
     }
 
-    // checks that the given device ID is unique
-    deviceUnique = (id) => {
-        const { devices } = this.props;
-        let isUnique = true;
-        devices.forEach(device => {
-            if (device.id === id) {
-                isUnique = false;
-            }
-        });
-        return isUnique;
-    }
 
-    // handles adding the new device
-    onAdd = (e) => {
+
+    // handles pairing the device
+    onPair = (e) => {
         e.preventDefault();
-        const {registerNewDevice, onHide} = this.props;
-        const {deviceID, selectedUser } = this.state;
-        let newDevice = {id: deviceID, deviceStatus: "Inactive"};
-        registerNewDevice(newDevice);
+        const {associateDeviceWithUser, device, onHide} = this.props;
+        const {selectedUser} = this.state;
+        associateDeviceWithUser({device: device, user: selectedUser});
         onHide();
     }
 
@@ -91,8 +71,8 @@ class RegisterDeviceModal extends React.Component {
 
 
     render() {
-        const { show, onHide } = this.props;
-        const { deviceIDUnique, availableUsers } = this.state;
+        const { show, onHide, device } = this.props;
+        const { selectedUser, availableUsers } = this.state;
 
         let userOptions = availableUsers.map(user => {
             return(
@@ -113,33 +93,19 @@ class RegisterDeviceModal extends React.Component {
                         <Modal.Title id="contained-modal-title-vcenter">
                             <div className="row">
                                 <div className="col d-flex justify-content-center align-items-center">
-                                    Add New Device
+                                    Pair Device
                                 </div>
                             </div>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div className={"row"}>
-                            <div className={"col-6 d-flex justify-content-center"}>
-                                    <FormGroup>
-                                    <label
-                                        className="form-control-label"
-                                        htmlFor="deviceID"
-                                    >
-                                        <span>Unique Device ID{(!deviceIDUnique)?
-                                            <i className={"far fa-times-circle"} style={{color: "red"}} /> :
-                                            <i className={"far fa-check-circle"} style={{color: "green"}} />}</span>
-                                    </label>
-                                    <Input
-                                        className="form-control-alternative"
-                                        id="deviceID"
-                                        type="text"
-                                        onChange={this.handleChange}
-                                        required={true}
-                                    />
-                                </FormGroup>
+                            <div className={"col d-flex justify-content-center text-center"}>
+                                <h4>Select a user to pair with device {device.id}.</h4>
                             </div>
-                            <div className={"col-6 d-flex justify-content-center"}>
+                        </div>
+                        <div className={"row"}>
+                            <div className={"col d-flex justify-content-center"}>
                                 <FormGroup>
                                     <label
                                         className="form-control-label"
@@ -174,10 +140,10 @@ class RegisterDeviceModal extends React.Component {
                             <div className={"col-6 d-flex justify-content-center"}>
                                 <Button
                                     color="danger"
-                                    onClick={this.onAdd}
-                                    disabled={!deviceIDUnique}
+                                    onClick={this.onPair}
+                                    disabled={Object.keys(selectedUser).length === 0}
                                 >
-                                    Add Device
+                                    Pair Device
                                 </Button>
                             </div>
                         </div>
@@ -190,7 +156,7 @@ class RegisterDeviceModal extends React.Component {
 }
 
 const mapDispatchToProps = {
-    registerNewDevice,
+    associateDeviceWithUser,
 };
 
 const mapStateToProps = (state) => {
@@ -200,4 +166,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterDeviceModal);
+export default connect(mapStateToProps, mapDispatchToProps)(PairDeviceModal);

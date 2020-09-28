@@ -1,7 +1,5 @@
 import React from "react";
-import {connect} from "react-redux";
 import {CircularProgress} from "@material-ui/core";
-import { withRouter } from "react-router-dom";
 import "./LoadingPage.css";
 
 
@@ -9,11 +7,6 @@ class LoadingPage extends React.Component {
 
 
     render() {
-        const {isLoading} = this.props;
-        if (!isLoading) {
-            const {history} = this.props;
-            history.push("/admin/index");
-        }
         return(
             <div className={"container"}>
                 <div className={"row loadRow-1"}>
@@ -31,10 +24,5 @@ class LoadingPage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        isLoading: state.applicationStatus.startupLoading,
-    };
-};
 
-export default withRouter(connect(mapStateToProps)(LoadingPage));
+export default LoadingPage;

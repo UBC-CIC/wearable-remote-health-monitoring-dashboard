@@ -1,32 +1,19 @@
 
-const initialDevices = [
-    {
-        id: "4etr32",
-        deviceStatus: "Inactive",
-        associatedUserName: "John Smith",
-        associatedUserID: "12345"
-    },
-    {
-        id: "4etr35",
-        deviceStatus: "Active",
-        associatedUserName: "Jane Doe",
-        associatedUserID: "58943"
-    },
-    {
-        id: "5etr64",
-        deviceStatus: "Active",
-        associatedUserName: "Jessica Johnson",
-        associatedUserID: "10851"
-    },
-    {
-        id: "6etr78",
-        deviceStatus: "Active",
-        associatedUserName: "Philip Westinghouse",
-        associatedUserID: "35836"
-    },
-];
+const initialDevices = [];
 
-const removeDeviceHelper = (devices, target) => {
+
+const pairDeviceHelper = (devices, payload) => {
+    devices.forEach(device => {
+        if (device.id === payload.deviceID) {
+            device.associatedUser = payload.user;
+        }
+    })
+
+    return devices;
+}
+
+
+const deleteDeviceHelper = (devices, target) => {
     const index = devices.findIndex(device =>
         device.id === target.deviceID
     );
@@ -41,11 +28,20 @@ const removeDeviceHelper = (devices, target) => {
 const deviceReducer = (devices = initialDevices, action) => {
     let newDeviceList = [...devices];
     switch (action.type) {
+        case "FETCH_DEVICES_SUCCESS": {
+            return action.payload;
+        }
         case "REGISTER_NEW_DEVICE": {
             return [...devices, action.payload];
         }
+        case "ASSOCIATE_NEW_DEVICE": {
+            return pairDeviceHelper(newDeviceList, action.payload);
+        }
+        case "DELETE_DEVICE": {
+            return deleteDeviceHelper(newDeviceList, action.payload);
+        }
         case "UNPAIR_DEVICE": {
-            return removeDeviceHelper(newDeviceList, action.payload);
+            return newDeviceList;
         }
         default:
             return newDeviceList;
