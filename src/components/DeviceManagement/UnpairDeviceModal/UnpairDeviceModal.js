@@ -2,7 +2,7 @@ import * as React from "react";
 import Modal from "react-bootstrap/Modal";
 import {Button } from "reactstrap";
 import { connect } from "react-redux";
-import { unpairDevice } from "../../../actions/deviceActions";
+import { disassociateDeviceWithUser } from "../../../actions/deviceActions";
 
 
 class UnpairDeviceModal extends React.Component{
@@ -11,9 +11,9 @@ class UnpairDeviceModal extends React.Component{
     // handles unpairing the device
     onRemove = (e) => {
         e.preventDefault();
-        const {onHide, userID, deviceID, unpairDevice} = this.props;
+        const {onHide, userID, deviceID, disassociateDeviceWithUser} = this.props;
         let payload = {deviceID: deviceID, userID: userID};
-        unpairDevice(payload);
+        disassociateDeviceWithUser(payload);
         onHide();
     }
 
@@ -80,7 +80,7 @@ class UnpairDeviceModal extends React.Component{
 }
 
 const mapDispatchToProps = {
-    unpairDevice,
+    disassociateDeviceWithUser,
 };
 
 export default connect(null, mapDispatchToProps)(UnpairDeviceModal);

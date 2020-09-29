@@ -4,8 +4,18 @@ const initialDevices = [];
 
 const pairDeviceHelper = (devices, payload) => {
     devices.forEach(device => {
-        if (device.id === payload.deviceID) {
+        if (device.id === payload.device.id) {
             device.associatedUser = payload.user;
+        }
+    })
+
+    return devices;
+}
+
+const unpairDeviceHelper = (devices, payload) => {
+    devices.forEach(device => {
+        if (device.id === payload.deviceID) {
+            device.associatedUser = null;
         }
     })
 
@@ -36,6 +46,9 @@ const deviceReducer = (devices = initialDevices, action) => {
         }
         case "ASSOCIATE_NEW_DEVICE": {
             return pairDeviceHelper(newDeviceList, action.payload);
+        }
+        case "DISASSOCIATE_DEVICE": {
+            return unpairDeviceHelper(newDeviceList, action.payload);
         }
         case "DELETE_DEVICE": {
             return deleteDeviceHelper(newDeviceList, action.payload);

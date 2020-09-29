@@ -33,6 +33,7 @@ import {
 } from "reactstrap";
 // other imports
 import UserTableItem from "../../../components/Dashboard/UserTableItem/UserTableItem";
+import {v4 as uuidv4} from "uuid";
 
 
 class HomePage extends React.Component {
@@ -56,7 +57,7 @@ class HomePage extends React.Component {
     const userList = users.map((user) => {
       return(
           <UserTableItem
-              key={user.id}
+              key={uuidv4()}
               name={user.firstName + " " + user.lastName}
               profileImg={user.profileImageURL}
               id={user.id}

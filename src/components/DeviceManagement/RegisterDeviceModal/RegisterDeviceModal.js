@@ -13,38 +13,8 @@ class RegisterDeviceModal extends React.Component {
         this.state = {
             deviceID: "",
             deviceIDUnique: false,
-            availableUsers: [],
-            selectedUser: {},
-            defaultUser: "",
         }
     }
-
-    componentDidMount() {
-        this.populateFormFields();
-    }
-
-    //  check for users without a registered device
-    populateFormFields = () => {
-        const {users} = this.props;
-        console.log("users", users);
-        let availableUsers = [];
-        users.forEach(user => {
-            if (user.device === null) {
-                availableUsers.push(user);
-            }
-        });
-        // save the available users to the local state
-        this.setState({
-            availableUsers: availableUsers,
-        });
-        // set default value for select input (handleChange isn't triggered if first option is selected)
-        if (availableUsers.length >= 1) {
-            this.setState({
-                selectedUserID: availableUsers[0].id,
-            });
-        }
-    }
-
 
 
     handleChange = (e) => {
@@ -52,12 +22,10 @@ class RegisterDeviceModal extends React.Component {
         this.setState({
             [e.target.id]: e.target.value,
         })
-        if(e.target.id === "deviceID") {
-            let isUnique = this.deviceUnique(e.target.value);
-            this.setState({
-                deviceIDUnique: isUnique,
-            })
-        }
+        let isUnique = this.deviceUnique(e.target.value);
+        this.setState({
+            deviceIDUnique: isUnique,
+        })
     }
 
     // checks that the given device ID is unique
@@ -76,13 +44,13 @@ class RegisterDeviceModal extends React.Component {
     onAdd = (e) => {
         e.preventDefault();
         const {registerNewDevice, onHide} = this.props;
-        const {deviceID, selectedUser } = this.state;
+        const {deviceID} = this.state;
         let newDevice = {id: deviceID, deviceStatus: "Inactive"};
         registerNewDevice(newDevice);
         onHide();
     }
 
-    // handles cancelling/closing the form
+    // handles cancelling/closing the modal
     onCancel = (e) => {
         e.preventDefault();
         const {onHide} = this.props;
@@ -92,13 +60,7 @@ class RegisterDeviceModal extends React.Component {
 
     render() {
         const { show, onHide } = this.props;
-        const { deviceIDUnique, availableUsers } = this.state;
-
-        let userOptions = availableUsers.map(user => {
-            return(
-                <option key={user.id} value={user}>{user.firstName  + " " + user.lastName + ": " + user.id}</option>
-            )
-        });
+        const { deviceIDUnique, deviceID } = this.state;
 
         return(
             <div>
@@ -120,7 +82,7 @@ class RegisterDeviceModal extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         <div className={"row"}>
-                            <div className={"col-6 d-flex justify-content-center"}>
+                            <div className={"col d-flex justify-content-center"}>
                                     <FormGroup>
                                     <label
                                         className="form-control-label"
@@ -139,26 +101,6 @@ class RegisterDeviceModal extends React.Component {
                                     />
                                 </FormGroup>
                             </div>
-                            <div className={"col-6 d-flex justify-content-center"}>
-                                <FormGroup>
-                                    <label
-                                        className="form-control-label"
-                                        htmlFor="selectedUserID"
-                                    >
-                                        Available Users
-                                    </label>
-                                    <Input
-                                        className="form-control-alternative"
-                                        id="selectedUserID"
-                                        type="select"
-                                        onChange={this.handleChange}
-                                        required={true}
-                                    >
-                                        <option disabled>User</option>
-                                        {userOptions}
-                                    </Input>
-                                </FormGroup>
-                            </div>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
@@ -175,7 +117,7 @@ class RegisterDeviceModal extends React.Component {
                                 <Button
                                     color="danger"
                                     onClick={this.onAdd}
-                                    disabled={!deviceIDUnique}
+                                    disabled={(!deviceIDUnique) || (deviceID.length === 0)}
                                 >
                                     Add Device
                                 </Button>
@@ -196,7 +138,6 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => {
     return {
         devices: state.devices,
-        users: state.users,
     };
 };
 

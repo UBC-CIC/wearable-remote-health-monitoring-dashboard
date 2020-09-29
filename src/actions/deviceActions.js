@@ -1,15 +1,8 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { listDevices } from '../graphql/queries';
-import {createDevice, updateDevice, updateUser} from '../graphql/mutations';
+import {createDevice, updateDevice, updateUser, deleteDevice} from '../graphql/mutations';
 
 
-// Removes device from local store, and removes the device from the associated user
-export const unpairDevice = (payload) => {
-    return {
-        type: "UNPAIR_DEVICE",
-        payload: payload
-    }
-}
 
 
 // ===================================---FETCHING DEVICES---=======================================
@@ -53,7 +46,6 @@ export const registerNewDevice = (payload) => {
         // Add device to DynamoDB
         API.graphql(graphqlOperation(createDevice, {input: {id: payload.id,
                 deviceStatus: payload.deviceStatus}})).then((response) => {
-            console.log("response", response);
             dispatch(registerDeviceSuccess());
         }).catch((err) => {
             console.log("Error registering device: ", err);
@@ -87,7 +79,6 @@ export const associateDeviceWithUser = (payload) => {
         dispatch({ type: "ASSOCIATE_NEW_DEVICE", payload: payload});
         API.graphql(graphqlOperation(updateDevice, {input: {id: payload.device.id,
                 deviceAssociatedUserId: payload.user.id}})).then((response) => {
-            console.log("response", response);
             dispatch(associateDeviceSuccess(payload));
         }).catch((err) => {
             console.log("Error pairing user to device: ", err);
@@ -110,7 +101,6 @@ export const associateDeviceSuccess = (payload) => {
     return (dispatch) => {
         API.graphql(graphqlOperation(updateUser, {input: {id: payload.user.id,
                 userDeviceId: payload.device.id}})).then((response) => {
-            console.log("response", response);
         }).catch((err) => {
             console.log("Error pairing device to user: ", err);
             dispatch(associateDeviceFailure(err));
@@ -118,4 +108,75 @@ export const associateDeviceSuccess = (payload) => {
     }
 }
 
-// ====================================================================================================
+// ===================================---DISASSOCIATE A DEVICE FROM A USER---=======================================
+
+// Disassociates a User from a Device
+export const disassociateDeviceWithUser = (payload) => {
+    return (dispatch) => {
+        // Disassociate device locally
+        dispatch({ type: "DISASSOCIATE_DEVICE", payload: payload});
+        API.graphql(graphqlOperation(updateDevice, {input: {id: payload.deviceID,
+                deviceAssociatedUserId: null}})).then((response) => {
+            dispatch(disassociateDeviceSuccess(payload));
+        }).catch((err) => {
+            console.log("Error pairing user to device: ", err);
+            dispatch(disassociateDeviceFailure(err));
+        })
+    }
+}
+
+
+// NOT YET IMPLEMENTED: respond to failure condition
+export const disassociateDeviceFailure = (error) => {
+    return {
+        type: "DISASSOCIATE_DEVICE_FAILURE",
+        payload: error
+    }
+}
+
+// Disassociates a Device from a User in DynamoDB
+export const disassociateDeviceSuccess = (payload) => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(updateUser, {input: {id: payload.userID,
+                userDeviceId: null}})).then((response) => {
+        }).catch((err) => {
+            console.log("Error pairing device to user: ", err);
+            dispatch(disassociateDeviceFailure(err));
+        })
+    }
+}
+
+// ===================================---DELETE A DEVICE---=======================================
+
+// Delete a device
+export const deleteDeviceRequest = (payload) => {
+    return (dispatch) => {
+        // Delete device locally
+        dispatch({ type: "DELETE_DEVICE", payload: payload});
+        API.graphql(graphqlOperation(deleteDevice, {input: {id: payload.deviceID}}))
+            .then((response) => {
+            console.log("response", response);
+            dispatch(deleteDeviceSuccess());
+        }).catch((err) => {
+            console.log("Error pairing user to device: ", err);
+            dispatch(disassociateDeviceFailure(err));
+        })
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to failure condition
+export const deleteDeviceFailure = (error) => {
+    return {
+        type: "DELETE_DEVICE_FAILURE",
+        payload: error
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to success condition
+export const deleteDeviceSuccess = () => {
+    return {
+        type: "DELETE_DEVICE_SUCCESS",
+    }
+}
+
+// ================================================================================================

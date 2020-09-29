@@ -70,8 +70,7 @@ const deviceAssociationHelper = (users, payload) => {
 const removeDeviceHelper = (users, target) => {
     users.forEach(user => {
         if (user.id === target.userID) {
-            user.device = {};
-            user.status  = {code: 1, description: "NO DEVICE CONNECTED"};
+            user.device = null;
         }
     })
 
@@ -96,7 +95,7 @@ const userReducer = (users = initialUsers, action) => {
         case "ASSOCIATE_NEW_DEVICE": {
             return deviceAssociationHelper(newUsers, action.payload);
         }
-        case "UNPAIR_DEVICE": {
+        case "DISASSOCIATE_DEVICE": {
             return removeDeviceHelper(newUsers, action.payload);
         }
         default:

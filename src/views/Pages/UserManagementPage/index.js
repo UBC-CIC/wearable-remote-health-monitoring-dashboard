@@ -29,6 +29,7 @@ import {
 import UserManagementHeader from "../../../components/Headers/UserManagementHeader";
 import {connect} from "react-redux";
 import UserManagementTableItem from "../../../components/UserManagement/UserTableItem/UserTableItem";
+import {v4 as uuidv4} from "uuid";
 
 class UserManagement extends React.Component {
   render() {
@@ -37,7 +38,7 @@ class UserManagement extends React.Component {
     const userList = users.map((user) => {
       return(
           <UserManagementTableItem
-              key={user.id}
+              key={uuidv4()}
               name={user.firstName + " " + user.lastName}
               profileImg={user.profileImageURL}
               id={user.id}

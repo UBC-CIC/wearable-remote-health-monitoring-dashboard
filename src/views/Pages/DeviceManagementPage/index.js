@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 // reactstrap components
 import {
@@ -39,7 +40,7 @@ class DeviceManager extends React.Component {
     const deviceList = devices.map((device) => {
       return(
           <DeviceTableItem
-              key={device.id}
+              key={uuidv4()}
               device={device}
               associatedUserName={(!device.associatedUser)? "NONE" : device.associatedUser.firstName + " " + device.associatedUser.lastName}
               associatedUserID={(!device.associatedUser)? "NONE" : device.associatedUser.id}
