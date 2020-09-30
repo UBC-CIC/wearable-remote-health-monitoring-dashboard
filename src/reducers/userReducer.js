@@ -77,13 +77,14 @@ const removeDeviceHelper = (users, target) => {
     return users;
 }
 
+
 const userReducer = (users = initialUsers, action) => {
     let newUsers = [...users];
     switch (action.type) {
         case "FETCH_USERS_SUCCESS": {
             return action.payload;
         }
-        case "REGISTER_NEW_USER": {
+        case "ADD_NEW_USER_REQUEST": {
             return newUsers.concat(action.payload);
         }
         case "UPDATE_USER_INFORMATION": {

@@ -41,7 +41,7 @@ class Profile extends React.Component {
 
   constructor(props) {
     super(props);
-    const {location} = this.props;
+    const {location } = this.props;
     let userID = location.pathname.replace(/.admin.user-profile./, "");
     let userProfile = this.findUser(userID);
     this.state = {
@@ -49,7 +49,7 @@ class Profile extends React.Component {
         lastName: userProfile.lastName,
         age: userProfile.age,
         facility: userProfile.facility,
-        room: userProfile.room.roomNumber,
+        room: userProfile.room,
         phoneNumber: userProfile.phoneNumber,
         email: userProfile.email,
         streetAddress: userProfile.address.streetAddress,
@@ -68,6 +68,7 @@ class Profile extends React.Component {
     }
   }
 
+
   findUser = (id) => {
     const {users} = this.props;
     console.log(users);
@@ -83,9 +84,11 @@ class Profile extends React.Component {
       const {originalProfile, firstName, lastName, age, facility, room, phoneNumber, email,
         streetAddress, city, stateProvince, country, postalZip, additionalNotes, emergencyContacts, careGivers} = this.state;
       const {updateUserInformation: updateUserInfo} = this.props;
+      let newRoom = originalProfile.room;
+      newRoom.roomNumber = room;
       const updatedUser = {
         ...originalProfile,
-        firstName: firstName, lastName: lastName, age: age, facility: facility, room: room, phoneNumber: phoneNumber,
+        firstName: firstName, lastName: lastName, age: age, facility: facility, room: newRoom, phoneNumber: phoneNumber,
         email: email, address: {streetAddress: streetAddress, city: city, stateProvince: stateProvince,
           country: country, postalZip: postalZip}, additionalNotes: additionalNotes, emergencyContacts: emergencyContacts,
         careGivers: careGivers
@@ -119,14 +122,12 @@ class Profile extends React.Component {
   render() {
     const { originalProfile, firstName, lastName, age, facility, room, phoneNumber, email,
       streetAddress, city, stateProvince, country, postalZip, heartRate, additionalNotes ,editMode, deleteModalShow } = this.state;
-    const { isLoading } = this.props;
-    if (isLoading) {
+    const {rooms} = this.props;
+    let roomsList = rooms.map(room => {
       return(
-          <div>
-            Page is loading..
-          </div>
+          <option key={room.id} value={room}>{room.roomNumber}</option>
       )
-    } else {
+    });
       return (
           <div>
             <UserHeader userName={firstName + " " + lastName}/>
@@ -175,7 +176,7 @@ class Profile extends React.Component {
                         <div className="col">
                           <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                             <div>
-                              <span className="heading">{(room) ? room : "N/A"}</span>
+                              <span className="heading">{(room.roomNumber) ? room.roomNumber : "N/A"}</span>
                               <span className="description">Room</span>
                             </div>
                             <div>
@@ -328,11 +329,14 @@ class Profile extends React.Component {
                                 <Input
                                     className="form-control-alternative"
                                     id="room"
-                                    defaultValue={room}
                                     onChange={this.handleChange}
-                                    type="text"
+                                    defaultValue={room}
+                                    type="select"
                                     disabled={!editMode}
-                                />
+                                >
+                                  <option disabled>Room Number</option>
+                                  {roomsList}
+                                </Input>
                               </FormGroup>
                             </Col>
                           </Row>
@@ -509,12 +513,13 @@ class Profile extends React.Component {
           </div>
       );
     }
-  }
+
 }
 
 const mapStateToProps = (state) => {
   return {
     users: state.users,
+    rooms: state.rooms,
     isLoading: state.applicationStatus.startupLoading,
   };
 };

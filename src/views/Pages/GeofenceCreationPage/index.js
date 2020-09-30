@@ -28,7 +28,7 @@ import {
 import { Card, Container, Row } from "reactstrap";
 
 // core components
-import GeofenceHeader from "../../components/Headers/GeofenceHeader.js";
+import GeofenceHeader from "../../../components/Headers/GeofenceHeader.js";
 // mapTypeId={google.maps.MapTypeId.ROADMAP}
 const MapWrapper = withScriptjs(
   withGoogleMap(props => (
@@ -86,7 +86,7 @@ const MapWrapper = withScriptjs(
   ))
 );
 
-class ManageGeofence extends React.Component {
+class CreateGeofence extends React.Component {
   render() {
     return (
       <>
@@ -119,4 +119,4 @@ class ManageGeofence extends React.Component {
   }
 }
 
-export default ManageGeofence;
+export default CreateGeofence;

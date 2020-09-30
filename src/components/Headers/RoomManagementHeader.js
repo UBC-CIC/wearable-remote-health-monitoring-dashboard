@@ -16,20 +16,40 @@
 
 */
 import React from "react";
+import CreateRoomModal from "../RoomManagement/CreateRoomModal/CreateRoomModal";
+
+
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
-class GeofenceHeader extends React.Component {
+class RoomManagementHeader extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            createRoomModalShow: false,
+        }
+    }
+
+    // Triggers the opening/closing of the createRoomModal
+    setCreateRoomModalShow = (bool) => {
+        this.setState({
+            createRoomModalShow: bool,
+        });
+    };
+
+
   render() {
+      const {createRoomModalShow} = this.state;
     return (
-      <>
+      <div>
         <div
           className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
           style={{
             minHeight: "600px",
             backgroundImage:
-              "url(" + require("../../assets/img/theme/globe.jpg") + ")",
+              "url(" + require("../../assets/img/theme/floor-plan.jpg") + ")",
             backgroundSize: "cover",
             backgroundPosition: "center top"
           }}
@@ -40,20 +60,22 @@ class GeofenceHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="12" md="12">
-                <h1 className="display-2 text-white">Geofence Management Console</h1>
+                <h1 className="display-2 text-white">Room Management Console</h1>
                   <Button
                       color="info"
-                      href="/admin/create-geofence"
+                      href="#"
+                      onClick={() => this.setCreateRoomModalShow(true)}
                   >
-                      Create a Geofence
+                      Add a Room
                   </Button>
               </Col>
             </Row>
           </Container>
         </div>
-      </>
+          <CreateRoomModal show={createRoomModalShow} onHide={() => this.setCreateRoomModalShow(false)}  />
+      </div>
     );
   }
 }
 
-export default GeofenceHeader;
+export default RoomManagementHeader;

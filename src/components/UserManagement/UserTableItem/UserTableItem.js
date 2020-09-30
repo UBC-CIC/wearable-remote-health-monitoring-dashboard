@@ -99,7 +99,6 @@ class UserManagementTableItem extends React.Component {
                                 Locate User
                             </DropdownItem>
                             <DropdownItem
-                                href="#"
                                 onClick={() => this.setDeleteModalShow(true)}
                             >
                                 Delete User

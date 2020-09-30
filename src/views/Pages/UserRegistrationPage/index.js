@@ -17,7 +17,7 @@
 */
 import React from "react";
 import { connect } from "react-redux";
-import {registerNewUser} from "../../../actions/userActions";
+import {registerNewUser, registerUserLocal} from "../../../actions/userActions";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -78,7 +78,7 @@ class RegisterUser extends React.Component {
     // set default value for select input (handleChange isn't triggered if first option is selected)
     if (availableRooms.length >= 1) {
       this.setState({
-        room: availableRooms[0].id,
+        room: availableRooms[0],
       });
     }
   }
@@ -94,17 +94,24 @@ class RegisterUser extends React.Component {
     e.preventDefault();
     const {firstName, lastName, age, facility, room, phoneNumber, email,
       streetAddress, city, stateProvince, country, postalZip, additionalNotes, emergencyContacts, careGivers} = this.state;
-    const {registerNewUser: registerUser, history} = this.props;
+    const {registerNewUser: registerUser, registerUserLocal: registerLocal ,history} = this.props;
     let newUserID = uuidv4();
     let newUser = {
       id: newUserID, firstName: firstName, lastName: lastName, age: age,
-      facility: facility, userRoomId: room, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
+      facility: facility, userRoomId: room.id, roomUsersId: room.id, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
         city: city, stateProvince: stateProvince, country: country, postalZip: postalZip},
       profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileImageS3Key: "", additionalNotes: additionalNotes, emergencyContacts: emergencyContacts, careGivers: careGivers
     }
-
-    // submit new user info for registration and local state storage in redux and in DynamoDB
+    // submit new user info for storage in redux and in DynamoDB
     registerUser(newUser);
+    // submit new user info for local state storage in redux (DynamoDB takes a slightly different input)
+    let userLocal = {
+      id: newUserID, firstName: firstName, lastName: lastName, age: age,
+      facility: facility, room: room, device: null, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
+        city: city, stateProvince: stateProvince, country: country, postalZip: postalZip},
+      profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileImageS3Key: "", additionalNotes: additionalNotes, emergencyContacts: emergencyContacts, careGivers: careGivers
+    }
+    registerLocal(userLocal);
     // return to user management page after submit
     history.push("/admin/manage-users");
   }
@@ -114,7 +121,7 @@ class RegisterUser extends React.Component {
     const {rooms} = this.props;
     let roomsList = rooms.map(room => {
       return(
-          <option key={room.id} value={room.id}>{room.roomNumber}</option>
+          <option key={room.id} value={room}>{room.roomNumber}</option>
       )
     });
     return (
@@ -414,4 +421,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps,{registerNewUser})(RegisterUser);
+export default connect(mapStateToProps,{registerNewUser, registerUserLocal})(RegisterUser);

@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { createUser, deleteUser} from '../graphql/mutations';
-import { listUsers} from '../graphql/queries';
+import { createUser, deleteUser, updateUser } from '../graphql/mutations';
+import { listUsers } from '../graphql/queries';
 
 // ===================================---FETCHING USERS---=======================================
 // Fetch users from AWS, set loading flag
@@ -35,10 +35,9 @@ export const fetchUsersSuccess = (payload) => {
 
 // =====================================---ADDING NEW USER---=======================================
 
-// add new user locally and upload to DynamoDB, sets loading flag
+// Add new user to DynamoDB
 export const registerNewUser = (payload) => {
     return (dispatch) => {
-        dispatch({ type: "ADD_NEW_USER_REQUEST", payload: payload });
         API.graphql(graphqlOperation(createUser, {input: payload})).then((response) => {
             dispatch(addNewUserSuccess());
         }).catch((err) => {
@@ -63,16 +62,59 @@ export const addNewUserSuccess = () => {
     }
 }
 
-
-// =================================================================================================
-
-// Updates user information
-export const updateUserInformation = (payload) => {
+// Add new user locally
+export const registerUserLocal = (payload) => {
     return {
-        type: "UPDATE_USER_INFORMATION",
+        type: "ADD_NEW_USER_REQUEST",
         payload: payload
     }
 }
+
+// =============================---ASSOCIATE ROOM WITH USER---====================================
+
+// Associate user with room
+export const associateRoomUser = (payload) => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(updateUser, {input: {id: payload.id, roomUsersId: payload.userRoomId }})).then((response) => {
+            console.log(response);
+            dispatch(associateRoomSuccess());
+        }).catch((err) => {
+            console.log("Error adding user to room: ", err);
+            dispatch(associateRoomFailure(err));
+        })
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to failure condition
+export const associateRoomFailure = (error) => {
+    return {
+        type: "ASSOCIATE_ROOM_FAILURE",
+        payload: error
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to success condition
+export const associateRoomSuccess = () => {
+    return {
+        type: "ASSOCIATE_ROOM_SUCCESS",
+    }
+}
+
+// =====================================---UPDATING USER INFORMATION---=======================================
+
+// Updates user information
+export const updateUserInformation = (payload) => {
+    return (dispatch) => {
+        dispatch({ type: "UPDATE_USER_INFORMATION", payload: payload});
+        API.graphql(graphqlOperation(updateUser, {input: {id: payload.id}})).then((response) => {
+            console.log(response);
+        }).catch((err) => {
+            console.log("Error deleting user: ", err);
+            dispatch(deleteUserFailure(err));
+        })
+    }
+}
+
 // =====================================---DELETING A USER---=======================================
 
 // Delete user locally, and from DynamoDB. Also delete user profile image from S3 [future addition]
