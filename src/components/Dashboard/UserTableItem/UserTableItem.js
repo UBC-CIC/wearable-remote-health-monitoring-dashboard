@@ -14,7 +14,7 @@ import {
 class UserTableItem extends React.Component {
 
     render() {
-        const {name, profileImg, id, status, heartRate } = this.props;
+        const {name, profileImg, id, heartRate } = this.props;
         let statusClass = "bg-success";
         /*switch (status.code) {
             case -1:{

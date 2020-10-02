@@ -20,11 +20,10 @@ import Profile from "./views/Pages/ProfilePage";
 import Login from "./views/examples/Login.js";
 import RegisterUser from "./views/Pages/UserRegistrationPage/";
 import DeviceManager from "./views/Pages/DeviceManagementPage";
-import Maps from "./views/examples/Maps.js";
-import ManageGeofence from "./views/Pages/GeofenceManagementPage";
+import CreateLocation from "./views/Pages/LocationCreationPage";
+import ManageLocations from "./views/Pages/LocationManagementPage";
 import UserManagement from "./views/Pages/UserManagementPage/";
 import LoadingPage from "./views/Pages/LoadingPage";
-import RoomManager from "./views/Pages/RoomManagementPage";
 
 
 let routes = [
@@ -69,26 +68,18 @@ let routes = [
     exposed: true
   },
   {
-    path: "/manage-rooms",
-    name: "Manage Rooms",
-    icon: "fas fa-door-closed text-purple",
-    component: RoomManager,
-    layout: "/admin",
-    exposed: true
-  },
-  {
-    path: "/manage-geofencing",
-    name: "Manage Geofencing",
+    path: "/manage-locations",
+    name: "Manage Locations",
     icon: "fas fa-map-marked-alt text-green",
-    component: ManageGeofence,
+    component: ManageLocations,
     layout: "/admin",
     exposed: true
   },
   {
-    path: "/create-geofence",
-    name: "Create a Geofence",
+    path: "/create-location",
+    name: "Create a Location",
     icon: "ni ni-map-big text-green",
-    component: Maps,
+    component: CreateLocation,
     layout: "/admin",
     exposed: false
   },

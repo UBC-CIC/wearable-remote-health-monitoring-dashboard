@@ -16,56 +16,43 @@
 
 */
 import React from "react";
-import { v4 as uuidv4 } from 'uuid';
+
 
 // reactstrap components
-import {
-  Card,
-  CardHeader,
-  Container,
-  Row,
-  Col, Table
-} from "reactstrap";
-// core components
-import {connect} from "react-redux";
-import RoomTableItem from "../../../components/RoomManagement/RoomTableItem/RoomTableItem";
-import RoomManagementHeader from "../../../components/Headers/RoomManagementHeader";
+import {Card, CardHeader, Col, Container, Row, Table} from "reactstrap";
 
-class RoomManager extends React.Component {
+// core components
+import LocationHeader from "../../../components/Headers/LocationHeader.js";
+
+
+
+class ManageLocations extends React.Component {
+
 
   render() {
-    const { rooms } = this.props;
-    // map our list of devices to the device table
-    const roomList = rooms.map((room) => {
-      return(
-          <RoomTableItem
-              key={uuidv4()}
-              room={room}
-          />
-      )
-    })
     return (
       <div>
-        <RoomManagementHeader />
+        <LocationHeader />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row className="mt-5">
             <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">All Rooms</h3>
+                  <h3 className="mb-0">All Locations</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                   <tr>
-                    <th scope="col">Room Number</th>
-                    <th scope="col">Room Name</th>
-                    <th scope="col">Room Users</th>
+                    <th scope="col">Location ID</th>
+                    <th scope="col">Location Name</th>
+                    <th scope="col">Center</th>
+                    <th scope="col">Radius</th>
                     <th scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>
-                  {roomList}
+
                   </tbody>
                 </Table>
               </Card>
@@ -77,11 +64,4 @@ class RoomManager extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    rooms: state.rooms,
-    users: state.users,
-  };
-};
-
-export default connect(mapStateToProps)(RoomManager);
+export default ManageLocations;

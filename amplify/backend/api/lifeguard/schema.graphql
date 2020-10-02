@@ -5,37 +5,45 @@ type User @model {
   age: Int
   profileImageURL: String
   profileImageS3Key: String
-  room: Room @connection
   device: Device @connection
-  assignedGeofencing: [UserGeo] @connection(keyName: "byUser", fields: ["id"])
   facility: String
   phoneNumber: String
   email: String
   address: Address
   emergencyContacts: [Contact]  
-  careGivers: [Contact] 
   additionalNotes: String
-}
-
-type Room @model 
-@key(name: "byRoomNumber", fields: ["roomNumber"]) {
-  id: ID!
-  roomNumber: String
-  name: String
-  location: LatLon
-  locationRadius: String
-  users: [User] @connection
 }
 
 type Device @model {
   id: ID!
-  associatedUser: User @connection
+  userID: ID
   deviceStatus: String 
-  data: [DeviceData] @connection
+  alerts: [Alert] @connection(keyName: "byDevice", fields: ["id"])
+  geofence: Location @connection
+  data: [DeviceData] @connection(keyName: "byDevice", fields: ["id"])
+}
+
+type Location @model 
+@key(name: "byLocationName", fields: ["locationName"]) {
+  id: ID!
+  locationName: String!
+  centerpointCoordinates: LatLon!
+  radius: Int!
+}
+
+type Alert @model 
+@key(name: "byDevice", fields: ["deviceID", "createdAt"]) {
+  id: ID!
+  deviceID: ID!
+  type: String!
+  description: String!
+  location: LatLon
+  createdAt: String!
+  expirationTime: Int!
 }
 
 type DeviceData @model
-@key(name: "byDeviceID", fields: ["deviceID", "createdAt"])
+@key(name: "byDevice", fields: ["deviceID", "createdAt"])
 @key(name: "byDeviceAndObservationType", fields: ["deviceID", "observationType", "createdAt"]) {
   id: ID!
   deviceID: ID!
@@ -46,25 +54,9 @@ type DeviceData @model
   observationValue: String
   observationDescription: String
   createdAt: String!
+  expirationTime: Int!
 }
 
-type Geofence @model {
-  id: ID!
-  locationName: String
-  centerpointCoordinates: LatLon
-  radius: Int
-  users: [UserGeo] @connection(keyName: "byGeofence", fields: ["id"]) 
-}
-
-type UserGeo @model
-@key(name: "byUser", fields: ["userID", "geofenceID"])
-@key(name: "byGeofence", fields: ["geofenceID", "userID"]) {
-  id: ID!
-  userID: ID!
-  geofenceID: ID!
-  user: User! @connection(fields: ["userID"])
-  geofence: Geofence! @connection(fields: ["geofenceID"])
-}
 
 type LatLon {
   Latitude: String!
@@ -88,5 +80,4 @@ type Address {
   country: String
   postalZip: String
 }
-
 

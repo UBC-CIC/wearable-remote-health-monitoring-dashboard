@@ -1,7 +1,6 @@
 const initialState = {
     startupLoading: true,
     usersFetched: false,
-    roomsFetched: false,
     devicesFetched: false,
     errorState: false,
     errorMessage: "",
@@ -11,9 +10,6 @@ const initialState = {
 const isLastToLoad = (appStatus) => {
     let falseCount = 0;
     if (appStatus.usersFetched === false) {
-        falseCount += 1;
-    }
-    if (appStatus.roomsFetched === false) {
         falseCount += 1;
     }
     if (appStatus.devicesFetched === false) {
@@ -46,27 +42,6 @@ const appStatusReducer = (appStatus = initialState, action) => {
         }
 
         case "FETCH_USERS_FAILURE": {
-            return {
-                ...newAppStatus,
-                startupLoading: false,
-                errorState: true,
-                errorMessage: action.payload,
-            }
-        }
-        case "FETCH_ROOMS_REQUEST": {
-            return {
-                ...newAppStatus,
-                startupLoading: true,
-            }
-        }
-        case "FETCH_ROOMS_SUCCESS": {
-            return {
-                ...newAppStatus,
-                startupLoading: !(lastToLoad),
-                roomsFetched: true,
-            }
-        }
-        case "FETCH_ROOMS_FAILURE": {
             return {
                 ...newAppStatus,
                 startupLoading: false,

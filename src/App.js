@@ -7,16 +7,14 @@ import LoadingPage from "./views/Pages/LoadingPage";
 
 // actions
 import {fetchUsers} from "./actions/userActions";
-import {fetchRooms} from "./actions/roomActions";
 import {fetchDevices} from "./actions/deviceActions";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    const {fetchUsers, fetchRooms, fetchDevices} = this.props;
+    const {fetchUsers, fetchDevices} = this.props;
     fetchUsers();
-    fetchRooms();
     fetchDevices();
   }
 
@@ -48,7 +46,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     fetchUsers,
-    fetchRooms,
     fetchDevices
 };
 

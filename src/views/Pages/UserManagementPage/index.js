@@ -42,7 +42,6 @@ class UserManagement extends React.Component {
               name={user.firstName + " " + user.lastName}
               profileImg={user.profileImageURL}
               id={user.id}
-              room={user.room.roomNumber}
               device={user.device}
               profileURL={user.profileURL}
           />
@@ -65,7 +64,6 @@ class UserManagement extends React.Component {
                     <th scope="col">Name</th>
                     <th scope="col">Image</th>
                     <th scope="col">ID</th>
-                    <th scope="col">Assigned Room</th>
                     <th scope="col">Assigned Device</th>
                     <th scope="col">Actions</th>
                   </tr>

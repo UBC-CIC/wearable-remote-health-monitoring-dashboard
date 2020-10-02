@@ -17,7 +17,7 @@
 */
 import React from "react";
 import { connect } from "react-redux";
-import {registerNewUser, registerUserLocal} from "../../../actions/userActions";
+import {registerNewUser} from "../../../actions/userActions";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -47,8 +47,6 @@ class RegisterUser extends React.Component {
       lastName: "",
       age: 0,
       facility: "",
-      room: "",
-      availableRooms: [],
       phoneNumber: "",
       email: "",
       streetAddress: "",
@@ -58,28 +56,6 @@ class RegisterUser extends React.Component {
       postalZip: "",
       additionalNotes: "",
       emergencyContacts: [],
-      careGivers: [],
-    }
-  }
-
-  componentDidMount() {
-    this.populateFormFields();
-  }
-
-  //  check for available rooms, populate rooms field
-  populateFormFields = () => {
-    const {rooms} = this.props;
-    let availableRooms = [...rooms];
-
-    // save the available rooms to the local state
-    this.setState({
-      availableRooms: availableRooms,
-    });
-    // set default value for select input (handleChange isn't triggered if first option is selected)
-    if (availableRooms.length >= 1) {
-      this.setState({
-        room: availableRooms[0],
-      });
     }
   }
 
@@ -92,38 +68,25 @@ class RegisterUser extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const {firstName, lastName, age, facility, room, phoneNumber, email,
-      streetAddress, city, stateProvince, country, postalZip, additionalNotes, emergencyContacts, careGivers} = this.state;
-    const {registerNewUser: registerUser, registerUserLocal: registerLocal ,history} = this.props;
+    const {firstName, lastName, age, facility, phoneNumber, email,
+      streetAddress, city, stateProvince, country, postalZip, additionalNotes, emergencyContacts} = this.state;
+    const {registerNewUser: registerUser ,history} = this.props;
     let newUserID = uuidv4();
     let newUser = {
       id: newUserID, firstName: firstName, lastName: lastName, age: age,
-      facility: facility, userRoomId: room.id, roomUsersId: room.id, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
+      facility: facility, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
         city: city, stateProvince: stateProvince, country: country, postalZip: postalZip},
-      profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileImageS3Key: "", additionalNotes: additionalNotes, emergencyContacts: emergencyContacts, careGivers: careGivers
+      profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileImageS3Key: "", additionalNotes: additionalNotes, emergencyContacts: emergencyContacts
     }
     // submit new user info for storage in redux and in DynamoDB
     registerUser(newUser);
-    // submit new user info for local state storage in redux (DynamoDB takes a slightly different input)
-    let userLocal = {
-      id: newUserID, firstName: firstName, lastName: lastName, age: age,
-      facility: facility, room: room, device: null, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
-        city: city, stateProvince: stateProvince, country: country, postalZip: postalZip},
-      profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileImageS3Key: "", additionalNotes: additionalNotes, emergencyContacts: emergencyContacts, careGivers: careGivers
-    }
-    registerLocal(userLocal);
+
     // return to user management page after submit
     history.push("/admin/manage-users");
   }
 
 
   render() {
-    const {rooms} = this.props;
-    let roomsList = rooms.map(room => {
-      return(
-          <option key={room.id} value={room}>{room.roomNumber}</option>
-      )
-    });
     return (
       <div>
         <UserRegistrationHeader />
@@ -187,7 +150,7 @@ class RegisterUser extends React.Component {
                         </Col>
                       </Row>
                       <Row>
-                        <Col lg="4">
+                        <Col lg="6">
                           <FormGroup>
                             <label
                                 className="form-control-label"
@@ -204,7 +167,7 @@ class RegisterUser extends React.Component {
                             />
                           </FormGroup>
                         </Col>
-                        <Col lg="4">
+                        <Col lg="6">
                           <FormGroup>
                             <label
                                 className="form-control-label"
@@ -219,26 +182,6 @@ class RegisterUser extends React.Component {
                                 type="text"
                                 onChange={this.handleChange}
                             />
-                          </FormGroup>
-                        </Col>
-                        <Col lg="4">
-                          <FormGroup>
-                            <label
-                                className="form-control-label"
-                                htmlFor="room"
-                            >
-                              Assigned Room
-                            </label>
-                            <Input
-                                className="form-control-alternative"
-                                id="room"
-                                type="select"
-                                onChange={this.handleChange}
-                                required={true}
-                            >
-                              <option disabled>Room Number</option>
-                              {roomsList}
-                            </Input>
                           </FormGroup>
                         </Col>
                       </Row>
@@ -417,8 +360,7 @@ class RegisterUser extends React.Component {
 const mapStateToProps = (state) => {
   return {
     users: state.users,
-    rooms: state.rooms,
   };
 };
 
-export default connect(mapStateToProps,{registerNewUser, registerUserLocal})(RegisterUser);
+export default connect(mapStateToProps,{registerNewUser})(RegisterUser);

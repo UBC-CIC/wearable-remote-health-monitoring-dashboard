@@ -16,11 +16,21 @@
 
 */
 import React from "react";
+import {withRouter} from "react-router-dom";
+
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
 
-class GeofenceHeader extends React.Component {
+class LocationHeader extends React.Component {
+
+    onClick = (e) => {
+        e.preventDefault();
+        const {history} = this.props;
+        let path = "/admin/create-location";
+        history.push(path);
+    }
+
   render() {
     return (
       <>
@@ -40,12 +50,12 @@ class GeofenceHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="12" md="12">
-                <h1 className="display-2 text-white">Geofence Management Console</h1>
+                <h1 className="display-2 text-white">Location Management Console</h1>
                   <Button
                       color="info"
-                      href="/admin/create-geofence"
+                      onClick={this.onClick}
                   >
-                      Create a Geofence
+                      Create a Location
                   </Button>
               </Col>
             </Row>
@@ -56,4 +66,4 @@ class GeofenceHeader extends React.Component {
   }
 }
 
-export default GeofenceHeader;
+export default withRouter(LocationHeader);

@@ -46,6 +46,7 @@ export const registerNewDevice = (payload) => {
         // Add device to DynamoDB
         API.graphql(graphqlOperation(createDevice, {input: {id: payload.id,
                 deviceStatus: payload.deviceStatus}})).then((response) => {
+                    console.log(response);
             dispatch(registerDeviceSuccess());
         }).catch((err) => {
             console.log("Error registering device: ", err);
@@ -78,7 +79,7 @@ export const associateDeviceWithUser = (payload) => {
         // Associate device locally
         dispatch({ type: "ASSOCIATE_NEW_DEVICE", payload: payload});
         API.graphql(graphqlOperation(updateDevice, {input: {id: payload.device.id,
-                deviceAssociatedUserId: payload.user.id}})).then((response) => {
+                userID: payload.user.id}})).then((response) => {
             dispatch(associateDeviceSuccess(payload));
         }).catch((err) => {
             console.log("Error pairing user to device: ", err);
@@ -116,7 +117,7 @@ export const disassociateDeviceWithUser = (payload) => {
         // Disassociate device locally
         dispatch({ type: "DISASSOCIATE_DEVICE", payload: payload});
         API.graphql(graphqlOperation(updateDevice, {input: {id: payload.deviceID,
-                deviceAssociatedUserId: null}})).then((response) => {
+                userID: null}})).then((response) => {
             dispatch(disassociateDeviceSuccess(payload));
         }).catch((err) => {
             console.log("Error pairing user to device: ", err);

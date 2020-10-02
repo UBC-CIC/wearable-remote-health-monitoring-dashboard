@@ -5,7 +5,7 @@ const initialDevices = [];
 const pairDeviceHelper = (devices, payload) => {
     devices.forEach(device => {
         if (device.id === payload.device.id) {
-            device.associatedUser = payload.user;
+            device.userID = payload.user.id;
         }
     })
 
@@ -15,7 +15,7 @@ const pairDeviceHelper = (devices, payload) => {
 const unpairDeviceHelper = (devices, payload) => {
     devices.forEach(device => {
         if (device.id === payload.deviceID) {
-            device.associatedUser = null;
+            device.userID = null;
         }
     })
 

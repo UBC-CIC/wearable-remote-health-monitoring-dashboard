@@ -59,7 +59,7 @@ const updateUserHelper = (users, profile) => {
 // associate a device with a user
 const deviceAssociationHelper = (users, payload) => {
     users.forEach(user => {
-        if (user.id === payload.device.id) {
+        if (user.id === payload.user.id) {
             user.device = payload.device;
         }
     })

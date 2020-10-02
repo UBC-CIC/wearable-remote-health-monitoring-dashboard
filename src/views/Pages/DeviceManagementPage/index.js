@@ -33,17 +33,46 @@ import DeviceTableItem from "../../../components/DeviceManagement/DeviceTableIte
 
 class DeviceManager extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      devicesList: [],
+    }
+  }
+
+  componentDidMount() {
+    // fetch associated users for each device
+    this.pairUserDeviceInfo();
+  }
+
+  pairUserDeviceInfo = () => {
+    const {devices, users} = this.props;
+    users.forEach(user => {
+      devices.forEach(device => {
+        if (user.id === device.userID) {
+          device.userName = user.firstName + " " + user.lastName;
+        }
+      })
+    })
+    this.setState({
+      devicesList: devices,
+    })
+  }
+
+
+
 
   render() {
-    const {devices} = this.props;
+    const {devicesList} = this.state;
+    console.log(devicesList);
     // map our list of devices to the device table
-    const deviceList = devices.map((device) => {
+    const deviceList = devicesList.map((device) => {
       return(
           <DeviceTableItem
               key={uuidv4()}
               device={device}
-              associatedUserName={(!device.associatedUser)? "NONE" : device.associatedUser.firstName + " " + device.associatedUser.lastName}
-              associatedUserID={(!device.associatedUser)? "NONE" : device.associatedUser.id}
+              associatedUserName={(!device.userName)? "NONE" : device.userName}
+              associatedUserID={(!device.userID)? "NONE" : device.userID}
           />
       )
     })
@@ -83,6 +112,7 @@ class DeviceManager extends React.Component {
 const mapStateToProps = (state) => {
   return {
     devices: state.devices,
+    users: state.users,
   };
 };
 

@@ -1,5 +1,5 @@
 {
-    "AppSyncApiName": "lifeguarddemo",
+    "AppSyncApiName": "lifeguard",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
     "DynamoDBEnableServerSideEncryption": false
 }

@@ -38,6 +38,7 @@ export const fetchUsersSuccess = (payload) => {
 // Add new user to DynamoDB
 export const registerNewUser = (payload) => {
     return (dispatch) => {
+        dispatch({type: "ADD_NEW_USER_REQUEST", payload: payload});
         API.graphql(graphqlOperation(createUser, {input: payload})).then((response) => {
             dispatch(addNewUserSuccess());
         }).catch((err) => {
@@ -62,56 +63,41 @@ export const addNewUserSuccess = () => {
     }
 }
 
-// Add new user locally
-export const registerUserLocal = (payload) => {
-    return {
-        type: "ADD_NEW_USER_REQUEST",
-        payload: payload
-    }
-}
+// =====================================---UPDATING USER INFORMATION---=======================================
 
-// =============================---ASSOCIATE ROOM WITH USER---====================================
-
-// Associate user with room
-export const associateRoomUser = (payload) => {
+// Updates user information in DynamoDB
+export const updateUserInformation = (payload) => {
     return (dispatch) => {
-        API.graphql(graphqlOperation(updateUser, {input: {id: payload.id, roomUsersId: payload.userRoomId }})).then((response) => {
+        API.graphql(graphqlOperation(updateUser, {input: payload})).then((response) => {
             console.log(response);
-            dispatch(associateRoomSuccess());
+            dispatch(updateUserSuccess());
         }).catch((err) => {
-            console.log("Error adding user to room: ", err);
-            dispatch(associateRoomFailure(err));
+            console.log("Error updating user: ", err);
+            dispatch(updateUserFailure(err));
         })
     }
 }
 
 // NOT YET IMPLEMENTED: respond to failure condition
-export const associateRoomFailure = (error) => {
+export const updateUserFailure = (error) => {
     return {
-        type: "ASSOCIATE_ROOM_FAILURE",
+        type: "UPDATE_USER_FAILURE",
         payload: error
     }
 }
 
 // NOT YET IMPLEMENTED: respond to success condition
-export const associateRoomSuccess = () => {
+export const updateUserSuccess = () => {
     return {
-        type: "ASSOCIATE_ROOM_SUCCESS",
+        type: "UPDATE_USER_SUCCESS",
     }
 }
 
-// =====================================---UPDATING USER INFORMATION---=======================================
-
-// Updates user information
-export const updateUserInformation = (payload) => {
-    return (dispatch) => {
-        dispatch({ type: "UPDATE_USER_INFORMATION", payload: payload});
-        API.graphql(graphqlOperation(updateUser, {input: {id: payload.id}})).then((response) => {
-            console.log(response);
-        }).catch((err) => {
-            console.log("Error deleting user: ", err);
-            dispatch(deleteUserFailure(err));
-        })
+// Update user information locally
+export const updateUserInformationLocally = (payload) => {
+    return {
+        type: "UPDATE_USER_INFORMATION",
+        payload: payload,
     }
 }
 

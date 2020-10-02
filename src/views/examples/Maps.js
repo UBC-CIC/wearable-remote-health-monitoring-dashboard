@@ -28,7 +28,7 @@ import {
 import { Card, Container, Row } from "reactstrap";
 
 // core components
-import GeofenceCreationHeader from "../../components/Headers/GeofenceCreationHeader.js";
+import LocationCreationHeader from "../../components/Headers/LocationCreationHeader.js";
 // mapTypeId={google.maps.MapTypeId.ROADMAP}
 const MapWrapper = withScriptjs(
   withGoogleMap(props => (
@@ -90,7 +90,7 @@ class Maps extends React.Component {
   render() {
     return (
       <>
-        <GeofenceCreationHeader />
+        <LocationCreationHeader />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>

@@ -1,6 +1,6 @@
 {
   "api": {
-    "lifeguarddemo": {
+    "lifeguard": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -8,8 +8,8 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 7,
-              "description": "lifeguardAPIKey"
+              "apiKeyExpirationDays": 365,
+              "description": "lifeguard"
             }
           },
           "additionalAuthenticationProviders": []

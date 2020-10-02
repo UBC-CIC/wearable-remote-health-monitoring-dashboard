@@ -10,53 +10,25 @@ export const onCreateUser = /* GraphQL */ `
       age
       profileImageURL
       profileImageS3Key
-      room {
-        id
-        roomNumber
-        name
-        location {
-          Latitude
-          Longitude
-        }
-        locationRadius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       device {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      assignedGeofencing {
-        items {
-          id
-          userID
-          geofenceID
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       facility
       phoneNumber
@@ -69,20 +41,6 @@ export const onCreateUser = /* GraphQL */ `
         postalZip
       }
       emergencyContacts {
-        firstName
-        lastName
-        relationshipToUser
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-      }
-      careGivers {
         firstName
         lastName
         relationshipToUser
@@ -111,53 +69,25 @@ export const onUpdateUser = /* GraphQL */ `
       age
       profileImageURL
       profileImageS3Key
-      room {
-        id
-        roomNumber
-        name
-        location {
-          Latitude
-          Longitude
-        }
-        locationRadius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       device {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      assignedGeofencing {
-        items {
-          id
-          userID
-          geofenceID
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       facility
       phoneNumber
@@ -170,20 +100,6 @@ export const onUpdateUser = /* GraphQL */ `
         postalZip
       }
       emergencyContacts {
-        firstName
-        lastName
-        relationshipToUser
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-      }
-      careGivers {
         firstName
         lastName
         relationshipToUser
@@ -212,53 +128,25 @@ export const onDeleteUser = /* GraphQL */ `
       age
       profileImageURL
       profileImageS3Key
-      room {
-        id
-        roomNumber
-        name
-        location {
-          Latitude
-          Longitude
-        }
-        locationRadius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       device {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      assignedGeofencing {
-        items {
-          id
-          userID
-          geofenceID
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       facility
       phoneNumber
@@ -284,120 +172,7 @@ export const onDeleteUser = /* GraphQL */ `
           postalZip
         }
       }
-      careGivers {
-        firstName
-        lastName
-        relationshipToUser
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-      }
       additionalNotes
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateRoom = /* GraphQL */ `
-  subscription OnCreateRoom {
-    onCreateRoom {
-      id
-      roomNumber
-      name
-      location {
-        Latitude
-        Longitude
-      }
-      locationRadius
-      users {
-        items {
-          id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateRoom = /* GraphQL */ `
-  subscription OnUpdateRoom {
-    onUpdateRoom {
-      id
-      roomNumber
-      name
-      location {
-        Latitude
-        Longitude
-      }
-      locationRadius
-      users {
-        items {
-          id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteRoom = /* GraphQL */ `
-  subscription OnDeleteRoom {
-    onDeleteRoom {
-      id
-      roomNumber
-      name
-      location {
-        Latitude
-        Longitude
-      }
-      locationRadius
-      users {
-        items {
-          id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -407,59 +182,31 @@ export const onCreateDevice = /* GraphQL */ `
   subscription OnCreateDevice {
     onCreateDevice {
       id
-      associatedUser {
+      userID
+      deviceStatus
+      alerts {
+        items {
+          id
+          deviceID
+          type
+          description
+          createdAt
+          expirationTime
+          updatedAt
+        }
+        nextToken
+      }
+      geofence {
         id
-        firstName
-        lastName
-        age
-        profileImageURL
-        profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
+        locationName
+        centerpointCoordinates {
+          Latitude
+          Longitude
         }
-        device {
-          id
-          deviceStatus
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-        emergencyContacts {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        additionalNotes
+        radius
         createdAt
         updatedAt
       }
-      deviceStatus
       data {
         items {
           id
@@ -469,6 +216,7 @@ export const onCreateDevice = /* GraphQL */ `
           observationValue
           observationDescription
           createdAt
+          expirationTime
           updatedAt
         }
         nextToken
@@ -482,59 +230,31 @@ export const onUpdateDevice = /* GraphQL */ `
   subscription OnUpdateDevice {
     onUpdateDevice {
       id
-      associatedUser {
+      userID
+      deviceStatus
+      alerts {
+        items {
+          id
+          deviceID
+          type
+          description
+          createdAt
+          expirationTime
+          updatedAt
+        }
+        nextToken
+      }
+      geofence {
         id
-        firstName
-        lastName
-        age
-        profileImageURL
-        profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
+        locationName
+        centerpointCoordinates {
+          Latitude
+          Longitude
         }
-        device {
-          id
-          deviceStatus
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-        emergencyContacts {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        additionalNotes
+        radius
         createdAt
         updatedAt
       }
-      deviceStatus
       data {
         items {
           id
@@ -544,6 +264,7 @@ export const onUpdateDevice = /* GraphQL */ `
           observationValue
           observationDescription
           createdAt
+          expirationTime
           updatedAt
         }
         nextToken
@@ -557,59 +278,31 @@ export const onDeleteDevice = /* GraphQL */ `
   subscription OnDeleteDevice {
     onDeleteDevice {
       id
-      associatedUser {
+      userID
+      deviceStatus
+      alerts {
+        items {
+          id
+          deviceID
+          type
+          description
+          createdAt
+          expirationTime
+          updatedAt
+        }
+        nextToken
+      }
+      geofence {
         id
-        firstName
-        lastName
-        age
-        profileImageURL
-        profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
+        locationName
+        centerpointCoordinates {
+          Latitude
+          Longitude
         }
-        device {
-          id
-          deviceStatus
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-        emergencyContacts {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        additionalNotes
+        radius
         createdAt
         updatedAt
       }
-      deviceStatus
       data {
         items {
           id
@@ -619,11 +312,108 @@ export const onDeleteDevice = /* GraphQL */ `
           observationValue
           observationDescription
           createdAt
+          expirationTime
           updatedAt
         }
         nextToken
       }
       createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateLocation = /* GraphQL */ `
+  subscription OnCreateLocation {
+    onCreateLocation {
+      id
+      locationName
+      centerpointCoordinates {
+        Latitude
+        Longitude
+      }
+      radius
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLocation = /* GraphQL */ `
+  subscription OnUpdateLocation {
+    onUpdateLocation {
+      id
+      locationName
+      centerpointCoordinates {
+        Latitude
+        Longitude
+      }
+      radius
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLocation = /* GraphQL */ `
+  subscription OnDeleteLocation {
+    onDeleteLocation {
+      id
+      locationName
+      centerpointCoordinates {
+        Latitude
+        Longitude
+      }
+      radius
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateAlert = /* GraphQL */ `
+  subscription OnCreateAlert {
+    onCreateAlert {
+      id
+      deviceID
+      type
+      description
+      location {
+        Latitude
+        Longitude
+      }
+      createdAt
+      expirationTime
+      updatedAt
+    }
+  }
+`;
+export const onUpdateAlert = /* GraphQL */ `
+  subscription OnUpdateAlert {
+    onUpdateAlert {
+      id
+      deviceID
+      type
+      description
+      location {
+        Latitude
+        Longitude
+      }
+      createdAt
+      expirationTime
+      updatedAt
+    }
+  }
+`;
+export const onDeleteAlert = /* GraphQL */ `
+  subscription OnDeleteAlert {
+    onDeleteAlert {
+      id
+      deviceID
+      type
+      description
+      location {
+        Latitude
+        Longitude
+      }
+      createdAt
+      expirationTime
       updatedAt
     }
   }
@@ -635,21 +425,18 @@ export const onCreateDeviceData = /* GraphQL */ `
       deviceID
       device {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
@@ -665,6 +452,7 @@ export const onCreateDeviceData = /* GraphQL */ `
       observationValue
       observationDescription
       createdAt
+      expirationTime
       updatedAt
     }
   }
@@ -676,21 +464,18 @@ export const onUpdateDeviceData = /* GraphQL */ `
       deviceID
       device {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
@@ -706,6 +491,7 @@ export const onUpdateDeviceData = /* GraphQL */ `
       observationValue
       observationDescription
       createdAt
+      expirationTime
       updatedAt
     }
   }
@@ -717,21 +503,18 @@ export const onDeleteDeviceData = /* GraphQL */ `
       deviceID
       device {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
@@ -747,312 +530,7 @@ export const onDeleteDeviceData = /* GraphQL */ `
       observationValue
       observationDescription
       createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateGeofence = /* GraphQL */ `
-  subscription OnCreateGeofence {
-    onCreateGeofence {
-      id
-      locationName
-      centerpointCoordinates {
-        Latitude
-        Longitude
-      }
-      radius
-      users {
-        items {
-          id
-          userID
-          geofenceID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateGeofence = /* GraphQL */ `
-  subscription OnUpdateGeofence {
-    onUpdateGeofence {
-      id
-      locationName
-      centerpointCoordinates {
-        Latitude
-        Longitude
-      }
-      radius
-      users {
-        items {
-          id
-          userID
-          geofenceID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteGeofence = /* GraphQL */ `
-  subscription OnDeleteGeofence {
-    onDeleteGeofence {
-      id
-      locationName
-      centerpointCoordinates {
-        Latitude
-        Longitude
-      }
-      radius
-      users {
-        items {
-          id
-          userID
-          geofenceID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateUserGeo = /* GraphQL */ `
-  subscription OnCreateUserGeo {
-    onCreateUserGeo {
-      id
-      userID
-      geofenceID
-      user {
-        id
-        firstName
-        lastName
-        age
-        profileImageURL
-        profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
-        }
-        device {
-          id
-          deviceStatus
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-        emergencyContacts {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        additionalNotes
-        createdAt
-        updatedAt
-      }
-      geofence {
-        id
-        locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
-        }
-        radius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateUserGeo = /* GraphQL */ `
-  subscription OnUpdateUserGeo {
-    onUpdateUserGeo {
-      id
-      userID
-      geofenceID
-      user {
-        id
-        firstName
-        lastName
-        age
-        profileImageURL
-        profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
-        }
-        device {
-          id
-          deviceStatus
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-        emergencyContacts {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        additionalNotes
-        createdAt
-        updatedAt
-      }
-      geofence {
-        id
-        locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
-        }
-        radius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteUserGeo = /* GraphQL */ `
-  subscription OnDeleteUserGeo {
-    onDeleteUserGeo {
-      id
-      userID
-      geofenceID
-      user {
-        id
-        firstName
-        lastName
-        age
-        profileImageURL
-        profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
-        }
-        device {
-          id
-          deviceStatus
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-        emergencyContacts {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        additionalNotes
-        createdAt
-        updatedAt
-      }
-      geofence {
-        id
-        locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
-        }
-        radius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
+      expirationTime
       updatedAt
     }
   }

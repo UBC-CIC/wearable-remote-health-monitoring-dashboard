@@ -37,7 +37,7 @@ class UserManagementTableItem extends React.Component {
     }
 
     render() {
-        const {name, profileImg, id, room, device } = this.props;
+        const {name, profileImg, id, device } = this.props;
         const {deleteModalShow} = this.state;
         return (
             <tr>
@@ -71,7 +71,6 @@ class UserManagementTableItem extends React.Component {
                     </div>
                 </td>
                 <td>{id}</td>
-                <td>{room}</td>
                 <td>{(device === null)? "NONE" : device.id}</td>
                 <td className="text-right">
                     <UncontrolledDropdown>

@@ -35,7 +35,7 @@ import {
 import UserHeader from "../../../components/Headers/UserHeader.js";
 import DeleteUserModal from "../../../components/UserProfile/DeleteUserModal/DeleteUserModal";
 // actions
-import {updateUserInformation} from "../../../actions/userActions";
+import {updateUserInformation, updateUserInformationLocally} from "../../../actions/userActions";
 
 class Profile extends React.Component {
 
@@ -45,11 +45,11 @@ class Profile extends React.Component {
     let userID = location.pathname.replace(/.admin.user-profile./, "");
     let userProfile = this.findUser(userID);
     this.state = {
+        id: userProfile.id,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
         age: userProfile.age,
         facility: userProfile.facility,
-        room: userProfile.room,
         phoneNumber: userProfile.phoneNumber,
         email: userProfile.email,
         streetAddress: userProfile.address.streetAddress,
@@ -81,19 +81,25 @@ class Profile extends React.Component {
     const {editMode, profileInfoEdited} = this.state;
     // if save profile button clicked, propagate updated profile information
     if (editMode && profileInfoEdited) {
-      const {originalProfile, firstName, lastName, age, facility, room, phoneNumber, email,
-        streetAddress, city, stateProvince, country, postalZip, additionalNotes, emergencyContacts, careGivers} = this.state;
-      const {updateUserInformation: updateUserInfo} = this.props;
-      let newRoom = originalProfile.room;
-      newRoom.roomNumber = room;
+      const {originalProfile, id, firstName, lastName, age, facility, phoneNumber, email,
+        streetAddress, city, stateProvince, country, postalZip, additionalNotes, emergencyContacts} = this.state;
+      const {updateUserInformation: updateUserInfo, updateUserInformationLocally: updateUserInfoLocal } = this.props;
       const updatedUser = {
-        ...originalProfile,
-        firstName: firstName, lastName: lastName, age: age, facility: facility, room: newRoom, phoneNumber: phoneNumber,
+        id: id, firstName: firstName, lastName: lastName, age: age, facility: facility, phoneNumber: phoneNumber,
         email: email, address: {streetAddress: streetAddress, city: city, stateProvince: stateProvince,
-          country: country, postalZip: postalZip}, additionalNotes: additionalNotes, emergencyContacts: emergencyContacts,
-        careGivers: careGivers
+          country: country, postalZip: postalZip}, additionalNotes: additionalNotes, emergencyContacts: emergencyContacts
       }
+      // update user info in DynamoDB, only input possible changed fields
       updateUserInfo(updatedUser);
+
+      // local user info needs entire profile
+      const updatedUserLocal = {
+        ...originalProfile,
+        firstName: firstName, lastName: lastName, age: age, facility: facility, phoneNumber: phoneNumber,
+        email: email, address: {streetAddress: streetAddress, city: city, stateProvince: stateProvince,
+          country: country, postalZip: postalZip}, additionalNotes: additionalNotes, emergencyContacts: emergencyContacts
+      }
+      updateUserInfoLocal(updatedUserLocal);
     }
 
     // toggle edit mode on/off
@@ -120,14 +126,8 @@ class Profile extends React.Component {
   };
 
   render() {
-    const { originalProfile, firstName, lastName, age, facility, room, phoneNumber, email,
+    const { originalProfile, firstName, lastName, age, facility, phoneNumber, email,
       streetAddress, city, stateProvince, country, postalZip, heartRate, additionalNotes ,editMode, deleteModalShow } = this.state;
-    const {rooms} = this.props;
-    let roomsList = rooms.map(room => {
-      return(
-          <option key={room.id} value={room}>{room.roomNumber}</option>
-      )
-    });
       return (
           <div>
             <UserHeader userName={firstName + " " + lastName}/>
@@ -176,8 +176,8 @@ class Profile extends React.Component {
                         <div className="col">
                           <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                             <div>
-                              <span className="heading">{(room.roomNumber) ? room.roomNumber : "N/A"}</span>
-                              <span className="description">Room</span>
+                              <span className="heading">N/A</span>
+                              <span className="description">Location</span>
                             </div>
                             <div>
                               <span
@@ -282,7 +282,7 @@ class Profile extends React.Component {
                             </Col>
                           </Row>
                           <Row>
-                            <Col lg="4">
+                            <Col lg="6">
                               <FormGroup>
                                 <label
                                     className="form-control-label"
@@ -300,7 +300,7 @@ class Profile extends React.Component {
                                 />
                               </FormGroup>
                             </Col>
-                            <Col lg="4">
+                            <Col lg="6">
                               <FormGroup>
                                 <label
                                     className="form-control-label"
@@ -316,27 +316,6 @@ class Profile extends React.Component {
                                     onChange={this.handleChange}
                                     disabled={!editMode}
                                 />
-                              </FormGroup>
-                            </Col>
-                            <Col lg="4">
-                              <FormGroup>
-                                <label
-                                    className="form-control-label"
-                                    htmlFor="room"
-                                >
-                                  Assigned Room
-                                </label>
-                                <Input
-                                    className="form-control-alternative"
-                                    id="room"
-                                    onChange={this.handleChange}
-                                    defaultValue={room}
-                                    type="select"
-                                    disabled={!editMode}
-                                >
-                                  <option disabled>Room Number</option>
-                                  {roomsList}
-                                </Input>
                               </FormGroup>
                             </Col>
                           </Row>
@@ -519,9 +498,8 @@ class Profile extends React.Component {
 const mapStateToProps = (state) => {
   return {
     users: state.users,
-    rooms: state.rooms,
     isLoading: state.applicationStatus.startupLoading,
   };
 };
 
-export default connect(mapStateToProps, {updateUserInformation}) (Profile);
+export default connect(mapStateToProps, {updateUserInformation, updateUserInformationLocally}) (Profile);

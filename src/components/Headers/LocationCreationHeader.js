@@ -20,7 +20,7 @@ import React from "react";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
-class GeofenceCreationHeader extends React.Component {
+class LocationCreationHeader extends React.Component {
   render() {
     return (
       <>
@@ -40,7 +40,7 @@ class GeofenceCreationHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="12" md="12">
-                <h1 className="display-2 text-white">Create a Geofence</h1>
+                <h1 className="display-2 text-white">Create a Location</h1>
               </Col>
             </Row>
           </Container>
@@ -50,4 +50,4 @@ class GeofenceCreationHeader extends React.Component {
   }
 }
 
-export default GeofenceCreationHeader;
+export default LocationCreationHeader;

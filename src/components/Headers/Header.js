@@ -29,7 +29,6 @@ import {
   Media,
    Badge, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from "reactstrap";
-import AlertTableItem from "../Dashboard/AlertTableItem/AlertTableItem";
 
 class Header extends React.Component {
   render() {

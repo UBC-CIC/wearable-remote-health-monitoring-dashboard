@@ -10,53 +10,25 @@ export const getUser = /* GraphQL */ `
       age
       profileImageURL
       profileImageS3Key
-      room {
-        id
-        roomNumber
-        name
-        location {
-          Latitude
-          Longitude
-        }
-        locationRadius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       device {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      assignedGeofencing {
-        items {
-          id
-          userID
-          geofenceID
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       facility
       phoneNumber
@@ -69,20 +41,6 @@ export const getUser = /* GraphQL */ `
         postalZip
       }
       emergencyContacts {
-        firstName
-        lastName
-        relationshipToUser
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-      }
-      careGivers {
         firstName
         lastName
         relationshipToUser
@@ -116,22 +74,12 @@ export const listUsers = /* GraphQL */ `
         age
         profileImageURL
         profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
-        }
         device {
           id
+          userID
           deviceStatus
           createdAt
           updatedAt
-        }
-        assignedGeofencing {
-          nextToken
         }
         facility
         phoneNumber
@@ -150,73 +98,7 @@ export const listUsers = /* GraphQL */ `
           phoneNumber
           email
         }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
         additionalNotes
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getRoom = /* GraphQL */ `
-  query GetRoom($id: ID!) {
-    getRoom(id: $id) {
-      id
-      roomNumber
-      name
-      location {
-        Latitude
-        Longitude
-      }
-      locationRadius
-      users {
-        items {
-          id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listRooms = /* GraphQL */ `
-  query ListRooms(
-    $filter: ModelRoomFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        roomNumber
-        name
-        location {
-          Latitude
-          Longitude
-        }
-        locationRadius
-        users {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -228,59 +110,31 @@ export const getDevice = /* GraphQL */ `
   query GetDevice($id: ID!) {
     getDevice(id: $id) {
       id
-      associatedUser {
+      userID
+      deviceStatus
+      alerts {
+        items {
+          id
+          deviceID
+          type
+          description
+          createdAt
+          expirationTime
+          updatedAt
+        }
+        nextToken
+      }
+      geofence {
         id
-        firstName
-        lastName
-        age
-        profileImageURL
-        profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
+        locationName
+        centerpointCoordinates {
+          Latitude
+          Longitude
         }
-        device {
-          id
-          deviceStatus
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-        emergencyContacts {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        additionalNotes
+        radius
         createdAt
         updatedAt
       }
-      deviceStatus
       data {
         items {
           id
@@ -290,6 +144,7 @@ export const getDevice = /* GraphQL */ `
           observationValue
           observationDescription
           createdAt
+          expirationTime
           updatedAt
         }
         nextToken
@@ -308,25 +163,100 @@ export const listDevices = /* GraphQL */ `
     listDevices(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
         createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getLocation = /* GraphQL */ `
+  query GetLocation($id: ID!) {
+    getLocation(id: $id) {
+      id
+      locationName
+      centerpointCoordinates {
+        Latitude
+        Longitude
+      }
+      radius
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLocations = /* GraphQL */ `
+  query ListLocations(
+    $filter: ModelLocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        locationName
+        centerpointCoordinates {
+          Latitude
+          Longitude
+        }
+        radius
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getAlert = /* GraphQL */ `
+  query GetAlert($id: ID!) {
+    getAlert(id: $id) {
+      id
+      deviceID
+      type
+      description
+      location {
+        Latitude
+        Longitude
+      }
+      createdAt
+      expirationTime
+      updatedAt
+    }
+  }
+`;
+export const listAlerts = /* GraphQL */ `
+  query ListAlerts(
+    $filter: ModelAlertFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAlerts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        deviceID
+        type
+        description
+        location {
+          Latitude
+          Longitude
+        }
+        createdAt
+        expirationTime
         updatedAt
       }
       nextToken
@@ -340,21 +270,18 @@ export const getDeviceData = /* GraphQL */ `
       deviceID
       device {
         id
-        associatedUser {
+        userID
+        deviceStatus
+        alerts {
+          nextToken
+        }
+        geofence {
           id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
+          locationName
+          radius
           createdAt
           updatedAt
         }
-        deviceStatus
         data {
           nextToken
         }
@@ -370,6 +297,7 @@ export const getDeviceData = /* GraphQL */ `
       observationValue
       observationDescription
       createdAt
+      expirationTime
       updatedAt
     }
   }
@@ -386,6 +314,7 @@ export const listDeviceDatas = /* GraphQL */ `
         deviceID
         device {
           id
+          userID
           deviceStatus
           createdAt
           updatedAt
@@ -399,172 +328,7 @@ export const listDeviceDatas = /* GraphQL */ `
         observationValue
         observationDescription
         createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getGeofence = /* GraphQL */ `
-  query GetGeofence($id: ID!) {
-    getGeofence(id: $id) {
-      id
-      locationName
-      centerpointCoordinates {
-        Latitude
-        Longitude
-      }
-      radius
-      users {
-        items {
-          id
-          userID
-          geofenceID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listGeofences = /* GraphQL */ `
-  query ListGeofences(
-    $filter: ModelGeofenceFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listGeofences(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
-        }
-        radius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserGeo = /* GraphQL */ `
-  query GetUserGeo($id: ID!) {
-    getUserGeo(id: $id) {
-      id
-      userID
-      geofenceID
-      user {
-        id
-        firstName
-        lastName
-        age
-        profileImageURL
-        profileImageS3Key
-        room {
-          id
-          roomNumber
-          name
-          locationRadius
-          createdAt
-          updatedAt
-        }
-        device {
-          id
-          deviceStatus
-          createdAt
-          updatedAt
-        }
-        assignedGeofencing {
-          nextToken
-        }
-        facility
-        phoneNumber
-        email
-        address {
-          streetAddress
-          city
-          stateProvince
-          country
-          postalZip
-        }
-        emergencyContacts {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        careGivers {
-          firstName
-          lastName
-          relationshipToUser
-          phoneNumber
-          email
-        }
-        additionalNotes
-        createdAt
-        updatedAt
-      }
-      geofence {
-        id
-        locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
-        }
-        radius
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserGeos = /* GraphQL */ `
-  query ListUserGeos(
-    $filter: ModelUserGeoFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserGeos(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userID
-        geofenceID
-        user {
-          id
-          firstName
-          lastName
-          age
-          profileImageURL
-          profileImageS3Key
-          facility
-          phoneNumber
-          email
-          additionalNotes
-          createdAt
-          updatedAt
-        }
-        geofence {
-          id
-          locationName
-          radius
-          createdAt
-          updatedAt
-        }
-        createdAt
+        expirationTime
         updatedAt
       }
       nextToken
