@@ -4,6 +4,7 @@ import userReducer from "./userReducer";
 import deviceReducer from "./deviceReducer";
 import appStatusReducer from "./appStatusReducer";
 import locationReducer from "./locationReducer";
+import notificationReducer from "./notificationReducer";
 
 export default combineReducers({
     alerts: alertReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     devices: deviceReducer,
     applicationStatus: appStatusReducer,
     locations: locationReducer,
+    notifications: notificationReducer,
 });

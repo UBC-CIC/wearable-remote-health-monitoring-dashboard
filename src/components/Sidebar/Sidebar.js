@@ -20,20 +20,15 @@ import React from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+import "./SideBar.css";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
   Collapse,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  FormGroup,
   Form,
   Input,
   InputGroupAddon,
@@ -45,14 +40,11 @@ import {
   NavItem,
   NavLink,
   Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col
 } from "reactstrap";
-
-var ps;
+import Toast from 'react-bootstrap/Toast'
 
 class Sidebar extends React.Component {
   state = {
@@ -99,7 +91,7 @@ class Sidebar extends React.Component {
     });
   };
   render() {
-    const { bgColor, routes, logo } = this.props;
+    const { routes, logo } = this.props;
     let navbarBrandProps;
     if (logo && logo.innerLink) {
       navbarBrandProps = {
@@ -243,6 +235,27 @@ class Sidebar extends React.Component {
             <Nav navbar>{this.createLinks(routes)}</Nav>
             {/* Divider */}
             <hr className="my-3" />
+            {/* Alert Notifications */}
+            <div>
+              <Toast className={"bg-yellow rounded mr-1 px-1 toast"} animation={true}>
+                <Toast.Header style={{borderBottom: "1px solid gray"}}>
+                  <strong className="mr-auto">New Alert</strong>
+                  <small> just now</small>
+                </Toast.Header>
+                <Toast.Body>
+                  <div className={"row"}>
+                    <div className={"col"}>
+                      User: Jane Doe
+                    </div>
+                  </div>
+                  <div className={"row"}>
+                    <div className={"col"}>
+                      Type: Heart Rate
+                    </div>
+                  </div>
+                </Toast.Body>
+              </Toast>
+            </div>
             {/* Heading */}
             {/* Navigation */}
           </Collapse>

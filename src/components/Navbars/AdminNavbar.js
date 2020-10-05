@@ -17,6 +17,8 @@
 */
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 // reactstrap components
 import {
   DropdownMenu,
@@ -31,8 +33,10 @@ import {
 
 class AdminNavbar extends React.Component {
   render() {
+    const { alertsConnected } = this.props;
+
     return (
-      <>
+      <div>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
           <Container fluid>
             <Link
@@ -41,6 +45,12 @@ class AdminNavbar extends React.Component {
             >
               {this.props.brandText}
             </Link>
+            <div className="navbar-search navbar-search-dark text-white form-inline mr-3 d-none d-md-flex ml-lg-auto">
+               {(alertsConnected)?
+                 <span>Realtime Status: <i className="fas fa-dot-circle" style={{color: "lightGreen"}}></i> Connected</span>
+                 :
+                 <span>Realtime Status: <i className="fas fa-dot-circle" style={{color: "red"}}></i> Disconnected</span>}
+            </div>
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>
                 <DropdownToggle className="pr-0" nav>
@@ -59,28 +69,8 @@ class AdminNavbar extends React.Component {
                   </Media>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem className="noti-title" header tag="div">
-                    <h6 className="text-overflow m-0">Welcome!</h6>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-single-02" />
-                    <span>My profile</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-settings-gear-65" />
-                    <span>Settings</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-calendar-grid-58" />
-                    <span>Activity</span>
-                  </DropdownItem>
-                  <DropdownItem to="/admin/user-profile" tag={Link}>
-                    <i className="ni ni-support-16" />
-                    <span>Support</span>
-                  </DropdownItem>
-                  <DropdownItem divider />
                   <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                    <i className="ni ni-user-run" />
+                    <i className="fas fa-sign-out-alt" />
                     <span>Logout</span>
                   </DropdownItem>
                 </DropdownMenu>
@@ -88,9 +78,15 @@ class AdminNavbar extends React.Component {
             </Nav>
           </Container>
         </Navbar>
-      </>
+      </div>
     );
   }
 }
 
-export default AdminNavbar;
+const mapStateToProps = (state) => {
+  return {
+    alertsConnected: state.applicationStatus.alertsConnected,
+  };
+};
+
+export default connect(mapStateToProps)(AdminNavbar);

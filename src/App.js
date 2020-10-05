@@ -9,15 +9,19 @@ import LoadingPage from "./views/Pages/LoadingPage";
 import {fetchUsers} from "./actions/userActions";
 import {fetchDevices} from "./actions/deviceActions";
 import {fetchLocations} from "./actions/locationActions";
+import {fetchAlerts} from "./actions/alertActions";
+import {subscribeAlerts} from "./actions/alertActions";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    const {fetchUsers, fetchDevices, fetchLocations} = this.props;
+    const {fetchUsers, fetchDevices, fetchLocations, fetchAlerts, subscribeAlerts} = this.props;
     fetchUsers();
     fetchDevices();
     fetchLocations();
+    fetchAlerts();
+    subscribeAlerts();
   }
 
   render() {
@@ -50,6 +54,8 @@ const mapDispatchToProps = {
     fetchUsers,
     fetchDevices,
     fetchLocations,
+    fetchAlerts,
+    subscribeAlerts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

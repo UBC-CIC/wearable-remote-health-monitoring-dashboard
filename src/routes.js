@@ -86,7 +86,7 @@ let routes = [
   {
     path: "/login",
     name: "Logout",
-    icon: "ni ni-key-25 text-info",
+    icon: "fas fa-sign-out-alt text-info",
     component: Login,
     layout: "/admin",
     exposed: true

@@ -38,7 +38,7 @@ type Alert @model
   type: String!
   description: String!
   location: LatLon
-  createdAt: String!
+  createdAt: Int!
   expirationTime: Int!
 }
 

@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import {Button, FormGroup, Input} from "reactstrap";
 import { connect } from "react-redux";
 import { assignLocationRequest, assignLocationLocal } from "../../../actions/deviceActions";
-import {v4 as uuidv4} from "uuid";
 
 
 class AssignLocationModal extends React.Component{
@@ -20,7 +19,7 @@ class AssignLocationModal extends React.Component{
         // set default location to the first location, if any are available
         if (locations.length > 0) {
             this.setState({
-                locationID: locations[0],
+                locationID: locations[0].id,
             })
         }
     }
@@ -66,7 +65,7 @@ class AssignLocationModal extends React.Component{
         const {locationID} = this.state;
         const locationsList = locations.map(location => {
             return(
-              <option key={uuidv4()} value={location.id}>{location.locationName}</option>
+              <option key={location.id} value={location.id}>{location.locationName}</option>
             );
         })
         return(
