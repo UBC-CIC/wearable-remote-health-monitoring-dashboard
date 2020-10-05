@@ -2,49 +2,30 @@ import * as React from "react";
 import Modal from "react-bootstrap/Modal";
 import {Button, FormGroup, Input} from "reactstrap";
 import { connect } from "react-redux";
-import { associateDeviceWithUser } from "../../../actions/deviceActions";
+import { assignLocationRequest, assignLocationLocal } from "../../../actions/deviceActions";
 import {v4 as uuidv4} from "uuid";
 
 
-
-class PairDeviceModal extends React.Component {
+class AssignLocationModal extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            availableUsers: [],
-            selectedUser: {},
+            locationID: "",
         }
     }
 
     componentDidMount() {
-        this.populateFormFields();
-    }
-
-    //  check for users without a registered device
-    populateFormFields = () => {
-        const {users} = this.props;
-        console.log("users", users);
-        let availableUsers = [];
-        users.forEach(user => {
-            if (user.device === null) {
-                availableUsers.push(user);
-            }
-        });
-        // save the available users to the local state
-        this.setState({
-            availableUsers: availableUsers,
-        });
-        // set default value for select input (handleChange isn't triggered if first option is selected)
-        if (availableUsers.length >= 1) {
+        const {locations} = this.props;
+        // set default location to the first location, if any are available
+        if (locations.length > 0) {
             this.setState({
-                selectedUser: availableUsers[0],
-            });
+                locationID: locations[0],
+            })
         }
     }
 
-
-
+    // handles tracking the location selected
     handleChange = (e) => {
         e.preventDefault();
         this.setState({
@@ -52,14 +33,22 @@ class PairDeviceModal extends React.Component {
         })
     }
 
-
-
-    // handles pairing the device
-    onPair = (e) => {
+    // handles assigning the location to the user's device
+    onAssign = (e) => {
         e.preventDefault();
-        const {associateDeviceWithUser, device, onHide} = this.props;
-        const {selectedUser} = this.state;
-        associateDeviceWithUser({device: device, user: selectedUser});
+        const {onHide, assignLocationRequest, assignLocationLocal, deviceID} = this.props;
+        const { locationID } = this.state;
+
+        // payload for DynamoDB
+        const payload = {id: deviceID, deviceGeofenceId: locationID};
+        assignLocationRequest(payload);
+
+        const {locations} = this.props;
+        // retrieve the associated location
+        let location =  locations.find(location => location.id === locationID);
+        // payload for local state update
+        const payloadLocal = {id: deviceID, geofence: location};
+        assignLocationLocal(payloadLocal);
         onHide();
     }
 
@@ -71,21 +60,20 @@ class PairDeviceModal extends React.Component {
     }
 
 
+
     render() {
-        const { show, onHide, device } = this.props;
-        const { selectedUser, availableUsers } = this.state;
-
-        let userOptions = availableUsers.map(user => {
+        const { show, onHide, locations, userName } = this.props;
+        const {locationID} = this.state;
+        const locationsList = locations.map(location => {
             return(
-                <option key={uuidv4()} value={user}>{user.firstName  + " " + user.lastName + ": " + user.id}</option>
-            )
-        });
-
+              <option key={uuidv4()} value={location.id}>{location.locationName}</option>
+            );
+        })
         return(
             <div>
                 <Modal
                     onHide={onHide}
-                    size="sm"
+                    size="md"
                     show={show}
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -94,15 +82,15 @@ class PairDeviceModal extends React.Component {
                         <Modal.Title id="contained-modal-title-vcenter">
                             <div className="row">
                                 <div className="col d-flex justify-content-center align-items-center">
-                                    Pair Device
+                                    Assign a Location
                                 </div>
                             </div>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div className={"row"}>
-                            <div className={"col d-flex justify-content-center text-center"}>
-                                <h4>Select a user to pair with device {device.id}.</h4>
+                            <div className={"col d-flex justify-content-center"}>
+                                Please select a location to assign to {userName}.
                             </div>
                         </div>
                         <div className={"row"}>
@@ -110,19 +98,18 @@ class PairDeviceModal extends React.Component {
                                 <FormGroup>
                                     <label
                                         className="form-control-label"
-                                        htmlFor="selectedUserID"
+                                        htmlFor="locationID"
                                     >
-                                        Available Users
+                                        <span>Location</span>
                                     </label>
                                     <Input
                                         className="form-control-alternative"
-                                        id="selectedUserID"
+                                        id="locationID"
                                         type="select"
                                         onChange={this.handleChange}
                                         required={true}
                                     >
-                                        <option disabled>User</option>
-                                        {userOptions}
+                                        {locationsList}
                                     </Input>
                                 </FormGroup>
                             </div>
@@ -140,11 +127,12 @@ class PairDeviceModal extends React.Component {
                             </div>
                             <div className={"col-6 d-flex justify-content-center"}>
                                 <Button
-                                    color="danger"
-                                    onClick={this.onPair}
-                                    disabled={Object.keys(selectedUser).length === 0}
+                                    color="success"
+                                    onClick={this.onAssign}
+                                    disabled={locationID.length === 0}
+
                                 >
-                                    Pair Device
+                                    Assign Location
                                 </Button>
                             </div>
                         </div>
@@ -157,14 +145,14 @@ class PairDeviceModal extends React.Component {
 }
 
 const mapDispatchToProps = {
-    associateDeviceWithUser,
+    assignLocationRequest,
+    assignLocationLocal,
 };
 
 const mapStateToProps = (state) => {
     return {
-        devices: state.devices,
-        users: state.users,
+        locations: state.locations,
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PairDeviceModal);
+export default connect(mapStateToProps, mapDispatchToProps)(AssignLocationModal);

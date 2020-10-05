@@ -78,6 +78,15 @@ export const listUsers = /* GraphQL */ `
           id
           userID
           deviceStatus
+          geofence {
+           id
+           locationName
+           centerpoint {
+           latitude
+           longitude
+           }
+           radius
+          }
           createdAt
           updatedAt
         }
@@ -127,9 +136,9 @@ export const getDevice = /* GraphQL */ `
       geofence {
         id
         locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
+        centerpoint {
+          latitude
+          longitude
         }
         radius
         createdAt
@@ -190,9 +199,9 @@ export const getLocation = /* GraphQL */ `
     getLocation(id: $id) {
       id
       locationName
-      centerpointCoordinates {
-        Latitude
-        Longitude
+      centerpoint {
+        latitude
+        longitude
       }
       radius
       createdAt
@@ -210,9 +219,9 @@ export const listLocations = /* GraphQL */ `
       items {
         id
         locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
+        centerpoint {
+          latitude
+          longitude
         }
         radius
         createdAt
@@ -230,8 +239,8 @@ export const getAlert = /* GraphQL */ `
       type
       description
       location {
-        Latitude
-        Longitude
+        latitude
+        longitude
       }
       createdAt
       expirationTime
@@ -252,8 +261,8 @@ export const listAlerts = /* GraphQL */ `
         type
         description
         location {
-          Latitude
-          Longitude
+          latitude
+          longitude
         }
         createdAt
         expirationTime
@@ -289,8 +298,8 @@ export const getDeviceData = /* GraphQL */ `
         updatedAt
       }
       location {
-        Latitude
-        Longitude
+        latitude
+        longitude
       }
       observationType
       observationUnit
@@ -320,8 +329,8 @@ export const listDeviceDatas = /* GraphQL */ `
           updatedAt
         }
         location {
-          Latitude
-          Longitude
+          latitude
+          longitude
         }
         observationType
         observationUnit

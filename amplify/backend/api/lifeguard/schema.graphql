@@ -27,7 +27,7 @@ type Location @model
 @key(name: "byLocationName", fields: ["locationName"]) {
   id: ID!
   locationName: String!
-  centerpointCoordinates: LatLon!
+  centerpoint: LatLon!
   radius: Int!
 }
 
@@ -59,8 +59,8 @@ type DeviceData @model
 
 
 type LatLon {
-  Latitude: String!
-  Longitude: String!
+  latitude: Float!
+  longitude: Float!
 }
 
 type Contact {

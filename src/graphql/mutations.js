@@ -211,9 +211,9 @@ export const createDevice = /* GraphQL */ `
       geofence {
         id
         locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
+        centerpoint {
+          latitude
+          longitude
         }
         radius
         createdAt
@@ -262,9 +262,9 @@ export const updateDevice = /* GraphQL */ `
       geofence {
         id
         locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
+        centerpoint {
+          latitude
+          longitude
         }
         radius
         createdAt
@@ -313,9 +313,9 @@ export const deleteDevice = /* GraphQL */ `
       geofence {
         id
         locationName
-        centerpointCoordinates {
-          Latitude
-          Longitude
+        centerpoint {
+          latitude
+          longitude
         }
         radius
         createdAt
@@ -348,9 +348,9 @@ export const createLocation = /* GraphQL */ `
     createLocation(input: $input, condition: $condition) {
       id
       locationName
-      centerpointCoordinates {
-        Latitude
-        Longitude
+      centerpoint {
+        latitude
+        longitude
       }
       radius
       createdAt
@@ -366,9 +366,9 @@ export const updateLocation = /* GraphQL */ `
     updateLocation(input: $input, condition: $condition) {
       id
       locationName
-      centerpointCoordinates {
-        Latitude
-        Longitude
+      centerpoint {
+        latitude
+        longitude
       }
       radius
       createdAt
@@ -384,9 +384,9 @@ export const deleteLocation = /* GraphQL */ `
     deleteLocation(input: $input, condition: $condition) {
       id
       locationName
-      centerpointCoordinates {
-        Latitude
-        Longitude
+      centerpoint {
+        latitude
+        longitude
       }
       radius
       createdAt
@@ -405,8 +405,8 @@ export const createAlert = /* GraphQL */ `
       type
       description
       location {
-        Latitude
-        Longitude
+        latitude
+        longitude
       }
       createdAt
       expirationTime
@@ -425,8 +425,8 @@ export const updateAlert = /* GraphQL */ `
       type
       description
       location {
-        Latitude
-        Longitude
+        latitude
+        longitude
       }
       createdAt
       expirationTime
@@ -445,8 +445,8 @@ export const deleteAlert = /* GraphQL */ `
       type
       description
       location {
-        Latitude
-        Longitude
+        latitude
+        longitude
       }
       createdAt
       expirationTime
@@ -483,8 +483,8 @@ export const createDeviceData = /* GraphQL */ `
         updatedAt
       }
       location {
-        Latitude
-        Longitude
+        latitude
+        longitude
       }
       observationType
       observationUnit
@@ -525,8 +525,8 @@ export const updateDeviceData = /* GraphQL */ `
         updatedAt
       }
       location {
-        Latitude
-        Longitude
+        latitude
+        longitude
       }
       observationType
       observationUnit
@@ -567,8 +567,8 @@ export const deleteDeviceData = /* GraphQL */ `
         updatedAt
       }
       location {
-        Latitude
-        Longitude
+        latitude
+        longitude
       }
       observationType
       observationUnit

@@ -35,6 +35,26 @@ const deleteDeviceHelper = (devices, target) => {
     return devices;
 }
 
+const assignGeofenceHelper = (devices, payload) => {
+    let newDevices = [...devices];
+    newDevices.forEach(device => {
+        if (device.id === payload.id) {
+            device.geofence = payload.geofence;
+        }
+    })
+    return newDevices;
+}
+
+const removeGeofenceHelper = (devices, payload) => {
+    let newDevices = [...devices];
+    newDevices.forEach(device => {
+        if (device.id === payload.id) {
+            device.geofence = null;
+        }
+    })
+    return newDevices;
+}
+
 const deviceReducer = (devices = initialDevices, action) => {
     let newDeviceList = [...devices];
     switch (action.type) {
@@ -55,6 +75,12 @@ const deviceReducer = (devices = initialDevices, action) => {
         }
         case "UNPAIR_DEVICE": {
             return newDeviceList;
+        }
+        case "ASSIGN_LOCATION": {
+            return assignGeofenceHelper(newDeviceList, action.payload);
+        }
+        case "REMOVE_LOCATION": {
+            return removeGeofenceHelper(newDeviceList, action.payload);
         }
         default:
             return newDeviceList;

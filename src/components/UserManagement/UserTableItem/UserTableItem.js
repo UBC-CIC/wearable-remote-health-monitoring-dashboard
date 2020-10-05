@@ -11,6 +11,8 @@ import {
     UncontrolledDropdown,
     UncontrolledTooltip
 } from "reactstrap";
+import AssignLocationModal from "../../LocationManagement/AssignLocationModal/AssignLocationModal";
+import RemoveLocationModal from "../../LocationManagement/RemoveLocationModal/RemoveLocationModal";
 
 
 
@@ -20,6 +22,8 @@ class UserManagementTableItem extends React.Component {
         super(props);
         this.state = {
             deleteModalShow: false,
+            assignLocationModalShow: false,
+            removeLocationModalShow: false,
         }
     }
 
@@ -27,6 +31,20 @@ class UserManagementTableItem extends React.Component {
     setDeleteModalShow = (bool) => {
         this.setState({
             deleteModalShow: bool,
+        });
+    };
+
+    // Triggers the opening/closing of the AssignLocationModal
+    setAssignLocationModalShow = (bool) => {
+        this.setState({
+            assignLocationModalShow: bool,
+        });
+    };
+
+    // Triggers the opening/closing of the RemoveLocationModal
+    setRemoveLocationModalShow = (bool) => {
+        this.setState({
+            removeLocationModalShow: bool,
         });
     };
 
@@ -38,7 +56,7 @@ class UserManagementTableItem extends React.Component {
 
     render() {
         const {name, profileImg, id, device } = this.props;
-        const {deleteModalShow} = this.state;
+        const {deleteModalShow, assignLocationModalShow, removeLocationModalShow} = this.state;
         return (
             <tr>
                 <th scope="row">
@@ -70,8 +88,8 @@ class UserManagementTableItem extends React.Component {
                         </UncontrolledTooltip>
                     </div>
                 </td>
-                <td>{id}</td>
-                <td>{(device === null)? "NONE" : device.id}</td>
+                <td>{(device)? device.id : "NONE" }</td>
+                <td>{(device)? (device.geofence)?  device.geofence.locationName : "NONE" : "NONE" }</td>
                 <td className="text-right">
                     <UncontrolledDropdown>
                         <DropdownToggle
@@ -102,7 +120,24 @@ class UserManagementTableItem extends React.Component {
                             >
                                 Delete User
                             </DropdownItem>
+                            {(device)?
+                                (device.geofence)?
+                                <DropdownItem
+                                    onClick={() => this.setRemoveLocationModalShow(true)}
+                                >
+                                    Remove Location
+                                </DropdownItem>
+                                    :
+                                    <DropdownItem
+                                        onClick={() => this.setAssignLocationModalShow(true)}
+                                    >
+                                        Assign a Location
+                                    </DropdownItem>
+                            :
+                            null}
                             <DeleteUserModal show={deleteModalShow} userID={id} userName={name} onHide={() => this.setDeleteModalShow(false)} />
+                            <AssignLocationModal show={assignLocationModalShow} userName={name} deviceID={(device)? device.id : ""} onHide={() => this.setAssignLocationModalShow(false)}  />
+                            <RemoveLocationModal show={removeLocationModalShow} userName={name} deviceID={(device)? device.id : ""} locationName={(device)? (device.geofence)? device.geofence.locationName : "N/A" : "N/A"} onHide={() => this.setRemoveLocationModalShow(false)} />
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </td>

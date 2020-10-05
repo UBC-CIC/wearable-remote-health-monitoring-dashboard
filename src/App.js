@@ -8,14 +8,16 @@ import LoadingPage from "./views/Pages/LoadingPage";
 // actions
 import {fetchUsers} from "./actions/userActions";
 import {fetchDevices} from "./actions/deviceActions";
+import {fetchLocations} from "./actions/locationActions";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    const {fetchUsers, fetchDevices} = this.props;
+    const {fetchUsers, fetchDevices, fetchLocations} = this.props;
     fetchUsers();
     fetchDevices();
+    fetchLocations();
   }
 
   render() {
@@ -46,7 +48,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     fetchUsers,
-    fetchDevices
+    fetchDevices,
+    fetchLocations,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

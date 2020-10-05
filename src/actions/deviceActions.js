@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { listDevices } from '../graphql/queries';
-import {createDevice, updateDevice, updateUser, deleteDevice} from '../graphql/mutations';
+import {createDevice, updateDevice, updateUser, deleteDevice } from '../graphql/mutations';
 
 
 
@@ -180,4 +180,71 @@ export const deleteDeviceSuccess = () => {
     }
 }
 
-// ================================================================================================
+// =====================================---ASSIGN LOCATION TO DEVICE---=======================================
+
+// Assign location to device in DynamoDB
+export const assignLocationRequest = (payload) => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(updateDevice, {input: payload})).then((response) => {
+            console.log(response);
+            dispatch(assignLocationSuccess());
+        }).catch((err) => {
+            console.log("Error assigning location: ", err);
+            dispatch(assignLocationFailure(err));
+        })
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to failure condition
+export const assignLocationFailure = (error) => {
+    return {
+        type: "ASSIGN_LOCATION_FAILURE",
+        payload: error
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to success condition
+export const assignLocationSuccess = () => {
+    return {
+        type: "ASSIGN_LOCATION_SUCCESS",
+    }
+}
+
+// Assign location to device locally
+export const assignLocationLocal = (payload) => {
+    return {
+        type: "ASSIGN_LOCATION",
+        payload: payload
+    }
+}
+
+// =====================================---REMOVE LOCATION FROM DEVICE---=======================================
+
+// Remove location from device locally and in DynamoDB
+export const removeLocationRequest = (payload) => {
+    return (dispatch) => {
+        dispatch({type: "REMOVE_LOCATION", payload: payload});
+        API.graphql(graphqlOperation(updateDevice, {input: payload})).then((response) => {
+            console.log(response);
+            dispatch(removeLocationSuccess());
+        }).catch((err) => {
+            console.log("Error removing location: ", err);
+            dispatch(removeLocationFailure(err));
+        })
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to failure condition
+export const removeLocationFailure = (error) => {
+    return {
+        type: "REMOVE_LOCATION_FAILURE",
+        payload: error
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to success condition
+export const removeLocationSuccess = () => {
+    return {
+        type: "REMOVE_LOCATION_SUCCESS",
+    }
+}

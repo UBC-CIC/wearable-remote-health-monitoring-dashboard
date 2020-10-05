@@ -11,7 +11,7 @@ class LoadingPage extends React.Component {
             <div className={"container"}>
                 <div className={"row loadRow-1"}>
                     <div className={"col d-flex justify-content-center align-items-end"}>
-                        <h1 className={"display-3"}>Application is Loading...</h1>
+                        <h1 className={"display-3"}>Loading System Information...</h1>
                     </div>
                 </div>
                 <div className={"row loadRow-2"}>

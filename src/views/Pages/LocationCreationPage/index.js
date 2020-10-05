@@ -16,13 +16,18 @@
 
 */
 import React from "react";
+import { connect } from "react-redux";
 import GoogleMap from "google-map-react";
-import { Card, Container, Row, Col, CardHeader,
+import {
+    Card, Container, Row, Col, CardHeader,
     CardBody,
     FormGroup,
     Form,
-    Input } from "reactstrap";
+    Input, Button
+} from "reactstrap";
 import LocationCreationHeader from "../../../components/Headers/LocationCreationHeader";
+import { v4 as uuidv4 } from "uuid";
+import { addNewLocation } from "../../../actions/locationActions";
 
 
 class CreateLocation extends React.Component {
@@ -36,6 +41,9 @@ class CreateLocation extends React.Component {
         super(props);
         this.state = {
             locationName: "",
+            latitude: 0,
+            longitude: 0,
+            radius: 0,
         }
     }
 
@@ -46,6 +54,27 @@ class CreateLocation extends React.Component {
         })
     }
 
+    handleSubmit = () => {
+        const { locationName, latitude, longitude, radius } = this.state;
+        const {addNewLocation: addLocation, history} = this.props;
+        const latLon = {latitude: latitude, longitude: longitude};
+        const newLocation = {
+            id: uuidv4(),
+            locationName: locationName,
+            centerpoint: latLon,
+            radius: radius,
+        }
+        // submit new location
+        addLocation(newLocation);
+        // return to location management page after submitting
+        let path = "/admin/manage-locations";
+        history.push(path);
+    }
+
+    handleDrawingTools = (map, maps) => {
+
+    }
+
   render() {
         const {center, zoom} = this.props;
     return (
@@ -54,6 +83,20 @@ class CreateLocation extends React.Component {
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
+              <Col lg="6" >
+                  <Card className="shadow border-0 mapCard" style={{width: "100%", height: "100%"}}>
+                      <GoogleMap
+                          bootstrapURLKeys={{
+                              key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+                              libraries: ['drawing', 'geometry', 'places']
+                          }}
+                          defaultCenter={center}
+                          defaultZoom={zoom}
+                          yesIWantToUseGoogleMapApiInternals
+                          onGoogleApiLoaded={({ map, maps }) => this.handleDrawingTools(map, maps)}
+                      />
+                  </Card>
+              </Col>
               <Col lg="6">
                   <Card className="bg-secondary shadow">
                       <CardHeader className={"bg-white border-0"}>
@@ -74,7 +117,7 @@ class CreateLocation extends React.Component {
                                                   className="form-control-label"
                                                   htmlFor="locationName"
                                               >
-                                                  Location Name*
+                                                  *Location Name
                                               </label>
                                               <Input
                                                   className="form-control-alternative"
@@ -87,24 +130,80 @@ class CreateLocation extends React.Component {
                                           </FormGroup>
                                       </Col>
                                   </Row>
+                                  <Row>
+                                      <Col lg="6" >
+                                          <FormGroup>
+                                              <label
+                                                  className="form-control-label"
+                                                  htmlFor="latitude"
+                                              >
+                                                  *Latitude
+                                              </label>
+                                              <Input
+                                                  className="form-control-alternative"
+                                                  id="latitude"
+                                                  placeholder="49.263232"
+                                                  type="number"
+                                                  min={-90}
+                                                  max={90}
+                                                  onChange={this.handleFormChange}
+                                                  required={true}
+                                              />
+                                          </FormGroup>
+                                      </Col>
+                                      <Col lg="6" >
+                                          <FormGroup>
+                                              <label
+                                                  className="form-control-label"
+                                                  htmlFor="longitude"
+                                              >
+                                                  *Longitude
+                                              </label>
+                                              <Input
+                                                  className="form-control-alternative"
+                                                  id="longitude"
+                                                  placeholder="-123.25429"
+                                                  type="number"
+                                                  min={-180}
+                                                  max={180}
+                                                  onChange={this.handleFormChange}
+                                                  required={true}
+                                              />
+                                          </FormGroup>
+                                      </Col>
+                                  </Row>
+                                  <Row>
+                                      <Col >
+                                          <FormGroup>
+                                              <label
+                                                  className="form-control-label"
+                                                  htmlFor="radius"
+                                              >
+                                                  *Radius (meters)
+                                              </label>
+                                              <Input
+                                                  className="form-control-alternative"
+                                                  id="radius"
+                                                  placeholder="10"
+                                                  type="number"
+                                                  onChange={this.handleFormChange}
+                                                  required={true}
+                                              />
+                                          </FormGroup>
+                                      </Col>
+                                  </Row>
                               </div>
+                              <Row>
+                                  <Col lg={"12"} className={"d-flex justify-content-center"}>
+                                      <Button type={"submit"} onClick={this.handleSubmit} color="info">
+                                          Add Location
+                                      </Button>
+                                  </Col>
+                              </Row>
                           </Form>
                       </CardBody>
                   </Card>
               </Col>
-            <Col lg="6">
-              <Card className="shadow border-0" style={{width: "450px", height: "400px"}}>
-                <GoogleMap
-                bootstrapURLKeys={{
-                    key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-                    libraries: ['drawing', 'geometry', 'places']
-                }}
-                defaultCenter={center}
-                defaultZoom={zoom}
-                yesIWantToUseGoogleMapApiInternals
-                />
-              </Card>
-            </Col>
           </Row>
         </Container>
       </div>
@@ -112,4 +211,4 @@ class CreateLocation extends React.Component {
   }
 }
 
-export default CreateLocation;
+export default connect(null, {addNewLocation})(CreateLocation);

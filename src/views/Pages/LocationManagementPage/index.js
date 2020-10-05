@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import { connect } from "react-redux";
+import LocationTableItem from "../../../components/LocationManagement/LocationTableItem/LocationTableItem";
 
 
 // reactstrap components
@@ -23,6 +25,7 @@ import {Card, CardHeader, Col, Container, Row, Table} from "reactstrap";
 
 // core components
 import LocationHeader from "../../../components/Headers/LocationHeader.js";
+import {v4 as uuidv4} from "uuid";
 
 
 
@@ -30,6 +33,13 @@ class ManageLocations extends React.Component {
 
 
   render() {
+    const {locations} = this.props;
+    const locationList = locations.map((location) => {
+      return(
+          <LocationTableItem key={uuidv4()} location={location} />
+      )
+    });
+
     return (
       <div>
         <LocationHeader />
@@ -44,15 +54,14 @@ class ManageLocations extends React.Component {
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                   <tr>
-                    <th scope="col">Location ID</th>
                     <th scope="col">Location Name</th>
-                    <th scope="col">Center</th>
-                    <th scope="col">Radius</th>
+                    <th scope="col">Center [lat, lon]</th>
+                    <th scope="col">Radius (meters)</th>
                     <th scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>
-
+                  {locationList}
                   </tbody>
                 </Table>
               </Card>
@@ -64,4 +73,16 @@ class ManageLocations extends React.Component {
   }
 }
 
-export default ManageLocations;
+const mapStateToProps = (state) => {
+  return {
+    locations: state.locations,
+  };
+};
+
+const mapDispatchToProps = {
+
+};
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageLocations);

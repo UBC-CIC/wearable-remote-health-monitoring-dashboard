@@ -34,6 +34,7 @@ import {v4 as uuidv4} from "uuid";
 class UserManagement extends React.Component {
   render() {
     const {users} = this.props;
+
     // map our list of users to the "Current Status" table
     const userList = users.map((user) => {
       return(
@@ -63,8 +64,8 @@ class UserManagement extends React.Component {
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Image</th>
-                    <th scope="col">ID</th>
                     <th scope="col">Assigned Device</th>
+                    <th scope="col">Assigned Location</th>
                     <th scope="col">Actions</th>
                   </tr>
                   </thead>

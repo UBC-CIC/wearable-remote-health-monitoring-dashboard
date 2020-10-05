@@ -2,6 +2,7 @@ const initialState = {
     startupLoading: true,
     usersFetched: false,
     devicesFetched: false,
+    locationsFetched: false,
     errorState: false,
     errorMessage: "",
 }
@@ -13,6 +14,9 @@ const isLastToLoad = (appStatus) => {
         falseCount += 1;
     }
     if (appStatus.devicesFetched === false) {
+        falseCount += 1;
+    }
+    if (appStatus.locationsFetched === false) {
         falseCount += 1;
     }
 
@@ -63,6 +67,27 @@ const appStatusReducer = (appStatus = initialState, action) => {
             }
         }
         case "FETCH_DEVICES_FAILURE": {
+            return {
+                ...newAppStatus,
+                startupLoading: false,
+                errorState: true,
+                errorMessage: action.payload,
+            }
+        }
+        case "FETCH_LOCATIONS_REQUEST": {
+            return {
+                ...newAppStatus,
+                startupLoading: true,
+            }
+        }
+        case "FETCH_LOCATIONS_SUCCESS": {
+            return {
+                ...newAppStatus,
+                startupLoading: !(lastToLoad),
+                locationsFetched: true,
+            }
+        }
+        case "FETCH_LOCATIONS_FAILURE": {
             return {
                 ...newAppStatus,
                 startupLoading: false,
