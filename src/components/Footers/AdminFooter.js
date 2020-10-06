@@ -19,7 +19,7 @@
 import React from "react";
 
 // reactstrap components
-import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
+import { Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 
 class Footer extends React.Component {
   render() {
@@ -35,7 +35,7 @@ class Footer extends React.Component {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Life Track
+                MHMP
               </a>
             </div>
           </Col>

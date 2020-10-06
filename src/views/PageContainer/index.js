@@ -73,7 +73,7 @@ class PageContainer extends React.Component {
                     routes={routes}
                     logo={{
                         innerLink: "/admin/index",
-                        imgSrc: require("../../assets/img/brand/LifeTrack.png"),
+                        imgSrc: require("../../assets/img/brand/MHMP.png"),
                         imgAlt: "..."
                     }}
                 />

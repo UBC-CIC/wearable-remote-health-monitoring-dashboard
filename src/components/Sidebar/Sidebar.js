@@ -17,6 +17,7 @@
 */
 /*eslint-disable*/
 import React from "react";
+import {connect} from "react-redux";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
@@ -44,7 +45,8 @@ import {
   Row,
   Col
 } from "reactstrap";
-import Toast from 'react-bootstrap/Toast'
+import AlertNotification from "./AlertNotification/AlertNotification";
+import {v4 as uuidv4} from "uuid";
 
 class Sidebar extends React.Component {
   state = {
@@ -91,7 +93,14 @@ class Sidebar extends React.Component {
     });
   };
   render() {
-    const { routes, logo } = this.props;
+    const { routes, logo, alerts, users } = this.props;
+    const alertList = alerts.map(alert => {
+      let user = users.find(user => user.device.id === alert.deviceID);
+      return (
+          <AlertNotification key={uuidv4()} alert={alert} user={user} />
+          )
+      }
+    );
     let navbarBrandProps;
     if (logo && logo.innerLink) {
       navbarBrandProps = {
@@ -237,24 +246,7 @@ class Sidebar extends React.Component {
             <hr className="my-3" />
             {/* Alert Notifications */}
             <div>
-              <Toast className={"bg-yellow rounded mr-1 px-1 toast"} animation={true}>
-                <Toast.Header style={{borderBottom: "1px solid gray"}}>
-                  <strong className="mr-auto">New Alert</strong>
-                  <small> just now</small>
-                </Toast.Header>
-                <Toast.Body>
-                  <div className={"row"}>
-                    <div className={"col"}>
-                      User: Jane Doe
-                    </div>
-                  </div>
-                  <div className={"row"}>
-                    <div className={"col"}>
-                      Type: Heart Rate
-                    </div>
-                  </div>
-                </Toast.Body>
-              </Toast>
+              {alertList}
             </div>
             {/* Heading */}
             {/* Navigation */}
@@ -286,4 +278,11 @@ Sidebar.propTypes = {
   })
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => {
+  return {
+    alerts: state.notifications.alertNotifications,
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps)(Sidebar);
