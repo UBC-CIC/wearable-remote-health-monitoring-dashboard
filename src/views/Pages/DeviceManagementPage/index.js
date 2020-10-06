@@ -45,6 +45,12 @@ class DeviceManager extends React.Component {
     this.pairUserDeviceInfo();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.users !== prevProps.users) {
+      this.pairUserDeviceInfo();
+    }
+  }
+
   pairUserDeviceInfo = () => {
     const {devices, users} = this.props;
     users.forEach(user => {

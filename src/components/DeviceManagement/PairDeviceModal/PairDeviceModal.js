@@ -24,7 +24,6 @@ class PairDeviceModal extends React.Component {
     //  check for users without a registered device
     populateFormFields = () => {
         const {users} = this.props;
-        console.log("users", users);
         let availableUsers = [];
         users.forEach(user => {
             if (user.device === null) {

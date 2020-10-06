@@ -78,15 +78,6 @@ export const listUsers = /* GraphQL */ `
           id
           userID
           deviceStatus
-          geofence {
-           id
-           locationName
-           centerpoint {
-           latitude
-           longitude
-           }
-           radius
-          }
           createdAt
           updatedAt
         }
