@@ -1,6 +1,8 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { createLocation, deleteLocation } from '../graphql/mutations';
 import {listLocations} from "../graphql/queries";
+import {enqueueAppNotification} from "./notificationActions";
+
 
 // ===================================---FETCH LOCATIONS---=============================================
 // Fetch locations from AWS, set loading flag
@@ -17,11 +19,11 @@ export const fetchLocations = () => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const fetchLocationsFailure = (error) => {
-    return {
-        type: "FETCH_LOCATIONS_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "FETCH_LOCATIONS_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching locations, please refresh the page: " + error}));
     }
 }
 
@@ -49,18 +51,19 @@ export const addNewLocation = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const addNewLocationFailure = (error) => {
-    return {
-        type: "ADD_NEW_LOCATION_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "ADD_NEW_LOCATION_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error adding location: " + error}));
     }
 }
 
-// NOT YET IMPLEMENTED: respond to success condition
+// Respond to success condition
 export const addNewLocationSuccess = () => {
-    return {
-        type: "ADD_NEW_LOCATION_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "ADD_NEW_LOCATION_SUCCESS"});
+        dispatch(enqueueAppNotification({type: "success", message: "New location added successfully!"}));
     }
 }
 
@@ -80,18 +83,19 @@ export const deleteLocationRequest = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const deleteLocationFailure = (error) => {
-    return {
-        type: "DELETE_LOCATION_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "DELETE_LOCATION_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error deleting location: " + error}));
     }
 }
 
-// NOT YET IMPLEMENTED: respond to success condition
+// Respond to success condition
 export const deleteLocationSuccess = () => {
-    return {
-        type: "DELETE_LOCATION_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "DELETE_LOCATION_SUCCES"});
+        dispatch(enqueueAppNotification({type: "info", message: "Location deleted successfully!"}));
     }
 }
 

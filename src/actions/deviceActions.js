@@ -1,6 +1,7 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { listDevices } from '../graphql/queries';
 import {createDevice, updateDevice, updateUser, deleteDevice } from '../graphql/mutations';
+import {enqueueAppNotification} from "./notificationActions";
 
 
 
@@ -20,11 +21,11 @@ export const fetchDevices = () => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const fetchDevicesFailure = (error) => {
-    return {
-        type: "FETCH_DEVICES_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({ type: "FETCH_DEVICES_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching devices, please refresh the page: " + error}));
     }
 }
 
@@ -55,18 +56,19 @@ export const registerNewDevice = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const registerDeviceFailure = (error) => {
-    return {
-        type: "REGISTER_DEVICE_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({ type: "REGISTER_DEVICE_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error registering new device: " + error}));
     }
 }
 
-// NOT YET IMPLEMENTED: respond to success condition
+// Respond to success condition
 export const registerDeviceSuccess = () => {
-    return {
-        type: "REGISTER_DEVICE_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "REGISTER_DEVICE_SUCCESS"});
+        dispatch(enqueueAppNotification({type: "success", message: "New device added successfully!"}));
     }
 }
 
@@ -89,11 +91,11 @@ export const associateDeviceWithUser = (payload) => {
 }
 
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const associateDeviceFailure = (error) => {
-    return {
-        type: "ASSOCIATE_DEVICE_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "ASSOCIATE_DEVICE_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error pairing device: " + error}));
     }
 }
 
@@ -102,6 +104,7 @@ export const associateDeviceSuccess = (payload) => {
     return (dispatch) => {
         API.graphql(graphqlOperation(updateUser, {input: {id: payload.user.id,
                 userDeviceId: payload.device.id}})).then((response) => {
+            dispatch(enqueueAppNotification({type: "success", message: "Device paired successfully!"}));
         }).catch((err) => {
             console.log("Error pairing device to user: ", err);
             dispatch(associateDeviceFailure(err));
@@ -120,18 +123,18 @@ export const disassociateDeviceWithUser = (payload) => {
                 userID: null}})).then((response) => {
             dispatch(disassociateDeviceSuccess(payload));
         }).catch((err) => {
-            console.log("Error pairing user to device: ", err);
+            console.log("Error unpairing device: ", err);
             dispatch(disassociateDeviceFailure(err));
         })
     }
 }
 
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const disassociateDeviceFailure = (error) => {
-    return {
-        type: "DISASSOCIATE_DEVICE_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "DISASSOCIATE_DEVICE_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error unpairing device: " + error}));
     }
 }
 
@@ -140,6 +143,7 @@ export const disassociateDeviceSuccess = (payload) => {
     return (dispatch) => {
         API.graphql(graphqlOperation(updateUser, {input: {id: payload.userID,
                 userDeviceId: null}})).then((response) => {
+            dispatch(enqueueAppNotification({type: "info", message: "Device successfully unpaired!"}));
         }).catch((err) => {
             console.log("Error pairing device to user: ", err);
             dispatch(disassociateDeviceFailure(err));
@@ -165,18 +169,19 @@ export const deleteDeviceRequest = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const deleteDeviceFailure = (error) => {
-    return {
-        type: "DELETE_DEVICE_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "DELETE_DEVICE_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error deleting device: " + error}));
     }
 }
 
-// NOT YET IMPLEMENTED: respond to success condition
+// Respond to success condition
 export const deleteDeviceSuccess = () => {
-    return {
-        type: "DELETE_DEVICE_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "DELETE_DEVICE_SUCCESS"});
+        dispatch(enqueueAppNotification({type: "info", message: "Device deleted successfully!"}));
     }
 }
 
@@ -195,18 +200,19 @@ export const assignLocationRequest = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const assignLocationFailure = (error) => {
-    return {
-        type: "ASSIGN_LOCATION_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "ASSIGN_LOCATION_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error assigning location: " + error}));
     }
 }
 
-// NOT YET IMPLEMENTED: respond to success condition
+// Respond to success condition
 export const assignLocationSuccess = () => {
-    return {
-        type: "ASSIGN_LOCATION_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "ASSIGN_LOCATION_SUCCESS"});
+        dispatch(enqueueAppNotification({type: "success", message: "Location assigned successfully!"}));
     }
 }
 
@@ -234,17 +240,18 @@ export const removeLocationRequest = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const removeLocationFailure = (error) => {
-    return {
-        type: "REMOVE_LOCATION_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "REMOVE_LOCATION_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error removing location: " + error}));
     }
 }
 
-// NOT YET IMPLEMENTED: respond to success condition
+// Respond to success condition
 export const removeLocationSuccess = () => {
-    return {
-        type: "REMOVE_LOCATION_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "REMOVE_LOCATION_SUCCESS"});
+        dispatch(enqueueAppNotification({type: "info", message: "Location successfully unassigned!"}));
     }
 }

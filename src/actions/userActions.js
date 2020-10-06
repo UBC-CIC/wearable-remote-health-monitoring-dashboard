@@ -1,6 +1,8 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import { createUser, deleteUser, updateUser } from '../graphql/mutations';
 import { listUsers } from '../graphql/queries';
+import {enqueueAppNotification} from "./notificationActions";
+
 
 // ===================================---FETCHING USERS---=======================================
 // Fetch users from AWS, set loading flag
@@ -17,11 +19,11 @@ export const fetchUsers = () => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const fetchUsersFailure = (error) => {
-    return {
-        type: "FETCH_USERS_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "FETCH_USERS_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching users, please refresh the page: " + error}));
     }
 }
 
@@ -48,18 +50,19 @@ export const registerNewUser = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const registerNewUserFailure = (error) => {
-    return {
-        type: "ADD_NEW_USER_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "ADD_NEW_USER_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error adding user: " + error}));
     }
 }
 
-// Removes loading flag
+// Respond to success condition
 export const addNewUserSuccess = () => {
-    return {
-        type: "ADD_NEW_USER_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "ADD_NEW_USER_SUCCESS"});
+        dispatch(enqueueAppNotification({type: "success", message: "New user added successfully!"}));
     }
 }
 
@@ -78,18 +81,19 @@ export const updateUserInformation = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const updateUserFailure = (error) => {
-    return {
-        type: "UPDATE_USER_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "UPDATE_USER_FAILURE", payload: error });
+        dispatch(enqueueAppNotification({type: "error", message: "Error updating user: " + error}));
     }
 }
 
-// NOT YET IMPLEMENTED: respond to success condition
+// Respond to success condition
 export const updateUserSuccess = () => {
-    return {
-        type: "UPDATE_USER_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "UPDATE_USER_SUCCESS"});
+        dispatch(enqueueAppNotification({type: "success", message: "User information updated successfully!"}));
     }
 }
 
@@ -116,20 +120,21 @@ export const deleteUserRequest = (payload) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to failure condition
+// Respond to failure condition
 export const deleteUserFailure = (error) => {
-    return {
-        type: "DELETE_USER_FAILURE",
-        payload: error
+    return (dispatch) => {
+        dispatch({type: "DELETE_USER_FAILURE", payload: error});
+        dispatch(enqueueAppNotification({type: "error", message: "Error deleting user: " + error}));
     }
 }
 
-// NOT YET IMPLEMENTED: creates a successful deletion notification
+// Respond to success condition
 export const deleteUserSuccess = () => {
-    return {
-        type: "DELETE_USER_SUCCESS",
+    return (dispatch) => {
+        dispatch({ type: "DELETE_USER_SUCCESS"});
+        dispatch(enqueueAppNotification({type: "info", message: "User deleted successfully!"}));
     }
 }
 
-// =================================================================================================
+// =======================================================================================================
 

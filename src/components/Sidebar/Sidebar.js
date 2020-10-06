@@ -21,7 +21,7 @@ import {connect} from "react-redux";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
-import "./SideBar.css";
+import "../Notifications/AlertNotification/SideBar.css";
 
 // reactstrap components
 import {
@@ -45,7 +45,7 @@ import {
   Row,
   Col
 } from "reactstrap";
-import AlertNotification from "./AlertNotification/AlertNotification";
+import AlertNotification from "../Notifications/AlertNotification/AlertNotification";
 import {v4 as uuidv4} from "uuid";
 
 class Sidebar extends React.Component {

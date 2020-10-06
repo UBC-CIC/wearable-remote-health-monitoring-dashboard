@@ -13,7 +13,7 @@ class PairDeviceModal extends React.Component {
         super(props);
         this.state = {
             availableUsers: [],
-            selectedUser: {},
+            selectedUserID: "",
         }
     }
 
@@ -22,10 +22,7 @@ class PairDeviceModal extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("this.props.users", this.props.users);
-        console.log("prevProps.users", prevProps.users);
         if (this.props.users !== prevProps.users) {
-            console.log("pair device prop Change found");
             this.populateFormFields();
         }
     }
@@ -47,7 +44,7 @@ class PairDeviceModal extends React.Component {
         // set default value for select input (handleChange isn't triggered if first option is selected)
         if (availableUsers.length >= 1) {
             this.setState({
-                selectedUser: availableUsers[0],
+                selectedUser: availableUsers[0].id,
             });
         }
     }
@@ -67,7 +64,8 @@ class PairDeviceModal extends React.Component {
     onPair = (e) => {
         e.preventDefault();
         const {associateDeviceWithUser, device, onHide} = this.props;
-        const {selectedUser} = this.state;
+        const {selectedUserID, availableUsers} = this.state;
+        const selectedUser = availableUsers.find(user => user.id === selectedUserID);
         associateDeviceWithUser({device: device, user: selectedUser});
         onHide();
     }
@@ -82,11 +80,11 @@ class PairDeviceModal extends React.Component {
 
     render() {
         const { show, onHide, device } = this.props;
-        const { selectedUser, availableUsers } = this.state;
+        const {  availableUsers } = this.state;
 
         let userOptions = availableUsers.map(user => {
             return(
-                <option key={uuidv4()} value={user}>{user.firstName  + " " + user.lastName + ": " + user.id}</option>
+                <option key={user.id} value={user.id}>{user.firstName  + " " + user.lastName + ": " + user.id}</option>
             )
         });
 
@@ -151,7 +149,7 @@ class PairDeviceModal extends React.Component {
                                 <Button
                                     color="danger"
                                     onClick={this.onPair}
-                                    disabled={Object.keys(selectedUser).length === 0}
+                                    disabled={availableUsers.length === 0}
                                 >
                                     Pair Device
                                 </Button>

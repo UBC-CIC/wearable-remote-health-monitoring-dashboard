@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import "../SideBar.css";
+import "./SideBar.css";
 import Toast from 'react-bootstrap/Toast';
 import moment from "moment";
 import {removeAlertNotification} from "../../../actions/notificationActions";
@@ -23,7 +23,6 @@ class AlertNotification extends React.Component{
         return(
             <div className={"py-1"}>
                 <Toast className={"bg-yellow rounded mr-auto px-1 toast"}
-                       style={{width: "200px"}}
                        animation={true} onClose={this.removeAlert}>
                     <Toast.Header style={{borderBottom: "1px solid gray"}}>
                         <strong className="mr-auto">New Alert</strong>

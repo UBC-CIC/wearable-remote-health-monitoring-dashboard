@@ -24,6 +24,7 @@ import { Container } from "reactstrap";
 import AdminNavbar from "../../components/Navbars/AdminNavbar.js";
 import AdminFooter from "../../components/Footers/AdminFooter.js";
 import Sidebar from "../../components/Sidebar/Sidebar.js";
+import AppNotification from "../../components/Notifications/AppNotification/AppNotification";
 
 
 
@@ -64,7 +65,14 @@ class PageContainer extends React.Component {
         }
         return "Brand";
     };
+
     render() {
+        const {notifications} = this.props;
+        const notificationList = notifications.map(notification => {
+            return (
+                <AppNotification id={notification.id} message={notification.message} type={notification.type} />
+            )
+        })
         let rts = this.getRoutes(routes);
         return (
             <div>
@@ -82,6 +90,7 @@ class PageContainer extends React.Component {
                         {...this.props}
                         brandText={this.getBrandText(this.props.location.pathname)}
                     />
+                    {notificationList}
                     <Switch>
                         {rts}
                         <Redirect from="*" to="/admin/index" />
@@ -99,6 +108,7 @@ const mapStateToProps = (state) => {
     return {
         users: state.users,
         isLoading: state.applicationStatus.startupLoading,
+        notifications: state.notifications.appNotifications
     };
 };
 
