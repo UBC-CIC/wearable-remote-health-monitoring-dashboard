@@ -1,5 +1,19 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Setup Instructions
+- Create a .env.local file in the root folder that contains the following:
+ ```javascript
+ REACT_APP_GOOGLE_MAPS_API_KEY=[Your API Key Here]
+ ```
+
+Please create a new Google Maps JavaScript API Key by following the instructions here: https://developers.google.com/maps/documentation/javascript/get-api-key
+
+Then enable the following APIs:
+- Maps Javascript API
+- Places API
+- Geocoding API
+
 ## Available Scripts
 
 In the project directory, you can run:
