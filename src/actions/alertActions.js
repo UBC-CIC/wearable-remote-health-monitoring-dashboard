@@ -1,6 +1,7 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import {onCreateAlert} from "../graphql/subscriptions";
 import {listAlerts} from "../graphql/queries";
+import {deleteAlert} from "../graphql/mutations";
 
 // ====================================---ALERT SUBSCRIPTION---==========================================
 // Subscribe to alerts, sets realtime connection status flag
@@ -70,3 +71,34 @@ export const fetchAlertsSuccess = (payload) => {
     }
 }
 
+
+// ====================================---DELETE ALERT---==========================================
+
+// Delete alerts from DynamoDB, and locally
+export const deleteAlertRequest = (payload) => {
+    return (dispatch) => {
+        dispatch({ type: "DELETE_ALERT_REQUEST", payload: payload });
+        API.graphql(graphqlOperation(deleteAlert, {input: {id: payload.id}})).then((response) => {
+            console.log(response);
+            dispatch(deleteAlertSuccess());
+        }).catch((err) => {
+            console.log("Error deleting alert: ", err);
+            dispatch(deleteAlertFailure(err));
+        })
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to failure condition
+export const deleteAlertFailure = (error) => {
+    return {
+        type: "DELETE_ALERT_FAILURE",
+        payload: error
+    }
+}
+
+// NOT YET IMPLEMENTED: respond to success condition
+export const deleteAlertSuccess = () => {
+    return {
+        type: "DELETE_ALERT_SUCCESS",
+    }
+}

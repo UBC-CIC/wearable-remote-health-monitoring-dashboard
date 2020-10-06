@@ -21,12 +21,22 @@ class PairDeviceModal extends React.Component {
         this.populateFormFields();
     }
 
+    componentDidUpdate(prevProps) {
+        console.log("this.props.users", this.props.users);
+        console.log("prevProps.users", prevProps.users);
+        if (this.props.users !== prevProps.users) {
+            console.log("pair device prop Change found");
+            this.populateFormFields();
+        }
+    }
+
+
     //  check for users without a registered device
     populateFormFields = () => {
         const {users} = this.props;
         let availableUsers = [];
         users.forEach(user => {
-            if (user.device === null) {
+            if ((!user.device) || (user.device === null)) {
                 availableUsers.push(user);
             }
         });

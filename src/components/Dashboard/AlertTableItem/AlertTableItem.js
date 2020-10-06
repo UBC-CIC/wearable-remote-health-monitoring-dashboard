@@ -1,6 +1,7 @@
 import * as React from "react";
 import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
 import {connect} from "react-redux";
+import {deleteAlertRequest} from "../../../actions/alertActions.js"
 import moment from "moment";
 
 
@@ -23,6 +24,13 @@ class AlertTableItem extends React.Component{
     findUser = () => {
         const {users, alert} = this.props;
         return users.find(user => user.device.id === alert.deviceID);
+    }
+
+    // Delete Alert
+    onResolve = (e) => {
+        e.preventDefault();
+        const {deleteAlertRequest, alert} = this.props;
+        deleteAlertRequest({id: alert.id});
     }
 
     render() {
@@ -55,7 +63,7 @@ class AlertTableItem extends React.Component{
                         <DropdownMenu className="dropdown-menu-arrow" right>
                             <DropdownItem
                                 href=""
-                                onClick={(e) => e.preventDefault()}
+                                onClick={this.onResolve}
                             >
                                 Mark As Resolved
                             </DropdownItem>
@@ -74,4 +82,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(AlertTableItem);
+export default connect(mapStateToProps, {deleteAlertRequest})(AlertTableItem);

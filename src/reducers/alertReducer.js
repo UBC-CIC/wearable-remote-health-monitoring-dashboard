@@ -2,7 +2,18 @@
 
 const initialAlerts = [];
 
+// delete alert
+const deleteAlertHelper = (alerts, target) => {
+    const index = alerts.findIndex(alert =>
+        alert.id === target.id
+    );
 
+    if (index !== -1) {
+        alerts.splice(index, 1);
+    }
+
+    return alerts;
+}
 
 const alertReducer = (alerts = initialAlerts, action) => {
     let newAlerts = [...alerts];
@@ -14,6 +25,9 @@ const alertReducer = (alerts = initialAlerts, action) => {
         }
         case "NEW_ALERT_RECEIVED": {
             return [action.payload, ...newAlerts];
+        }
+        case "DELETE_ALERT_REQUEST": {
+            return deleteAlertHelper(newAlerts, action.payload);
         }
         default:
             return newAlerts;
