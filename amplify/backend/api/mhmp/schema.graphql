@@ -17,6 +17,8 @@ type User @model {
 type Device @model {
   id: ID!
   userID: ID
+  deviceOS: String
+  osVersion: String
   deviceStatus: String 
   alerts: [Alert] @connection(keyName: "byDevice", fields: ["id"])
   geofence: Location @connection
@@ -27,8 +29,7 @@ type Location @model
 @key(name: "byLocationName", fields: ["locationName"]) {
   id: ID!
   locationName: String!
-  centerpoint: LatLon!
-  radius: Int!
+  boundary: [LatLon]!
 }
 
 type Alert @model 
@@ -59,8 +60,8 @@ type DeviceData @model
 
 
 type LatLon {
-  latitude: Float!
-  longitude: Float!
+  lat: Float!
+  lng: Float!
 }
 
 type Contact {

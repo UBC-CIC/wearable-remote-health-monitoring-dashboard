@@ -28,6 +28,7 @@ import {
 import LocationCreationHeader from "../../../components/Headers/LocationCreationHeader";
 import { v4 as uuidv4 } from "uuid";
 import { addNewLocation } from "../../../actions/locationActions";
+import MapSearchBox from "../../../components/LocationManagement/MapSearchBox/MapSearchBox";
 
 
 class CreateLocation extends React.Component {
@@ -41,9 +42,13 @@ class CreateLocation extends React.Component {
         super(props);
         this.state = {
             locationName: "",
-            latitude: 0,
-            longitude: 0,
-            radius: 0,
+            boundary: null,
+            polygonDrawn: false,
+            mapApiLoaded: false,
+            mapInstance: null,
+            mapApi: null,
+            drawMgrInstance: null,
+            places: [],
         }
     }
 
@@ -71,32 +76,44 @@ class CreateLocation extends React.Component {
         history.push(path);
     }
 
-    handleDrawingTools = (map, maps) => {
-
+    apiActions = (map, maps) => {
+        this.setState({
+            mapApiLoaded: true,
+            mapInstance: map,
+            mapApi: maps,
+        });
+        let drawingManager = new maps.drawing.DrawingManager({
+            drawingMode: maps.drawing.OverlayType.POLYGON,
+            drawingControl: false,
+            map: map,
+            polygonOptions: {
+                draggable: true,
+                suppressUndo: true,
+                editable: true,
+                strokeWeight: 2,
+                fillOpacity: 0.3,
+                fillColor: "#20b2c9",
+                strokeColor: "#20b2c9",
+            },
+        });
+        this.setState({
+            drawingMgrInstance: drawingManager,
+        })
     }
+
+    addPlace = (place) => {
+        this.setState({ places: place });
+    };
 
   render() {
         const {center, zoom} = this.props;
+        const {mapApiLoaded, mapInstance, mapApi} = this.state;
     return (
       <div>
         <LocationCreationHeader />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
-              <Col lg="6" >
-                  <Card className="shadow border-0 mapCard" style={{width: "100%", height: "100%"}}>
-                      <GoogleMap
-                          bootstrapURLKeys={{
-                              key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-                              libraries: ['drawing', 'geometry', 'places']
-                          }}
-                          defaultCenter={center}
-                          defaultZoom={zoom}
-                          yesIWantToUseGoogleMapApiInternals
-                          onGoogleApiLoaded={({ map, maps }) => this.handleDrawingTools(map, maps)}
-                      />
-                  </Card>
-              </Col>
               <Col lg="6">
                   <Card className="bg-secondary shadow">
                       <CardHeader className={"bg-white border-0"}>
@@ -131,45 +148,8 @@ class CreateLocation extends React.Component {
                                       </Col>
                                   </Row>
                                   <Row>
-                                      <Col lg="6" >
-                                          <FormGroup>
-                                              <label
-                                                  className="form-control-label"
-                                                  htmlFor="latitude"
-                                              >
-                                                  *Latitude
-                                              </label>
-                                              <Input
-                                                  className="form-control-alternative"
-                                                  id="latitude"
-                                                  placeholder="49.263232"
-                                                  type="number"
-                                                  min={-90}
-                                                  max={90}
-                                                  onChange={this.handleFormChange}
-                                                  required={true}
-                                              />
-                                          </FormGroup>
-                                      </Col>
-                                      <Col lg="6" >
-                                          <FormGroup>
-                                              <label
-                                                  className="form-control-label"
-                                                  htmlFor="longitude"
-                                              >
-                                                  *Longitude
-                                              </label>
-                                              <Input
-                                                  className="form-control-alternative"
-                                                  id="longitude"
-                                                  placeholder="-123.25429"
-                                                  type="number"
-                                                  min={-180}
-                                                  max={180}
-                                                  onChange={this.handleFormChange}
-                                                  required={true}
-                                              />
-                                          </FormGroup>
+                                      <Col >
+                                          {mapApiLoaded && <MapSearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace}/>}
                                       </Col>
                                   </Row>
                                   <Row>
@@ -202,6 +182,21 @@ class CreateLocation extends React.Component {
                               </Row>
                           </Form>
                       </CardBody>
+                  </Card>
+              </Col>
+              <Col lg="6" >
+                  <Card className="shadow border-0 mapCard" style={{width: "100%", height: "100%"}}>
+                      <GoogleMap
+                          bootstrapURLKeys={{
+                              key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+                              libraries: ['drawing', 'geometry', 'places']
+                          }}
+                          defaultCenter={center}
+                          defaultZoom={zoom}
+                          yesIWantToUseGoogleMapApiInternals
+                          onGoogleApiLoaded={({ map, maps }) => this.apiActions(map, maps)}
+
+                      />
                   </Card>
               </Col>
           </Row>

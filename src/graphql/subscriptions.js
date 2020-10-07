@@ -13,6 +13,8 @@ export const onCreateUser = /* GraphQL */ `
       device {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken
@@ -72,6 +74,8 @@ export const onUpdateUser = /* GraphQL */ `
       device {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken
@@ -131,6 +135,8 @@ export const onDeleteUser = /* GraphQL */ `
       device {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken
@@ -183,6 +189,8 @@ export const onCreateDevice = /* GraphQL */ `
     onCreateDevice {
       id
       userID
+      deviceOS
+      osVersion
       deviceStatus
       alerts {
         items {
@@ -231,6 +239,8 @@ export const onUpdateDevice = /* GraphQL */ `
     onUpdateDevice {
       id
       userID
+      deviceOS
+      osVersion
       deviceStatus
       alerts {
         items {
@@ -279,6 +289,8 @@ export const onDeleteDevice = /* GraphQL */ `
     onDeleteDevice {
       id
       userID
+      deviceOS
+      osVersion
       deviceStatus
       alerts {
         items {
@@ -426,6 +438,8 @@ export const onCreateDeviceData = /* GraphQL */ `
       device {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken
@@ -465,6 +479,8 @@ export const onUpdateDeviceData = /* GraphQL */ `
       device {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken
@@ -504,6 +520,8 @@ export const onDeleteDeviceData = /* GraphQL */ `
       device {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken

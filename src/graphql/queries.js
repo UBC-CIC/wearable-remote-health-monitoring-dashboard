@@ -13,6 +13,8 @@ export const getUser = /* GraphQL */ `
       device {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken
@@ -77,6 +79,8 @@ export const listUsers = /* GraphQL */ `
         device {
           id
           userID
+          deviceOS
+          osVersion
           deviceStatus
           createdAt
           updatedAt
@@ -111,6 +115,8 @@ export const getDevice = /* GraphQL */ `
     getDevice(id: $id) {
       id
       userID
+      deviceOS
+      osVersion
       deviceStatus
       alerts {
         items {
@@ -164,6 +170,8 @@ export const listDevices = /* GraphQL */ `
       items {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken
@@ -271,6 +279,8 @@ export const getDeviceData = /* GraphQL */ `
       device {
         id
         userID
+        deviceOS
+        osVersion
         deviceStatus
         alerts {
           nextToken
@@ -315,6 +325,8 @@ export const listDeviceDatas = /* GraphQL */ `
         device {
           id
           userID
+          deviceOS
+          osVersion
           deviceStatus
           createdAt
           updatedAt
