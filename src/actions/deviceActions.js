@@ -25,7 +25,7 @@ export const fetchDevices = () => {
 export const fetchDevicesFailure = (error) => {
     return (dispatch) => {
         dispatch({ type: "FETCH_DEVICES_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error fetching devices, please refresh the page: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching devices, please refresh the page: " + error.errors[0].message}));
     }
 }
 
@@ -60,7 +60,7 @@ export const registerNewDevice = (payload) => {
 export const registerDeviceFailure = (error) => {
     return (dispatch) => {
         dispatch({ type: "REGISTER_DEVICE_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error registering new device: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error registering new device: " + error.errors[0].message}));
     }
 }
 
@@ -95,7 +95,7 @@ export const associateDeviceWithUser = (payload) => {
 export const associateDeviceFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "ASSOCIATE_DEVICE_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error pairing device: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error pairing device: " + error.errors[0].message}));
     }
 }
 
@@ -134,7 +134,7 @@ export const disassociateDeviceWithUser = (payload) => {
 export const disassociateDeviceFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "DISASSOCIATE_DEVICE_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error unpairing device: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error unpairing device: " + error.errors[0].message}));
     }
 }
 
@@ -173,7 +173,7 @@ export const deleteDeviceRequest = (payload) => {
 export const deleteDeviceFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "DELETE_DEVICE_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error deleting device: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error deleting device: " + error.errors[0].message}));
     }
 }
 
@@ -204,7 +204,7 @@ export const assignLocationRequest = (payload) => {
 export const assignLocationFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "ASSIGN_LOCATION_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error assigning location: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error assigning location: " + error.errors[0].message}));
     }
 }
 
@@ -244,7 +244,7 @@ export const removeLocationRequest = (payload) => {
 export const removeLocationFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "REMOVE_LOCATION_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error removing location: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error removing location: " + error.errors[0].message}));
     }
 }
 

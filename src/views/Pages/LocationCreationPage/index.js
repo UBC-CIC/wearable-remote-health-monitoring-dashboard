@@ -253,7 +253,7 @@ class CreateLocation extends React.Component {
                                           <label
                                               className="form-control-label step"
                                           >
-                                              Location Boundaries Drawn:
+                                              Boundaries Drawn?
                                           </label>
                                          {(polygonDrawn)?
                                       <i className={"far fa-check-circle"} style={{color: "green"}}/>
@@ -266,7 +266,7 @@ class CreateLocation extends React.Component {
                               <Row>
                                   <Col lg={"12"} className={"d-flex justify-content-center"}>
                                       <Button type={"submit"} onClick={this.handleSubmit} color="info"
-                                      disabled={(!polygonDrawn) || ( locationName.length === 0)}
+                                     disabled={(!polygonDrawn) || ( locationName.length === 0)}
                                       >
                                           Add Location
                                       </Button>

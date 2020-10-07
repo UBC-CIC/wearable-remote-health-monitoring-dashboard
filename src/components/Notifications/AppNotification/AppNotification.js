@@ -35,7 +35,7 @@ class AppNotification extends React.Component{
                     horizontal: 'left',
                 }}
                 open={notificationOpen}
-                autoHideDuration={1500}
+                autoHideDuration={(type === "info" || type === "error")? 5000 : 1500}
                 onClose={this.handleClose}
             >
                 <Alert severity={type}>

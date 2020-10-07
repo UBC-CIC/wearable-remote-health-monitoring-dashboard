@@ -23,7 +23,7 @@ export const fetchLocations = () => {
 export const fetchLocationsFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "FETCH_LOCATIONS_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error fetching locations, please refresh the page: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching locations, please refresh the page: " + error.errors[0].message}));
     }
 }
 
@@ -55,7 +55,7 @@ export const addNewLocation = (payload) => {
 export const addNewLocationFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "ADD_NEW_LOCATION_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error adding location: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error adding location: " + error.errors[0].message}));
     }
 }
 
@@ -87,7 +87,7 @@ export const deleteLocationRequest = (payload) => {
 export const deleteLocationFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "DELETE_LOCATION_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error deleting location: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error deleting location: " + error.errors[0].message}));
     }
 }
 

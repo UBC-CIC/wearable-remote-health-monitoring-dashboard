@@ -23,7 +23,7 @@ export const fetchUsers = () => {
 export const fetchUsersFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "FETCH_USERS_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error fetching users, please refresh the page: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching users, please refresh the page: " + error.errors[0].message}));
     }
 }
 
@@ -54,7 +54,7 @@ export const registerNewUser = (payload) => {
 export const registerNewUserFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "ADD_NEW_USER_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error adding user: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error adding user: " + error.errors[0].message}));
     }
 }
 
@@ -85,7 +85,7 @@ export const updateUserInformation = (payload) => {
 export const updateUserFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "UPDATE_USER_FAILURE", payload: error });
-        dispatch(enqueueAppNotification({type: "error", message: "Error updating user: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error updating user: " + error.errors[0].message}));
     }
 }
 
@@ -124,7 +124,7 @@ export const deleteUserRequest = (payload) => {
 export const deleteUserFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "DELETE_USER_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error deleting user: " + error}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error deleting user: " + error.errors[0].message}));
     }
 }
 
