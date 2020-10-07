@@ -8,6 +8,7 @@ class MapSearchBox extends React.Component {
         super(props);
         this.state = {
             places: [],
+            currentMarker: null,
         }
     }
 
@@ -30,17 +31,34 @@ class MapSearchBox extends React.Component {
 
 
     onPlacesChanged = () => {
-        const {map, addplace} = this.props;
+        const {map, addplace, mapApi} = this.props;
         const selected = this.searchBox.getPlaces();
         const { 0: place } = selected;
         if (!place.geometry) return;
         if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
+            map.setZoom(19);
         } else {
             map.setCenter(place.geometry.location);
-            map.setZoom(17);
+            map.setZoom(19);
         }
-
+        const {currentMarker} = this.state;
+        // if set, remove current location pinpoint marker on the map
+        if (currentMarker) {
+            currentMarker.setMap(null);
+        }
+        let newMarker  = new mapApi.Marker({
+            map: map,
+            title: place.name,
+            position: place.geometry.location
+        })
+        // save current location marker for later removal
+        this.setState({
+            currentMarker: newMarker,
+        })
+        // set new marker on map
+        newMarker.setMap(map);
+        // add place to the map
         addplace(selected);
         this.searchInput.blur();
     }

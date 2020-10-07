@@ -29,13 +29,14 @@ import LocationCreationHeader from "../../../components/Headers/LocationCreation
 import { v4 as uuidv4 } from "uuid";
 import { addNewLocation } from "../../../actions/locationActions";
 import MapSearchBox from "../../../components/LocationManagement/MapSearchBox/MapSearchBox";
+import "./LoadingCreationPage.css";
 
 
 class CreateLocation extends React.Component {
 
     static defaultProps = {
         center: [49.263232, -123.25429],
-        zoom: 17,
+        zoom: 18,
     }
 
     constructor(props) {
@@ -48,6 +49,7 @@ class CreateLocation extends React.Component {
             mapInstance: null,
             mapApi: null,
             drawMgrInstance: null,
+            overlayInstance: null,
             places: [],
         }
     }
@@ -99,15 +101,84 @@ class CreateLocation extends React.Component {
         this.setState({
             drawingMgrInstance: drawingManager,
         })
+        // add event listener to check for completed polygon drawing, then save boundaries
+        maps.event.addListener(drawingManager, 'polygoncomplete', polygon => {
+            this.drawingComplete(polygon);
+        } )
+
+        // save overlay instance for later, so we can clear the map and re-draw a new polygon
+        maps.event.addListener(drawingManager, 'overlaycomplete',
+                instance => this.setState({ overlayInstance: instance }));
+    }
+
+
+    // get vertices of complete polygon and save them to the local state
+    drawingComplete = ( polygon ) => {
+        let points = polygon.getPath().getArray().map(point =>
+        {return {lat: point.lat(), lng: point.lng()}});
+        this.setState({
+            boundary: points,
+            polygonDrawn: true,
+        })
+        this.drawingMode("COMPLETE");
+        console.log("points", points);
     }
 
     addPlace = (place) => {
         this.setState({ places: place });
     };
 
+    mapOptions = (maps) => {
+        return {
+            mapTypeControl: true,
+            mapTypeId: maps.MapTypeId.ROADMAP,
+            mapTypeControlOptions: {
+                style: maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: maps.ControlPosition.BOTTOM_CENTER,
+                mapTypeIds: [
+                    maps.MapTypeId.ROADMAP,
+                    maps.MapTypeId.HYBRID
+                ]
+            }
+        }
+    }
+
+    // handles changing drawing modes, overlay changes, and state updates
+    drawingMode = (event) => {
+        const { drawingMgrInstance, overlayInstance, mapApi } = this.state;
+        switch (event) {
+            case "COMPLETE": {
+                drawingMgrInstance.setDrawingMode();
+                break;
+            }
+            case "CLEAR_MAP": {
+                overlayInstance.overlay.setMap(null);
+                drawingMgrInstance.setDrawingMode(mapApi.drawing.OverlayType.POLYGON);
+                this.setState({
+                    overlayInstance: null,
+                    polygonDrawn: false,
+                })
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    // calls drawing mode to clear map overlay
+    handleClearMap = (e) => {
+        e.preventDefault();
+        const {overlayInstance} = this.state;
+        // only call if overlay instance exists
+        if (overlayInstance) {
+            this.drawingMode("CLEAR_MAP");
+        }
+    }
+
+
   render() {
         const {center, zoom} = this.props;
-        const {mapApiLoaded, mapInstance, mapApi} = this.state;
+        const {mapApiLoaded, mapInstance, mapApi, polygonDrawn,  locationName} = this.state;
     return (
       <div>
         <LocationCreationHeader />
@@ -148,34 +219,55 @@ class CreateLocation extends React.Component {
                                       </Col>
                                   </Row>
                                   <Row>
+                                      <Col>
+                                          <label
+                                              className="form-control-label"
+                                          >
+                                              *Step 1: Enter an Address or Location below.
+                                          </label>
+                                      </Col>
+                                  </Row>
+                                  <Row>
                                       <Col >
                                           {mapApiLoaded && <MapSearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace}/>}
                                       </Col>
                                   </Row>
                                   <Row>
+                                      <Col>
+                                          <label
+                                              className="form-control-label step"
+                                          >
+                                              *Step 2: Draw the boundaries of the location on the map.
+                                          </label>
+                                      </Col>
+                                  </Row>
+                                  <Row>
+                                      <Col className={"d-flex justify-content-center"}>
+                                          <Button type={"button"} onClick={this.handleClearMap} color={"primary"}>
+                                              Redraw
+                                          </Button>
+                                      </Col>
+                                  </Row>
+                                  <Row>
                                       <Col >
-                                          <FormGroup>
-                                              <label
-                                                  className="form-control-label"
-                                                  htmlFor="radius"
-                                              >
-                                                  *Radius (meters)
-                                              </label>
-                                              <Input
-                                                  className="form-control-alternative"
-                                                  id="radius"
-                                                  placeholder="10"
-                                                  type="number"
-                                                  onChange={this.handleFormChange}
-                                                  required={true}
-                                              />
-                                          </FormGroup>
+                                          <label
+                                              className="form-control-label step"
+                                          >
+                                              Location Boundaries Drawn:
+                                          </label>
+                                         {(polygonDrawn)?
+                                      <i className={"far fa-check-circle"} style={{color: "green"}}/>
+                                          :
+                                          <i className={"far fa-times-circle"} style={{color: "red"}}/>
+                                      }
                                       </Col>
                                   </Row>
                               </div>
                               <Row>
                                   <Col lg={"12"} className={"d-flex justify-content-center"}>
-                                      <Button type={"submit"} onClick={this.handleSubmit} color="info">
+                                      <Button type={"submit"} onClick={this.handleSubmit} color="info"
+                                      disabled={(!polygonDrawn) || ( locationName.length === 0)}
+                                      >
                                           Add Location
                                       </Button>
                                   </Col>
@@ -195,7 +287,7 @@ class CreateLocation extends React.Component {
                           defaultZoom={zoom}
                           yesIWantToUseGoogleMapApiInternals
                           onGoogleApiLoaded={({ map, maps }) => this.apiActions(map, maps)}
-
+                          options={this.mapOptions}
                       />
                   </Card>
               </Col>
