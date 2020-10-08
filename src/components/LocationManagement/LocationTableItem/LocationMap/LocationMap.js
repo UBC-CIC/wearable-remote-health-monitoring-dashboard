@@ -17,7 +17,7 @@ class LocationMap extends React.Component{
     componentDidMount() {
        this.centerMap();
     }
-    
+
     // helps set the zoom and center coordinates for the map
     centerMap = () => {
         const { path } = this.props;
@@ -86,7 +86,7 @@ class LocationMap extends React.Component{
             fillColor: "#20b2c9",
             strokeColor: "#20b2c9",
         })
-
+        // add the polygon to the map
         polygon.setMap(map);
     }
 
@@ -98,9 +98,10 @@ class LocationMap extends React.Component{
                 <GoogleMap
                     bootstrapURLKeys={{
                         key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+                        libraries: ['drawing', 'geometry', 'places'],
                     }}
                     center={center}
-                    zoom={zoom}
+                    zoom={(zoom > 1)? zoom-1 : zoom}
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => this.apiActions(map, maps)}
                     options={this.mapOptions}
