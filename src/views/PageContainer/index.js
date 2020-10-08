@@ -70,7 +70,7 @@ class PageContainer extends React.Component {
         const {notifications} = this.props;
         const notificationList = notifications.map(notification => {
             return (
-                <AppNotification id={notification.id} message={notification.message} type={notification.type} />
+                <AppNotification key={notification.id} id={notification.id} message={notification.message} type={notification.type} />
             )
         })
         let rts = this.getRoutes(routes);

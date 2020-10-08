@@ -82,55 +82,7 @@ class CreateLocation extends React.Component {
             mapInstance: map,
             mapApi: maps,
         });
-        let drawingManager = new maps.drawing.DrawingManager({
-            drawingMode: maps.drawing.OverlayType.POLYGON,
-            drawingControl: false,
-            map: map,
-            polygonOptions: {
-                draggable: true,
-                suppressUndo: true,
-                editable: true,
-                strokeWeight: 2,
-                fillOpacity: 0.3,
-                fillColor: "#20b2c9",
-                strokeColor: "#20b2c9",
-            },
-        });
-        this.setState({
-            drawingMgrInstance: drawingManager,
-        })
-        // add event listener to check for completed polygon drawing, then save boundaries
-        maps.event.addListener(drawingManager, 'polygoncomplete', polygon => {
-            // retrieve and save polygon coordinates
-            this.updatePolygon(polygon);
-            // update local state flag
-            this.setState({
-                polygonDrawn: true,
-            })
-            // change drawingManager mode
-            this.drawingMode("COMPLETE");
-
-
-            // event listener added for polygon drag events (fires when user stops dragging the polygon)
-            maps.event.addListener(polygon, 'dragend', polygon => {
-                this.updatePolygon(polygon);
-            })
-            // event listeners added for polygon edit events
-            maps.event.addListener(polygon, 'insert_at', polygon => {
-                this.updatePolygon(polygon);
-            })
-            maps.event.addListener(polygon, 'remove_at', polygon => {
-                this.updatePolygon(polygon);
-            })
-            maps.event.addListener(polygon, 'set_at', polygon => {
-                this.updatePolygon(polygon);
-            })
-
-        } )
-
-        // save overlay instance for later, so we can clear the map and re-draw a new polygon
-        maps.event.addListener(drawingManager, 'overlaycomplete',
-                instance => this.setState({ overlayInstance: instance }));
+        this.setDrawingManager(maps, map);
     }
 
 
@@ -164,17 +116,76 @@ class CreateLocation extends React.Component {
         }
     }
 
+
+    // initialize new drawing manager
+    setDrawingManager = (mapApi, mapInstance) => {
+        let drawingManager = new mapApi.drawing.DrawingManager({
+            drawingMode: mapApi.drawing.OverlayType.POLYGON,
+            drawingControl: false,
+            map: mapInstance,
+            polygonOptions: {
+                draggable: true,
+                suppressUndo: true,
+                editable: true,
+                strokeWeight: 2,
+                fillOpacity: 0.3,
+                fillColor: "#20b2c9",
+                strokeColor: "#20b2c9",
+            },
+        });
+        this.setState({
+            drawingMgrInstance: drawingManager,
+        })
+        // add event listener to check for completed polygon drawing, then save boundaries
+        mapApi.event.addListener(drawingManager, 'polygoncomplete', polygon => {
+            // retrieve and save polygon coordinates
+            const update = () => {
+                this.updatePolygon(polygon);
+            }
+            // update local state flag
+            this.setState({
+                polygonDrawn: true,
+            })
+            // change drawingManager mode
+            this.drawingMode("COMPLETE");
+            
+            // event listener added for polygon drag events (fires when user stops dragging the polygon)
+            mapApi.event.addListener(polygon, 'dragend', function () {
+                update();
+            })
+            // event listeners added for polygon edit events
+            mapApi.event.addListener(polygon, 'insert_at', function () {
+                update();
+            })
+            mapApi.event.addListener(polygon, 'remove_at', function () {
+                update();
+            })
+            mapApi.event.addListener(polygon, 'set_at', function () {
+                update();
+            })
+
+        } )
+
+        // save overlay instance for later, so we can clear the map and re-draw a new polygon
+        mapApi.event.addListener(drawingManager, 'overlaycomplete',
+            instance => this.setState({ overlayInstance: instance }));
+    }
+
     // handles changing drawing modes, overlay changes, and state updates
     drawingMode = (event) => {
-        const { drawingMgrInstance, overlayInstance, mapApi } = this.state;
+        const { drawingMgrInstance, overlayInstance, mapApi, mapInstance } = this.state;
         switch (event) {
             case "COMPLETE": {
-                drawingMgrInstance.setDrawingMode();
+                drawingMgrInstance.setDrawingMode(null);
                 break;
             }
             case "CLEAR_MAP": {
-                overlayInstance.overlay.setMap(null);
-                drawingMgrInstance.setDrawingMode(mapApi.drawing.OverlayType.POLYGON);
+                // first check that the instance is not null
+                if (overlayInstance) {
+                    overlayInstance.overlay.setMap(null);
+                }
+                drawingMgrInstance.setMap(null);
+                this.setDrawingManager(mapApi, mapInstance);
                 this.setState({
                     overlayInstance: null,
                     polygonDrawn: false,
@@ -189,11 +200,7 @@ class CreateLocation extends React.Component {
     // calls drawingMode to clear map overlay
     handleClearMap = (e) => {
         e.preventDefault();
-        const {overlayInstance} = this.state;
-        // only call if overlay instance exists
-        if (overlayInstance) {
-            this.drawingMode("CLEAR_MAP");
-        }
+        this.drawingMode("CLEAR_MAP");
     }
 
 

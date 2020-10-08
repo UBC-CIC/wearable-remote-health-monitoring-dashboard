@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Route, Switch} from "react-router-dom";
+import { withAuthenticator } from '@aws-amplify/ui-react'
 import { connect } from "react-redux";
 import PageContainer from "./views/PageContainer/index";
 import LoadingPage from "./views/Pages/LoadingPage";
@@ -58,4 +59,4 @@ const mapDispatchToProps = {
     subscribeAlerts,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withAuthenticator(connect(mapStateToProps, mapDispatchToProps)(App));

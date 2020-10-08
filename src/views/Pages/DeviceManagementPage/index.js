@@ -70,7 +70,6 @@ class DeviceManager extends React.Component {
 
   render() {
     const {devicesList} = this.state;
-    console.log(devicesList);
     // map our list of devices to the device table
     const deviceList = devicesList.map((device) => {
       return(

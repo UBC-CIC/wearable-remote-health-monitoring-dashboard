@@ -2,6 +2,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import {onCreateAlert} from "../graphql/subscriptions";
 import {listAlerts} from "../graphql/queries";
 import {deleteAlert} from "../graphql/mutations";
+import {enqueueAppNotification} from "./notificationActions";
 
 // ====================================---ALERT SUBSCRIPTION---==========================================
 // Subscribe to alerts, sets realtime connection status flag
@@ -96,9 +97,10 @@ export const deleteAlertFailure = (error) => {
     }
 }
 
-// NOT YET IMPLEMENTED: respond to success condition
+// Respond to success condition
 export const deleteAlertSuccess = () => {
-    return {
-        type: "DELETE_ALERT_SUCCESS",
+    return (dispatch) => {
+        dispatch({type: "DELETE_ALERT_SUCCESS" });
+        enqueueAppNotification({type: "info", message: "Alert deleted successfully."})
     }
 }

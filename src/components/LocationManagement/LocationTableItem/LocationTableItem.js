@@ -33,7 +33,6 @@ class LocationTableItem extends React.Component {
     render() {
         const {location} = this.props;
         const {deleteLocationModalShow} = this.state;
-        console.log("boundary", location.boundary);
         let boundaryList = location.boundary.map(point => {
             return(
                 <li><span key={uuidv4()}>[lat: {point.lat}, lng: {point.lng}]</span></li>
