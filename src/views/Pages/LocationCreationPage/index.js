@@ -297,20 +297,20 @@ class CreateLocation extends React.Component {
                       </CardBody>
                   </Card>
               </Col>
-              <Col lg="6" >
-                  <Card className="shadow border-0 mapCard" style={{width: "100%", height: "100%"}}>
-                      <GoogleMap
-                          bootstrapURLKeys={{
-                              key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-                              libraries: ['drawing', 'geometry', 'places']
-                          }}
-                          defaultCenter={center}
-                          defaultZoom={zoom}
-                          yesIWantToUseGoogleMapApiInternals
-                          onGoogleApiLoaded={({ map, maps }) => this.apiActions(map, maps)}
-                          options={this.mapOptions}
-                      />
-                  </Card>
+              <Col lg="6" id={"outerMapWrapper"}  >
+                      <Card className="shadow border-0 mapCard" id={"innerMapWrapper"}>
+                          <GoogleMap
+                              bootstrapURLKeys={{
+                                  key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+                                  libraries: ['drawing', 'geometry', 'places']
+                              }}
+                              defaultCenter={center}
+                              defaultZoom={zoom}
+                              yesIWantToUseGoogleMapApiInternals
+                              onGoogleApiLoaded={({ map, maps }) => this.apiActions(map, maps)}
+                              options={this.mapOptions}
+                          />
+                      </Card>
               </Col>
           </Row>
         </Container>

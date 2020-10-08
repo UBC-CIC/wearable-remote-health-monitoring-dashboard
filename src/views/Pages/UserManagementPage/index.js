@@ -34,7 +34,6 @@ import {v4 as uuidv4} from "uuid";
 class UserManagement extends React.Component {
   render() {
     const {users} = this.props;
-
     // map our list of users to the "Current Status" table
     const userList = users.map((user) => {
       return(

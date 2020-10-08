@@ -56,7 +56,7 @@ class ManageLocations extends React.Component {
                   <tr>
                     <th scope="col">Location Name</th>
                     <th scope="col">Map</th>
-                    <th scope="col">Boundary</th>
+                    <th scope="col">Boundary Points</th>
                     <th scope="col">Actions</th>
                   </tr>
                   </thead>

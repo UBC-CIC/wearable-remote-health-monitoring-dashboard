@@ -7,6 +7,8 @@ import {
 } from "reactstrap";
 import DeleteLocationModal from "../DeleteLocationModal/DeleteLocationModal";
 import LocationMap from "./LocationMap/LocationMap";
+import {v4 as uuidv4} from "uuid";
+import "./LocationTableItem.css";
 
 
 
@@ -31,13 +33,19 @@ class LocationTableItem extends React.Component {
     render() {
         const {location} = this.props;
         const {deleteLocationModalShow} = this.state;
+        console.log("boundary", location.boundary);
+        let boundaryList = location.boundary.map(point => {
+            return(
+                <li><span key={uuidv4()}>[lat: {point.lat}, lng: {point.lng}]</span></li>
+            )
+        })
         return(
             <tr>
                 <th scope="row">
                     {location.locationName}
                 </th>
                 <td><LocationMap path={location.boundary} /></td>
-                <td></td>
+                <td className={"p-0 m-0"}><ul className={"boundaryList"}>{boundaryList}</ul></td>
                 <td className="text-right">
                     <UncontrolledDropdown>
                         <DropdownToggle
