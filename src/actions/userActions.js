@@ -23,7 +23,7 @@ export const fetchUsers = () => {
 export const fetchUsersFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "FETCH_USERS_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error fetching users, please refresh the page: " + error.errors[0].message}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching users, please refresh the page: " + error}));
     }
 }
 

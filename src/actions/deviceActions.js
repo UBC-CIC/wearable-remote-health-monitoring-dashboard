@@ -25,7 +25,7 @@ export const fetchDevices = () => {
 export const fetchDevicesFailure = (error) => {
     return (dispatch) => {
         dispatch({ type: "FETCH_DEVICES_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error fetching devices, please refresh the page: " + error.errors[0].message}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching devices, please refresh the page: " + error}));
     }
 }
 

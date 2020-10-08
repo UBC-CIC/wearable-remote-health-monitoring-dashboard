@@ -29,7 +29,7 @@ import LocationCreationHeader from "../../../components/Headers/LocationCreation
 import { v4 as uuidv4 } from "uuid";
 import { addNewLocation } from "../../../actions/locationActions";
 import MapSearchBox from "../../../components/LocationManagement/MapSearchBox/MapSearchBox";
-import "./LoadingCreationPage.css";
+import "./LocationCreationPage.css";
 
 
 class CreateLocation extends React.Component {
@@ -62,14 +62,12 @@ class CreateLocation extends React.Component {
     }
 
     handleSubmit = () => {
-        const { locationName, latitude, longitude, radius } = this.state;
+        const { locationName, boundary } = this.state;
         const {addNewLocation: addLocation, history} = this.props;
-        const latLon = {latitude: latitude, longitude: longitude};
         const newLocation = {
             id: uuidv4(),
             locationName: locationName,
-            centerpoint: latLon,
-            radius: radius,
+            boundary: boundary,
         }
         // submit new location
         addLocation(newLocation);
@@ -103,7 +101,31 @@ class CreateLocation extends React.Component {
         })
         // add event listener to check for completed polygon drawing, then save boundaries
         maps.event.addListener(drawingManager, 'polygoncomplete', polygon => {
-            this.drawingComplete(polygon);
+            // retrieve and save polygon coordinates
+            this.updatePolygon(polygon);
+            // update local state flag
+            this.setState({
+                polygonDrawn: true,
+            })
+            // change drawingManager mode
+            this.drawingMode("COMPLETE");
+
+
+            // event listener added for polygon drag events (fires when user stops dragging the polygon)
+            maps.event.addListener(polygon, 'dragend', polygon => {
+                this.updatePolygon(polygon);
+            })
+            // event listeners added for polygon edit events
+            maps.event.addListener(polygon, 'insert_at', polygon => {
+                this.updatePolygon(polygon);
+            })
+            maps.event.addListener(polygon, 'remove_at', polygon => {
+                this.updatePolygon(polygon);
+            })
+            maps.event.addListener(polygon, 'set_at', polygon => {
+                this.updatePolygon(polygon);
+            })
+
         } )
 
         // save overlay instance for later, so we can clear the map and re-draw a new polygon
@@ -112,17 +134,16 @@ class CreateLocation extends React.Component {
     }
 
 
-    // get vertices of complete polygon and save them to the local state
-    drawingComplete = ( polygon ) => {
+
+    // updates polygon coordinates after creation, dragging, or edit event
+    updatePolygon = (polygon) => {
         let points = polygon.getPath().getArray().map(point =>
         {return {lat: point.lat(), lng: point.lng()}});
         this.setState({
             boundary: points,
-            polygonDrawn: true,
         })
-        this.drawingMode("COMPLETE");
-        console.log("points", points);
     }
+
 
     addPlace = (place) => {
         this.setState({ places: place });
@@ -165,7 +186,7 @@ class CreateLocation extends React.Component {
         }
     }
 
-    // calls drawing mode to clear map overlay
+    // calls drawingMode to clear map overlay
     handleClearMap = (e) => {
         e.preventDefault();
         const {overlayInstance} = this.state;

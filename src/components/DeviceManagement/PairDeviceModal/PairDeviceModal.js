@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import {Button, FormGroup, Input} from "reactstrap";
 import { connect } from "react-redux";
 import { associateDeviceWithUser } from "../../../actions/deviceActions";
-import {v4 as uuidv4} from "uuid";
 
 
 

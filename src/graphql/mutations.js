@@ -25,7 +25,6 @@ export const createUser = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -89,7 +88,6 @@ export const updateUser = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -153,7 +151,6 @@ export const deleteUser = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -219,11 +216,10 @@ export const createDevice = /* GraphQL */ `
       geofence {
         id
         locationName
-        centerpoint {
-          latitude
-          longitude
+        boundary {
+          lat
+          lng
         }
-        radius
         createdAt
         updatedAt
       }
@@ -272,11 +268,10 @@ export const updateDevice = /* GraphQL */ `
       geofence {
         id
         locationName
-        centerpoint {
-          latitude
-          longitude
+        boundary {
+          lat
+          lng
         }
-        radius
         createdAt
         updatedAt
       }
@@ -325,11 +320,10 @@ export const deleteDevice = /* GraphQL */ `
       geofence {
         id
         locationName
-        centerpoint {
-          latitude
-          longitude
+        boundary {
+          lat
+          lng
         }
-        radius
         createdAt
         updatedAt
       }
@@ -360,11 +354,10 @@ export const createLocation = /* GraphQL */ `
     createLocation(input: $input, condition: $condition) {
       id
       locationName
-      centerpoint {
-        latitude
-        longitude
+      boundary {
+        lat
+        lng
       }
-      radius
       createdAt
       updatedAt
     }
@@ -378,11 +371,10 @@ export const updateLocation = /* GraphQL */ `
     updateLocation(input: $input, condition: $condition) {
       id
       locationName
-      centerpoint {
-        latitude
-        longitude
+      boundary {
+        lat
+        lng
       }
-      radius
       createdAt
       updatedAt
     }
@@ -396,11 +388,10 @@ export const deleteLocation = /* GraphQL */ `
     deleteLocation(input: $input, condition: $condition) {
       id
       locationName
-      centerpoint {
-        latitude
-        longitude
+      boundary {
+        lat
+        lng
       }
-      radius
       createdAt
       updatedAt
     }
@@ -417,8 +408,8 @@ export const createAlert = /* GraphQL */ `
       type
       description
       location {
-        latitude
-        longitude
+        lat
+        lng
       }
       createdAt
       expirationTime
@@ -437,8 +428,8 @@ export const updateAlert = /* GraphQL */ `
       type
       description
       location {
-        latitude
-        longitude
+        lat
+        lng
       }
       createdAt
       expirationTime
@@ -457,8 +448,8 @@ export const deleteAlert = /* GraphQL */ `
       type
       description
       location {
-        latitude
-        longitude
+        lat
+        lng
       }
       createdAt
       expirationTime
@@ -486,7 +477,6 @@ export const createDeviceData = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -497,8 +487,8 @@ export const createDeviceData = /* GraphQL */ `
         updatedAt
       }
       location {
-        latitude
-        longitude
+        lat
+        lng
       }
       observationType
       observationUnit
@@ -530,7 +520,6 @@ export const updateDeviceData = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -541,8 +530,8 @@ export const updateDeviceData = /* GraphQL */ `
         updatedAt
       }
       location {
-        latitude
-        longitude
+        lat
+        lng
       }
       observationType
       observationUnit
@@ -574,7 +563,6 @@ export const deleteDeviceData = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -585,8 +573,8 @@ export const deleteDeviceData = /* GraphQL */ `
         updatedAt
       }
       location {
-        latitude
-        longitude
+        lat
+        lng
       }
       observationType
       observationUnit

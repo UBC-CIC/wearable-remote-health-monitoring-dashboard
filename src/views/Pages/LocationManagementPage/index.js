@@ -55,8 +55,8 @@ class ManageLocations extends React.Component {
                   <thead className="thead-light">
                   <tr>
                     <th scope="col">Location Name</th>
-                    <th scope="col">Center [lat, lon]</th>
-                    <th scope="col">Radius (meters)</th>
+                    <th scope="col">Map</th>
+                    <th scope="col">Boundary</th>
                     <th scope="col">Actions</th>
                   </tr>
                   </thead>
@@ -79,10 +79,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = {
-
-};
 
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ManageLocations);
+export default connect(mapStateToProps)(ManageLocations);

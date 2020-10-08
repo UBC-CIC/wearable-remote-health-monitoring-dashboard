@@ -23,7 +23,7 @@ export const fetchLocations = () => {
 export const fetchLocationsFailure = (error) => {
     return (dispatch) => {
         dispatch({type: "FETCH_LOCATIONS_FAILURE", payload: error});
-        dispatch(enqueueAppNotification({type: "error", message: "Error fetching locations, please refresh the page: " + error.errors[0].message}));
+        dispatch(enqueueAppNotification({type: "error", message: "Error fetching locations, please refresh the page: " + error}));
     }
 }
 

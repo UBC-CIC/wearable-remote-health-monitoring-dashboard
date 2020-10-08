@@ -6,6 +6,7 @@ import {
     UncontrolledDropdown,
 } from "reactstrap";
 import DeleteLocationModal from "../DeleteLocationModal/DeleteLocationModal";
+import LocationMap from "./LocationMap/LocationMap";
 
 
 
@@ -35,8 +36,8 @@ class LocationTableItem extends React.Component {
                 <th scope="row">
                     {location.locationName}
                 </th>
-                <td>[{location.centerpoint.latitude}, {location.centerpoint.longitude}]</td>
-                <td>{location.radius}</td>
+                <td><LocationMap path={location.boundary} /></td>
+                <td></td>
                 <td className="text-right">
                     <UncontrolledDropdown>
                         <DropdownToggle

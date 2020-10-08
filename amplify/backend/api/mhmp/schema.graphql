@@ -29,7 +29,7 @@ type Location @model
 @key(name: "byLocationName", fields: ["locationName"]) {
   id: ID!
   locationName: String!
-  boundary: [LatLon]!
+  boundary: [LatLon!]!
 }
 
 type Alert @model 

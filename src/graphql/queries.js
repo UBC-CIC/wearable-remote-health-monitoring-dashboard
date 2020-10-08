@@ -22,7 +22,6 @@ export const getUser = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -133,11 +132,10 @@ export const getDevice = /* GraphQL */ `
       geofence {
         id
         locationName
-        centerpoint {
-          latitude
-          longitude
+        boundary {
+          lat
+          lng
         }
-        radius
         createdAt
         updatedAt
       }
@@ -179,7 +177,6 @@ export const listDevices = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -198,11 +195,10 @@ export const getLocation = /* GraphQL */ `
     getLocation(id: $id) {
       id
       locationName
-      centerpoint {
-        latitude
-        longitude
+      boundary {
+        lat
+        lng
       }
-      radius
       createdAt
       updatedAt
     }
@@ -218,11 +214,10 @@ export const listLocations = /* GraphQL */ `
       items {
         id
         locationName
-        centerpoint {
-          latitude
-          longitude
+        boundary {
+          lat
+          lng
         }
-        radius
         createdAt
         updatedAt
       }
@@ -238,8 +233,8 @@ export const getAlert = /* GraphQL */ `
       type
       description
       location {
-        latitude
-        longitude
+        lat
+        lng
       }
       createdAt
       expirationTime
@@ -260,8 +255,8 @@ export const listAlerts = /* GraphQL */ `
         type
         description
         location {
-          latitude
-          longitude
+          lat
+          lng
         }
         createdAt
         expirationTime
@@ -288,7 +283,6 @@ export const getDeviceData = /* GraphQL */ `
         geofence {
           id
           locationName
-          radius
           createdAt
           updatedAt
         }
@@ -299,8 +293,8 @@ export const getDeviceData = /* GraphQL */ `
         updatedAt
       }
       location {
-        latitude
-        longitude
+        lat
+        lng
       }
       observationType
       observationUnit
@@ -332,8 +326,8 @@ export const listDeviceDatas = /* GraphQL */ `
           updatedAt
         }
         location {
-          latitude
-          longitude
+          lat
+          lng
         }
         observationType
         observationUnit
