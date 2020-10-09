@@ -18,6 +18,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import LogoutModal from "../Auth/LogoutModal/LogoutModal";
+
 
 // reactstrap components
 import {
@@ -32,8 +34,25 @@ import {
 } from "reactstrap";
 
 class AdminNavbar extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      logoutModalShow: false,
+    }
+  }
+
+  // Triggers the opening/closing of the logoutModal
+  setLogoutModalShow = (bool) => {
+    this.setState({
+      logoutModalShow: bool,
+    });
+  };
+
+
   render() {
     const { alertsConnected } = this.props;
+    const { logoutModalShow } = this.state;
 
     return (
       <div>
@@ -69,11 +88,12 @@ class AdminNavbar extends React.Component {
                   </Media>
                 </DropdownToggle>
                 <DropdownMenu className="dropdown-menu-arrow" right>
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="" onClick={() => this.setLogoutModalShow(true)}>
                     <i className="fas fa-sign-out-alt" />
                     <span>Logout</span>
                   </DropdownItem>
                 </DropdownMenu>
+                <LogoutModal show={logoutModalShow} />
               </UncontrolledDropdown>
             </Nav>
           </Container>

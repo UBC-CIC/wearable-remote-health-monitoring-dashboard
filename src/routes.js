@@ -17,7 +17,7 @@
 */
 import HomePage from "./views/Pages/HomePage/";
 import Profile from "./views/Pages/ProfilePage";
-import Login from "./views/examples/Login.js";
+import App from "./App";
 import RegisterUser from "./views/Pages/UserRegistrationPage/";
 import DeviceManager from "./views/Pages/DeviceManagementPage";
 import CreateLocation from "./views/Pages/LocationCreationPage";
@@ -82,14 +82,6 @@ let routes = [
     component: CreateLocation,
     layout: "/admin",
     exposed: false
-  },
-  {
-    path: "/login",
-    name: "Logout",
-    icon: "fas fa-sign-out-alt text-info",
-    component: Login,
-    layout: "/admin",
-    exposed: true
   },
   {
     path: "/loading",

@@ -31,7 +31,7 @@ class App extends React.Component {
         return(<div className={"container"}>
           <LoadingPage />
         </div>)
-    } else {
+    }  else {
       return (
           <div>
             <Switch>

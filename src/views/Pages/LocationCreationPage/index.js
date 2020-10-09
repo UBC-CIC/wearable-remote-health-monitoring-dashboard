@@ -148,7 +148,7 @@ class CreateLocation extends React.Component {
             })
             // change drawingManager mode
             this.drawingMode("COMPLETE");
-            
+
             // event listener added for polygon drag events (fires when user stops dragging the polygon)
             mapApi.event.addListener(polygon, 'dragend', function () {
                 update();

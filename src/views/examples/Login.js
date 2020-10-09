@@ -15,7 +15,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {useState, useEffect} from "react";
+import {Auth, Hub} from 'aws-amplify';
 
 // reactstrap components
 import {
@@ -33,10 +34,29 @@ import {
   Col
 } from "reactstrap";
 
-class Login extends React.Component {
-  render() {
+
+const initalFormState = {
+  username: "",
+  password: "",
+  email: "",
+  authCode: "",
+  formType: "signUp"
+}
+
+function Login() {
+
+    const [formState, updateFormState] = useState(initalFormState);
+
+    function onChange(e) {
+      e.persist();
+      updateFormState(() => ({...formState, [e.target.name]: e.target.value }))
+
+    }
+
+    const { formType } = formState;
+
     return (
-      <>
+      <div>
         <Col lg="5" md="7">
           <Card className="bg-secondary shadow border-0">
             <CardHeader className="bg-transparent pb-5">
@@ -141,9 +161,9 @@ class Login extends React.Component {
             </Col>
           </Row>
         </Col>
-      </>
+      </div>
     );
-  }
+
 }
 
 export default Login;

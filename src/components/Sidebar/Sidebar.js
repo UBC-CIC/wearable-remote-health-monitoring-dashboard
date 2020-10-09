@@ -21,6 +21,7 @@ import {connect} from "react-redux";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
+
 import "../Notifications/AlertNotification/SideBar.css";
 
 // reactstrap components
@@ -47,6 +48,7 @@ import {
 } from "reactstrap";
 import AlertNotification from "../Notifications/AlertNotification/AlertNotification";
 import {v4 as uuidv4} from "uuid";
+import LogoutModal from "../Auth/LogoutModal/LogoutModal";
 
 class Sidebar extends React.Component {
   state = {
@@ -55,6 +57,9 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.activeRoute.bind(this);
+    this.state = {
+
+    }
   }
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
@@ -92,8 +97,17 @@ class Sidebar extends React.Component {
       }
     });
   };
+
+  // Triggers the opening/closing of the logoutModal
+  setLogoutModalShow = (bool) => {
+    this.setState({
+      logoutModalShow: bool,
+    });
+  };
+
   render() {
     const { routes, logo, alerts, users } = this.props;
+    const { logoutModalShow } = this.state;
     const alertList = alerts.map(alert => {
       let user = users.find(user => user.device.id === alert.deviceID);
       return (
@@ -156,11 +170,11 @@ class Sidebar extends React.Component {
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                  <i className="fas fa-sign-out-alt" />
+                <DropdownItem href="" onClick={() => this.setLogoutModalShow(true)}>
                   <span>Logout</span>
                 </DropdownItem>
               </DropdownMenu>
+              <LogoutModal show={logoutModalShow} />
             </UncontrolledDropdown>
           </Nav>
           {/* Collapse */}
