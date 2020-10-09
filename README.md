@@ -16,7 +16,7 @@ Then enable the following APIs:
 
 ## Development only instructions
 Please use Chrome with the redux dev tool chrome extension and the react chrome extension installed. The app will not start otherwise. 
-If you wish, you can get around this by replacing the following lines in the index.js file located at the root folder level:
+If you wish, you can get around this by replacing the following lines in the index.js file located at the src folder level:
 
 Replace This:
 ```javascript
