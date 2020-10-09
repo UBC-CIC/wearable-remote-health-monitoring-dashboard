@@ -14,6 +14,24 @@ Then enable the following APIs:
 - Places API
 - Geocoding API
 
+## Development only instructions
+Please use Chrome with the redux dev tool chrome extension and the react chrome extension installed. The app will not start otherwise. 
+If you wish, you can get around this by replacing the following lines in the index.js file located at the src folder level:
+
+Replace This:
+```javascript
+const store = createStore(
+    reducers, compose(applyMiddleware(thunk),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+);
+```
+With this:
+```javascript
+const store = createStore(
+    reducers, applyMiddleware(thunk)
+);
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
