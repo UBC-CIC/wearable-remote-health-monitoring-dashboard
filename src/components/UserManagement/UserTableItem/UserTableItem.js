@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import AssignLocationModal from "../../LocationManagement/AssignLocationModal/AssignLocationModal";
 import RemoveLocationModal from "../../LocationManagement/RemoveLocationModal/RemoveLocationModal";
+import {retrieveImageService} from "../../../services/profilePhotoFetcher/profilePhotoFetcher";
 
 
 
@@ -24,6 +25,23 @@ class UserManagementTableItem extends React.Component {
             deleteModalShow: false,
             assignLocationModalShow: false,
             removeLocationModalShow: false,
+            profilePhoto:  require("../../../assets/img/theme/blank-profile.png"),
+        }
+        const {  profileImg } = this.props;
+        this.fetchImage( profileImg );
+    }
+
+    // fetch image from S3
+    fetchImage = async ( profileImg ) => {
+        if ( profileImg ) {
+            try {
+                const imageData = await retrieveImageService(profileImg.key);
+                this.setState({
+                    profilePhoto: imageData,
+                })
+            } catch (err) {
+                console.log('error: ', err);
+            }
         }
     }
 
@@ -55,8 +73,8 @@ class UserManagementTableItem extends React.Component {
     }
 
     render() {
-        const {name, profileImg, id, device } = this.props;
-        const {deleteModalShow, assignLocationModalShow, removeLocationModalShow} = this.state;
+        const {name, id, device } = this.props;
+        const {profilePhoto, deleteModalShow, assignLocationModalShow, removeLocationModalShow} = this.state;
         return (
             <tr>
                 <th scope="row">
@@ -77,7 +95,7 @@ class UserManagementTableItem extends React.Component {
                             <img
                                 alt="..."
                                 className="rounded-circle"
-                                src={profileImg}
+                                src={profilePhoto}
                             />
                         </a>
                         <UncontrolledTooltip

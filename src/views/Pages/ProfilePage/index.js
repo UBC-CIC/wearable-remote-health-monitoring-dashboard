@@ -29,13 +29,16 @@ import {
   Input,
   Container,
   Row,
-  Col
+  Col, UncontrolledTooltip
 } from "reactstrap";
 // core components
 import UserHeader from "../../../components/Headers/UserHeader.js";
 import DeleteUserModal from "../../../components/UserProfile/DeleteUserModal/DeleteUserModal";
+import ProfilePhotoModal from "../../../components/UserProfile/ProfilePhotoModal/ProfilePhotoModal";
 // actions
 import {updateUserInformation, updateUserInformationLocally} from "../../../actions/userActions";
+// services
+import {retrieveImageService} from "../../../services/profilePhotoFetcher/profilePhotoFetcher";
 
 class Profile extends React.Component {
 
@@ -62,9 +65,25 @@ class Profile extends React.Component {
         emergencyContacts: [],
         careGivers: [],
       originalProfile: userProfile,
+      profilePhoto:  require("../../../assets/img/theme/blank-profile.png"),
       editMode: false,
       profileInfoEdited: false,
       deleteModalShow: false,
+      profilePhotoModalShow: false,
+    }
+    this.fetchImage(userProfile.profileImage);
+  }
+
+  fetchImage = async (profileImage) => {
+    if (profileImage) {
+      try {
+        const imageData = await retrieveImageService(profileImage.key);
+        this.setState({
+          profilePhoto: imageData,
+        })
+      } catch (err) {
+        console.log('error: ', err);
+      }
     }
   }
 
@@ -125,9 +144,17 @@ class Profile extends React.Component {
     });
   };
 
+  // Triggers the opening/closing of the profilePhotoModalShow
+  setProfilePhotoModalShow = (bool) => {
+    this.setState({
+      profilePhotoModalShow: bool,
+    });
+  };
+
   render() {
-    const { originalProfile, firstName, lastName, age, facility, phoneNumber, email,
-      streetAddress, city, stateProvince, country, postalZip, heartRate, additionalNotes ,editMode, deleteModalShow } = this.state;
+    const { originalProfile, id, firstName, lastName, age, facility, phoneNumber, email,
+      streetAddress, city, stateProvince, country, postalZip, heartRate, additionalNotes, profilePhoto,
+      editMode, deleteModalShow, profilePhotoModalShow } = this.state;
       return (
           <div>
             <UserHeader userName={firstName + " " + lastName}/>
@@ -139,14 +166,23 @@ class Profile extends React.Component {
                     <Row className="justify-content-center">
                       <Col className="order-lg-2" lg="3">
                         <div className="card-profile-image">
-                          <a href="#pablo" onClick={e => e.preventDefault()}>
+                          <a href="#pablo"
+                             id={"profileImage"}
+                             onClick={() => this.setProfilePhotoModalShow(true)}>
                             <img
                                 alt="..."
                                 className="rounded-circle"
-                                src={require("../../../assets/img/theme/blank-profile.png")}
+                                src={profilePhoto}
                             />
                           </a>
+                          <UncontrolledTooltip
+                              delay={0}
+                              target={"profileImage"}
+                          >
+                            Click to change photo.
+                          </UncontrolledTooltip>
                         </div>
+                        <ProfilePhotoModal show={profilePhotoModalShow} userID={id} onHide={() => this.setProfilePhotoModalShow(false)} />
                       </Col>
                     </Row>
                     <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">

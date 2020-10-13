@@ -12,7 +12,11 @@ export const createUser = /* GraphQL */ `
       lastName
       age
       profileImageURL
-      profileImageS3Key
+      profileImage {
+        bucket
+        region
+        key
+      }
       device {
         id
         userID
@@ -75,7 +79,11 @@ export const updateUser = /* GraphQL */ `
       lastName
       age
       profileImageURL
-      profileImageS3Key
+      profileImage {
+        bucket
+        region
+        key
+      }
       device {
         id
         userID
@@ -138,7 +146,11 @@ export const deleteUser = /* GraphQL */ `
       lastName
       age
       profileImageURL
-      profileImageS3Key
+      profileImage {
+        bucket
+        region
+        key
+      }
       device {
         id
         userID

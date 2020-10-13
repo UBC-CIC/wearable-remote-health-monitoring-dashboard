@@ -1,6 +1,6 @@
 {
     "identityPoolName": "mhmp3e34dee4_identitypool_3e34dee4",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "mhmp3e34dee4",
     "userPoolName": "mhmp3e34dee4_userpool_3e34dee4",
     "autoVerifiedAttributes": [

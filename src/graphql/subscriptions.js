@@ -9,7 +9,11 @@ export const onCreateUser = /* GraphQL */ `
       lastName
       age
       profileImageURL
-      profileImageS3Key
+      profileImage {
+        bucket
+        region
+        key
+      }
       device {
         id
         userID
@@ -69,7 +73,11 @@ export const onUpdateUser = /* GraphQL */ `
       lastName
       age
       profileImageURL
-      profileImageS3Key
+      profileImage {
+        bucket
+        region
+        key
+      }
       device {
         id
         userID
@@ -129,7 +137,11 @@ export const onDeleteUser = /* GraphQL */ `
       lastName
       age
       profileImageURL
-      profileImageS3Key
+      profileImage {
+        bucket
+        region
+        key
+      }
       device {
         id
         userID

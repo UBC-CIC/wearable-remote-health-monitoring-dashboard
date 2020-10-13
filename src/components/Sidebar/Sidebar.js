@@ -77,6 +77,7 @@ class Sidebar extends React.Component {
       collapseOpen: false
     });
   };
+
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
     return routes.map((prop, key) => {
@@ -174,7 +175,7 @@ class Sidebar extends React.Component {
                   <span>Logout</span>
                 </DropdownItem>
               </DropdownMenu>
-              <LogoutModal show={logoutModalShow} />
+              <LogoutModal show={logoutModalShow} onHide={() => this.setLogoutModalShow(false)} />
             </UncontrolledDropdown>
           </Nav>
           {/* Collapse */}

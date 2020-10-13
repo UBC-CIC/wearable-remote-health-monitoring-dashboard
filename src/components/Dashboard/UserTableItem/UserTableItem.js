@@ -8,13 +8,38 @@ import {
     UncontrolledDropdown,
     UncontrolledTooltip
 } from "reactstrap";
+import {retrieveImageService} from "../../../services/profilePhotoFetcher/profilePhotoFetcher";
 
 
 
 class UserTableItem extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            profilePhoto:  require("../../../assets/img/theme/blank-profile.png"),
+        }
+        const {  profileImg } = this.props;
+        this.fetchImage( profileImg );
+    }
+
+    // fetch image from S3
+    fetchImage = async ( profileImg ) => {
+        if ( profileImg ) {
+            try {
+                const imageData = await retrieveImageService(profileImg.key);
+                this.setState({
+                    profilePhoto: imageData,
+                })
+            } catch (err) {
+                console.log('error: ', err);
+            }
+        }
+    }
+
     render() {
-        const {name, profileImg, id, heartRate } = this.props;
+        const {name,id, heartRate } = this.props;
+        const { profilePhoto } = this.state;
         let statusClass = "bg-success";
         /*switch (status.code) {
             case -1:{
@@ -60,7 +85,7 @@ class UserTableItem extends React.Component {
                             <img
                                 alt="..."
                                 className="rounded-circle"
-                                src={profileImg}
+                                src={profilePhoto}
                             />
                         </a>
                         <UncontrolledTooltip

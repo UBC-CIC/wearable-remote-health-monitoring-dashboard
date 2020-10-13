@@ -93,7 +93,7 @@ class AdminNavbar extends React.Component {
                     <span>Logout</span>
                   </DropdownItem>
                 </DropdownMenu>
-                <LogoutModal show={logoutModalShow} />
+                <LogoutModal show={logoutModalShow} onHide={() => this.setLogoutModalShow(false)} />
               </UncontrolledDropdown>
             </Nav>
           </Container>

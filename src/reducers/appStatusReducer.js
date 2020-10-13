@@ -43,7 +43,6 @@ const appStatusReducer = (appStatus = initialState, action) => {
             }
         }
         case "FETCH_USERS_SUCCESS": {
-            console.log("users fetch done");
             return {
                 ...newAppStatus,
                 startupLoading: !(lastToLoad),
@@ -65,7 +64,6 @@ const appStatusReducer = (appStatus = initialState, action) => {
             }
         }
         case "FETCH_DEVICES_SUCCESS": {
-            console.log("devices fetch done");
             return {
                 ...newAppStatus,
                 startupLoading: !(lastToLoad),
@@ -87,7 +85,6 @@ const appStatusReducer = (appStatus = initialState, action) => {
             }
         }
         case "FETCH_LOCATIONS_SUCCESS": {
-            console.log("fetch locations done");
             return {
                 ...newAppStatus,
                 startupLoading: !(lastToLoad),
@@ -108,7 +105,6 @@ const appStatusReducer = (appStatus = initialState, action) => {
             }
         }
         case "FETCH_ALERTS_SUCCESS": {
-            console.log("fetch alerts done");
             return {
                 ...newAppStatus,
                 startupLoading: !(lastToLoad),

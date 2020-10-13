@@ -9,7 +9,11 @@ export const getUser = /* GraphQL */ `
       lastName
       age
       profileImageURL
-      profileImageS3Key
+      profileImage {
+        bucket
+        region
+        key
+      }
       device {
         id
         userID
@@ -74,7 +78,11 @@ export const listUsers = /* GraphQL */ `
         lastName
         age
         profileImageURL
-        profileImageS3Key
+        profileImage {
+          bucket
+          region
+          key
+        }
         device {
           id
           userID

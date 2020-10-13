@@ -59,7 +59,7 @@ class HomePage extends React.Component {
           <UserTableItem
               key={uuidv4()}
               name={user.firstName + " " + user.lastName}
-              profileImg={user.profileImageURL}
+              profileImg={(user.profileImage)? user.profileImage : null}
               id={user.id}
               status={user.status}
               device={user.device}

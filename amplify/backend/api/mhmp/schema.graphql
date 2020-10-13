@@ -4,7 +4,7 @@ type User @model {
   lastName: String!
   age: Int
   profileImageURL: String
-  profileImageS3Key: String
+  profileImage: S3Object
   device: Device @connection
   facility: String
   phoneNumber: String
@@ -12,6 +12,12 @@ type User @model {
   address: Address
   emergencyContacts: [Contact]  
   additionalNotes: String
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
 }
 
 type Device @model {

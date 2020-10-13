@@ -76,7 +76,7 @@ class RegisterUser extends React.Component {
       id: newUserID, firstName: firstName, lastName: lastName, age: age,
       facility: facility, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
         city: city, stateProvince: stateProvince, country: country, postalZip: postalZip},
-      profileImageURL: "https://i.imgur.com/6HAYO4e.png", profileImageS3Key: "", additionalNotes: additionalNotes, emergencyContacts: emergencyContacts
+      additionalNotes: additionalNotes, emergencyContacts: emergencyContacts
     }
     // submit new user info for storage in redux and in DynamoDB
     registerUser(newUser);
