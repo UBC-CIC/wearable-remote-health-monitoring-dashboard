@@ -17,7 +17,6 @@
 */
 import HomePage from "./views/Pages/HomePage/";
 import Profile from "./views/Pages/ProfilePage";
-import App from "./App";
 import RegisterUser from "./views/Pages/UserRegistrationPage/";
 import DeviceManager from "./views/Pages/DeviceManagementPage";
 import CreateLocation from "./views/Pages/LocationCreationPage";

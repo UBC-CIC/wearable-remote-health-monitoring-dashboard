@@ -182,7 +182,11 @@ class Profile extends React.Component {
                             Click to change photo.
                           </UncontrolledTooltip>
                         </div>
-                        <ProfilePhotoModal show={profilePhotoModalShow} userID={id} onHide={() => this.setProfilePhotoModalShow(false)} />
+                        <ProfilePhotoModal
+                            show={profilePhotoModalShow} userID={id}
+                            oldKey={(originalProfile.profileImage)? originalProfile.profileImage.key : null}
+                            onHide={() => this.setProfilePhotoModalShow(false)}
+                        />
                       </Col>
                     </Row>
                     <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">

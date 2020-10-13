@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import getCroppedImg from "./CropImage";
 import { v4 as uuid } from "uuid";
 import {Spinner} from "react-bootstrap";
+import {enqueueAppNotification} from "../../../actions/notificationActions";
 import "./ProfilePhotoModal.css";
 
 /* For other examples/options please refer to the
@@ -74,8 +75,16 @@ class ProfilePhotoModal extends React.Component {
             try {
                 await Storage.put(key, croppedImage, {
                     contentType: mimeType
-                })
-                await API.graphql(graphqlOperation(updateUser, { input: inputData }))
+                });
+                await API.graphql(graphqlOperation(updateUser, { input: inputData }));
+                // delete existing profile image in S3 if it exists
+                const { oldKey } = this.props;
+                if (oldKey) {
+                    await Storage.delete(oldKey);
+                }
+                // image upload successful
+                const {enqueueAppNotification} = this.props;
+                enqueueAppNotification({type: "success", message: "Image updated successfully."});
             } catch (err) {
                 console.log('error: ', err)
             }
@@ -92,6 +101,7 @@ class ProfilePhotoModal extends React.Component {
             });
         }
     };
+    
 
     onFileChange = async (e) => {
         if (e.target.files && e.target.files.length > 0) {
@@ -247,10 +257,5 @@ class ProfilePhotoModal extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
 
-    };
-};
-
-export default connect(mapStateToProps, {  })(ProfilePhotoModal);
+export default connect(null, { enqueueAppNotification })(ProfilePhotoModal);

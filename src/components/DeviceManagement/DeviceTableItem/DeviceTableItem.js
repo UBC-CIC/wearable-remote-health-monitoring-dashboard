@@ -61,8 +61,9 @@ class DeviceTableItem extends React.Component {
                 <th scope="row">
                     {device.id}
                 </th>
+                <td>{(device.deviceOS)? device.deviceOS : "Unknown"}</td>
                 <td>{(device.deviceStatus === null)? "N/A" : device.deviceStatus}</td>
-                <td>{(associatedUserID !== "NONE")? associatedUserName + ": " + associatedUserID : "NONE"}</td>
+                <td>{(associatedUserID !== "NONE")? associatedUserName : "NONE"}</td>
                 <td className="text-right">
                     <UncontrolledDropdown>
                         <DropdownToggle

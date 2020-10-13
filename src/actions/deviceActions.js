@@ -46,7 +46,8 @@ export const registerNewDevice = (payload) => {
         dispatch({ type: "REGISTER_NEW_DEVICE", payload: payload});
         // Add device to DynamoDB
         API.graphql(graphqlOperation(createDevice, {input: {id: payload.id,
-                deviceStatus: payload.deviceStatus}})).then((response) => {
+                deviceStatus: payload.deviceStatus, deviceOS: payload.deviceOS,
+                osVersion: payload.osVersion}})).then((response) => {
                     console.log(response);
             dispatch(registerDeviceSuccess());
         }).catch((err) => {

@@ -12,6 +12,8 @@ class RegisterDeviceModal extends React.Component {
         super(props);
         this.state = {
             deviceID: "",
+            deviceOS: null,
+            osVersion: null,
             deviceIDUnique: false,
         }
     }
@@ -22,10 +24,12 @@ class RegisterDeviceModal extends React.Component {
         this.setState({
             [e.target.id]: e.target.value,
         })
-        let isUnique = this.deviceUnique(e.target.value);
-        this.setState({
-            deviceIDUnique: isUnique,
-        })
+        if (e.target.id === "deviceID") {
+            let isUnique = this.deviceUnique(e.target.value);
+            this.setState({
+                deviceIDUnique: isUnique,
+            })
+        }
     }
 
     // checks that the given device ID is unique
@@ -44,8 +48,8 @@ class RegisterDeviceModal extends React.Component {
     onAdd = (e) => {
         e.preventDefault();
         const {registerNewDevice, onHide} = this.props;
-        const {deviceID} = this.state;
-        let newDevice = {id: deviceID, deviceStatus: "Inactive"};
+        const {deviceID, deviceOS, osVersion} = this.state;
+        let newDevice = {id: deviceID, deviceStatus: "Inactive", deviceOS: deviceOS, osVersion: osVersion};
         registerNewDevice(newDevice);
         onHide();
     }
@@ -98,6 +102,40 @@ class RegisterDeviceModal extends React.Component {
                                         type="text"
                                         onChange={this.handleChange}
                                         required={true}
+                                    />
+                                </FormGroup>
+                            </div>
+                        </div>
+                        <div className={"row"}>
+                            <div className={"col-6 d-flex justify-content-center"}>
+                                <FormGroup>
+                                    <label
+                                        className="form-control-label"
+                                        htmlFor="deviceOS"
+                                    >
+                                        <span>Device OS</span>
+                                    </label>
+                                    <Input
+                                        className="form-control-alternative"
+                                        id="deviceOS"
+                                        type="text"
+                                        onChange={this.handleChange}
+                                    />
+                                </FormGroup>
+                            </div>
+                            <div className={"col-6 d-flex justify-content-center"}>
+                                <FormGroup>
+                                    <label
+                                        className="form-control-label"
+                                        htmlFor="osVersion"
+                                    >
+                                        <span>OS Version</span>
+                                    </label>
+                                    <Input
+                                        className="form-control-alternative"
+                                        id="osVersion"
+                                        type="text"
+                                        onChange={this.handleChange}
                                     />
                                 </FormGroup>
                             </div>

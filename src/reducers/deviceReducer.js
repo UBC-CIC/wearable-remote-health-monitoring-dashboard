@@ -63,7 +63,8 @@ const deviceReducer = (devices = initialDevices, action) => {
         }
         case "REGISTER_NEW_DEVICE": {
             return [...newDeviceList, {id: action.payload.id, userID: null,
-                deviceStatus: action.payload.status, geofence: null, data: null}];
+                deviceStatus: action.payload.deviceStatus, deviceOS: action.payload.deviceOS,
+                osVersion: action.payload.osVersion, geofence: null, data: null}];
         }
         case "ASSOCIATE_NEW_DEVICE": {
             return pairDeviceHelper(newDeviceList, action.payload);

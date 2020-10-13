@@ -96,6 +96,7 @@ class DeviceManager extends React.Component {
                   <thead className="thead-light">
                   <tr>
                     <th scope="col">Device ID</th>
+                    <th scope="col">Device OS</th>
                     <th scope="col">Device Status</th>
                     <th scope="col">Associated User</th>
                     <th scope="col">Actions</th>

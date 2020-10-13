@@ -93,7 +93,8 @@ class CreateLocation extends React.Component {
         {return {lat: point.lat(), lng: point.lng()}});
         this.setState({
             boundary: points,
-        })
+        });
+        console.log("updatePolygon");
     }
 
 
@@ -142,6 +143,7 @@ class CreateLocation extends React.Component {
             const update = () => {
                 this.updatePolygon(polygon);
             }
+            update();
             // update local state flag
             this.setState({
                 polygonDrawn: true,
@@ -150,17 +152,17 @@ class CreateLocation extends React.Component {
             this.drawingMode("COMPLETE");
 
             // event listener added for polygon drag events (fires when user stops dragging the polygon)
-            mapApi.event.addListener(polygon, 'dragend', function () {
+            mapApi.event.addListener(polygon, 'dragend', () => {
                 update();
             })
             // event listeners added for polygon edit events
-            mapApi.event.addListener(polygon, 'insert_at', function () {
+            mapApi.event.addListener(polygon, 'insert_at', () => {
                 update();
             })
-            mapApi.event.addListener(polygon, 'remove_at', function () {
+            mapApi.event.addListener(polygon, 'remove_at', () => {
                 update();
             })
-            mapApi.event.addListener(polygon, 'set_at', function () {
+            mapApi.event.addListener(polygon, 'set_at', () => {
                 update();
             })
 

@@ -70,7 +70,7 @@ class HomePage extends React.Component {
           )
     })
     return (
-      <>
+      <div>
         <Header />
         {/* Page content */}
         <Container className="mt--7" fluid>
@@ -107,7 +107,7 @@ class HomePage extends React.Component {
             </Col>
           </Row>
         </Container>
-      </>
+      </div>
     );
   }
 }
