@@ -186,6 +186,7 @@ class Profile extends React.Component {
                             show={profilePhotoModalShow} userID={id}
                             oldKey={(originalProfile.profileImage)? originalProfile.profileImage.key : null}
                             onHide={() => this.setProfilePhotoModalShow(false)}
+                            fetchImage={this.fetchImage}
                         />
                       </Col>
                     </Row>

@@ -63,7 +63,7 @@ class ProfilePhotoModal extends React.Component {
                 isCropping: false,
             });
             const { onHide, userID } = this.props;
-            const key = `${uuid()}${fileName}`;
+            const key = `${uuid()}-${fileName}`;
             const bucket = process.env.REACT_APP_AWS_S3_BUCKET;
             const region = process.env.REACT_APP_AWS_S3_REGION;
             const fileForUpload = {
@@ -80,10 +80,11 @@ class ProfilePhotoModal extends React.Component {
                 // delete existing profile image in S3 if it exists
                 const { oldKey } = this.props;
                 if (oldKey) {
-                    await Storage.delete(oldKey);
+                    await Storage.remove(oldKey);
                 }
                 // image upload successful
-                const {enqueueAppNotification} = this.props;
+                const {enqueueAppNotification, fetchImage} = this.props;
+                fetchImage(fileForUpload);
                 enqueueAppNotification({type: "success", message: "Image updated successfully."});
             } catch (err) {
                 console.log('error: ', err)
@@ -101,7 +102,7 @@ class ProfilePhotoModal extends React.Component {
             });
         }
     };
-    
+
 
     onFileChange = async (e) => {
         if (e.target.files && e.target.files.length > 0) {
