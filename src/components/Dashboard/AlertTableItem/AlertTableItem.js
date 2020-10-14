@@ -23,7 +23,12 @@ class AlertTableItem extends React.Component{
 
     findUser = () => {
         const {users, alert} = this.props;
-        return users.find(user => user.device.id === alert.deviceID);
+        return users.find(user => {
+            if (user.device) {
+                return user.device.id === alert.deviceID;
+            } else
+                return false;
+        });
     }
 
     // Delete Alert
@@ -43,7 +48,7 @@ class AlertTableItem extends React.Component{
                     {user.firstName + " " + user.lastName}
                 </th>
                 <td>
-                    {moment(time*1000).format("ddd, MMM D YYYY, h:mm:ss a")}
+                    {moment(time).format("ddd, MMM D YYYY, h:mm:ss a")}
                 </td>
                 <td>{alert.type}</td>
                 <td>{alert.description}</td>

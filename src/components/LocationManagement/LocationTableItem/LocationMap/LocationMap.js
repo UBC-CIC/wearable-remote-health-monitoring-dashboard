@@ -1,6 +1,5 @@
 import * as React from "react";
 import GoogleMap from "google-map-react";
-import {fitBounds} from "google-map-react";
 
 
 class LocationMap extends React.Component{
@@ -14,56 +13,6 @@ class LocationMap extends React.Component{
         }
     }
 
-    componentDidMount() {
-       this.centerMap();
-    }
-
-    // helps set the zoom and center coordinates for the map
-    centerMap = () => {
-        const { path } = this.props;
-        let wIndex = this.findWestPoint(path);
-        let eIndex = this.findEastPoint(path);
-        let bounds = {
-            nw: {
-                lat: path[wIndex].lat,
-                lng: path[wIndex].lng,
-            },
-            se: {
-                lat: path[eIndex].lat,
-                lng: path[eIndex].lng,
-            }
-        }
-        const { center, zoom } = fitBounds(bounds, {width: 250, height: 250});
-        this.setState({
-            center: center,
-            zoom: zoom,
-        })
-    }
-
-    // finds furthest west point
-    findWestPoint = (path) => {
-        let furthestWestIndex = 0;
-        let furthestWestLat = path[0].lat;
-        for (let i = 0; i < path.length; i++) {
-            if (path[i].lat < furthestWestLat) {
-                furthestWestIndex = i;
-                furthestWestLat = path[i].lat;
-            }
-        }
-       return furthestWestIndex;
-    }
-    // finds furthest east point
-    findEastPoint = (path) => {
-        let furthestEastIndex = 0;
-        let furthestEastLat = path[0].lat;
-        for (let i = 0; i < path.length; i++) {
-            if (path[i].lat > furthestEastLat) {
-                furthestEastIndex = i;
-                furthestEastLat = path[i].lat;
-            }
-        }
-        return furthestEastIndex;
-    }
 
     mapOptions = (maps) => {
         return {
@@ -88,6 +37,15 @@ class LocationMap extends React.Component{
         })
         // add the polygon to the map
         polygon.setMap(map);
+
+
+        // fit map viewport with polygon bounds
+        let bounds = new maps.LatLngBounds();
+        for (let i = 0; i < path.length; i++) {
+            let point = new maps.LatLng(path[i].lat, path[0].lng);
+            bounds.extend(point);
+        }
+        map.fitBounds(bounds);
     }
 
 
@@ -100,8 +58,8 @@ class LocationMap extends React.Component{
                         key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
                         libraries: ['drawing', 'geometry', 'places'],
                     }}
-                    center={center}
-                    zoom={(zoom > 1)? zoom-1 : zoom}
+                    defaultCenter={center}
+                    defaultZoom={zoom}
                     yesIWantToUseGoogleMapApiInternals
                     onGoogleApiLoaded={({ map, maps }) => this.apiActions(map, maps)}
                     options={this.mapOptions}

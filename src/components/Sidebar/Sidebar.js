@@ -110,7 +110,12 @@ class Sidebar extends React.Component {
     const { routes, logo, alerts, users } = this.props;
     const { logoutModalShow } = this.state;
     const alertList = alerts.map(alert => {
-      let user = users.find(user => user.device.id === alert.deviceID);
+      let user = users.find(user => {
+        if (user.device) {
+          return user.device.id === alert.deviceID;
+        } else
+          return false;
+      });
       return (
           <AlertNotification key={uuidv4()} alert={alert} user={user} />
           )

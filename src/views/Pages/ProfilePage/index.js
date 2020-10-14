@@ -90,7 +90,6 @@ class Profile extends React.Component {
 
   findUser = (id) => {
     const {users} = this.props;
-    console.log(users);
     return users.find(user => user.id === id);
   }
 

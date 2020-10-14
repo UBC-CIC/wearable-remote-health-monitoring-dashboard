@@ -1,5 +1,6 @@
 
 .toast {
     filter: drop-shadow(-1px 2px 0.15rem orange);
-    width: 200px;
+    width: 225px;
+    margin-left: -15px;
 }

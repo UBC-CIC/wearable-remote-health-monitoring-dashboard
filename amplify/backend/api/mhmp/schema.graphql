@@ -45,7 +45,7 @@ type Alert @model
   type: String!
   description: String!
   location: LatLon
-  createdAt: Int!
+  createdAt: AWSDateTime!
   expirationTime: Int!
 }
 

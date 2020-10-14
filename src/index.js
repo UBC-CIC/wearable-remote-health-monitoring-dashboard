@@ -1,5 +1,5 @@
 import React from 'react';
-import { applyMiddleware, createStore, compose } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';

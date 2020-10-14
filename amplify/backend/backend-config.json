@@ -1,4 +1,12 @@
 {
+  "auth": {
+    "mhmpca83ec62": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
   "api": {
     "mhmp": {
       "service": "AppSync",
@@ -6,10 +14,9 @@
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "mhmp"
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authmhmpca83ec62"
             }
           },
           "additionalAuthenticationProviders": []
@@ -17,16 +24,8 @@
       }
     }
   },
-  "auth": {
-    "mhmp3e34dee4": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false
-    }
-  },
   "storage": {
-    "gqls3": {
+    "mhmps3": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }
