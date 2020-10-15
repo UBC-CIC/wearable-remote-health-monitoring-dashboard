@@ -29,6 +29,17 @@ const updateUserHelper = (users, profile) => {
     return newUsers;
 }
 
+// update user profile image in local state
+const updateUserProfileImageHelper = (users, target) => {
+    users.forEach((user) => {
+        if (user.id === target.id) {
+            user.profileImage = target.profileImage;
+        }
+    });
+    return users;
+}
+
+
 // associate a device with a user
 const deviceAssociationHelper = (users, payload) => {
     users.forEach(user => {
@@ -105,6 +116,9 @@ const userReducer = (users = initialUsers, action) => {
         }
         case "UPDATE_USER_INFORMATION": {
             return updateUserHelper(newUsers, action.payload);
+        }
+        case "UPDATE_USER_PROFILE_IMAGE": {
+            return updateUserProfileImageHelper(newUsers, action.payload);
         }
         case "DELETE_USER": {
             return deleteUserHelper(newUsers, action.payload);

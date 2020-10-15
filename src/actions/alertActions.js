@@ -34,9 +34,7 @@ export const subscribeAlertsFailure = (err) => {
         dispatch({type: "ALERT_SUBSCRIPTION_CLOSED", payload: err});
         // send out app notification to refresh app
         enqueueAppNotification({type: "error",
-            message: "Real Time connection error. Please check your internet connection and refresh the page."})
-        // attempt re-subscription
-        dispatch(subscribeAlerts());
+            message: "Real Time connection error. Please check your internet connection and refresh the page."});
     }
 }
 

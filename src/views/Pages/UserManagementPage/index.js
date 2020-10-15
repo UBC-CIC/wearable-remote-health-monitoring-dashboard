@@ -43,7 +43,6 @@ class UserManagement extends React.Component {
               profileImg={(user.profileImage)? user.profileImage : null}
               id={user.id}
               device={user.device}
-              profileURL={user.profileURL}
           />
       )
     })

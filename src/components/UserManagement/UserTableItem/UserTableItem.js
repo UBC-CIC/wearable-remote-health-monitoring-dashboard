@@ -86,7 +86,7 @@ class UserManagementTableItem extends React.Component {
     }
 
     render() {
-        const {name, id, device } = this.props;
+        const {name, id, device, profileImg } = this.props;
         const {profilePhoto, deleteModalShow, assignLocationModalShow, removeLocationModalShow} = this.state;
         return (
             <tr>
@@ -160,7 +160,7 @@ class UserManagementTableItem extends React.Component {
                                     </DropdownItem>
                             :
                             null}
-                            <DeleteUserModal show={deleteModalShow} userID={id} userName={name} onHide={() => this.setDeleteModalShow(false)} />
+                            <DeleteUserModal show={deleteModalShow} userID={id} userName={name} imageKey={(profileImg)? profileImg.key : null} onHide={() => this.setDeleteModalShow(false)} />
                             <AssignLocationModal show={assignLocationModalShow} userName={name} deviceID={(device)? device.id : ""} onHide={() => this.setAssignLocationModalShow(false)}  />
                             <RemoveLocationModal show={removeLocationModalShow} userName={name} deviceID={(device)? device.id : ""} locationName={(device)? (device.geofence)? device.geofence.locationName : "N/A" : "N/A"} onHide={() => this.setRemoveLocationModalShow(false)} />
                         </DropdownMenu>

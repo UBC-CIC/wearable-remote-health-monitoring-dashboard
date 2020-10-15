@@ -64,7 +64,6 @@ class Profile extends React.Component {
         heartRate: 0,
         additionalNotes: userProfile.additionalNotes,
         emergencyContacts: [],
-        careGivers: [],
       originalProfile: userProfile,
       profilePhoto:  require("../../../assets/img/theme/blank-profile.png"),
       editMode: false,
@@ -553,6 +552,7 @@ class Profile extends React.Component {
               </Row>
             </Container>
             <DeleteUserModal show={deleteModalShow} userID={originalProfile.id} userName={firstName + " " + lastName}
+                             imageKey={(originalProfile.profileImage)? originalProfile.profileImage.key : null}
                              onHide={() => this.setDeleteModalShow(false)}/>
           </div>
       );

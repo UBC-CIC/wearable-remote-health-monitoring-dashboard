@@ -1,4 +1,5 @@
-/** Example Cropping Logic from react-easy-crop component:  https://github.com/ricardo-ch/react-easy-crop */
+/** Cropping Logic from react-easy-crop
+ * component example:  https://github.com/ricardo-ch/react-easy-crop */
 
 const createImage = (url) =>
     new Promise((resolve, reject) => {

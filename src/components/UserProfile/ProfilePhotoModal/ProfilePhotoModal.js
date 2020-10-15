@@ -10,10 +10,10 @@ import getCroppedImg from "./CropImage";
 import { v4 as uuid } from "uuid";
 import {Spinner} from "react-bootstrap";
 import {enqueueAppNotification} from "../../../actions/notificationActions";
+import {updateUserProfileImage} from "../../../actions/userActions";
 import "./ProfilePhotoModal.css";
 
-/* For other examples/options please refer to the
-react-easy-crop component page: https://github.com/ricardo-ch/react-easy-crop */
+/* Adapted from an example on the react-easy-crop component page: https://github.com/ricardo-ch/react-easy-crop */
 
 class ProfilePhotoModal extends React.Component {
 
@@ -62,7 +62,7 @@ class ProfilePhotoModal extends React.Component {
             this.setState({
                 isCropping: false,
             });
-            const { onHide, userID } = this.props;
+            const { onHide, updateUserProfileImage, userID } = this.props;
             const key = `${uuid()}-${fileName}`;
             const bucket = process.env.REACT_APP_AWS_S3_BUCKET;
             const region = process.env.REACT_APP_AWS_S3_REGION;
@@ -72,18 +72,24 @@ class ProfilePhotoModal extends React.Component {
                 key,
             };
             const inputData = {id: userID, profileImage: fileForUpload};
+            // add new photo information locally
+            updateUserProfileImage(inputData);
+            // updates in persistent storage
             try {
-                await Storage.put(key, croppedImage, {
-                    contentType: mimeType
-                });
-                await API.graphql(graphqlOperation(updateUser, { input: inputData }));
                 // delete existing profile image in S3 if it exists
                 const { oldKey } = this.props;
                 if (oldKey) {
                     await Storage.remove(oldKey);
                 }
+                // try uploading new image to S3
+                await Storage.put(key, croppedImage, {
+                    contentType: mimeType
+                });
+                // update profileImage in user
+                await API.graphql(graphqlOperation(updateUser, { input: inputData }));
                 // image upload successful
                 const {enqueueAppNotification, fetchImage} = this.props;
+                // fetch updated image for profile
                 fetchImage(fileForUpload);
                 enqueueAppNotification({type: "success", message: "Image updated successfully."});
             } catch (err) {
@@ -258,5 +264,9 @@ class ProfilePhotoModal extends React.Component {
     }
 }
 
+const mapDispatchToProps = {
+    enqueueAppNotification,
+    updateUserProfileImage
+};
 
-export default connect(null, { enqueueAppNotification })(ProfilePhotoModal);
+export default connect(null, mapDispatchToProps)(ProfilePhotoModal);

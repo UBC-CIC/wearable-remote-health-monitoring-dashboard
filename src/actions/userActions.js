@@ -136,5 +136,12 @@ export const deleteUserSuccess = () => {
     }
 }
 
-// =======================================================================================================
+// =====================================---UPDATE USER PROFILE IMAGE---=======================================
 
+// updates the user profile image information locally
+export const updateUserProfileImage = (payload) => {
+    return {
+        type: "UPDATE_USER_PROFILE_IMAGE",
+        payload: payload,
+    }
+}

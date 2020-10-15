@@ -4,6 +4,8 @@ import {Button, Input} from "reactstrap";
 import {deleteUserRequest} from "../../../actions/userActions"
 import { connect } from "react-redux";
 import {withRouter} from "react-router-dom";
+import {Storage} from "aws-amplify";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 
 
@@ -12,6 +14,7 @@ class DeleteUserModal extends React.Component {
         super(props);
         this.state = {
             confirmationComplete: false,
+            isProcessing: false,
         }
     }
 
@@ -39,11 +42,22 @@ class DeleteUserModal extends React.Component {
         onHide();
     }
 
-    onProceed = () => {
-        const {deleteUserRequest, userID, history} = this.props;
+    onProceed = async () => {
+        // set loading screen state
+        this.setState({
+            isProcessing: true,
+        })
+        const {deleteUserRequest, userID, history, imageKey} = this.props;
         deleteUserRequest(userID);
-        // delete user image from S3
-
+        // delete user profile image in S3 if it exists
+        try {
+            if (imageKey) {
+                console.log("hit delete image block");
+                await Storage.remove(imageKey);
+            }
+        } catch (err) {
+            console.log("Error, could not delete user image: ", err);
+        }
         // redirect to user management page after deleting user
         let path = '/admin/manage-users';
         history.push(path);
@@ -51,7 +65,7 @@ class DeleteUserModal extends React.Component {
 
     render() {
         const { show, onHide, userName, userID } = this.props;
-        const {confirmationComplete} = this.state;
+        const {confirmationComplete, isProcessing} = this.state;
         return(
             <div>
                 <Modal
@@ -71,48 +85,71 @@ class DeleteUserModal extends React.Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className={"row"}>
-                            <div className={"col d-flex justify-content-center"}>
-                                Are you sure you want to delete user "{userName}" with ID {userID}?
+                        {(isProcessing)?
+                            <div>
+                               <div className={"row"}>
+                                   <div className={"col d-flex justify-content-center"}>
+                                       <h1>
+                                           Please wait while user deletion request is being processed...
+                                       </h1>
+                                   </div>
+                               </div>
+                                <div className={"row"}>
+                                    <div className={"col d-flex justify-content-center"}>
+                                        <LinearProgress />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className={"row"}>
-                            <div className={"col d-flex justify-content-center"}>
-                                <p>For deletion, please type "confirm" below then click "Proceed".</p>
+                            :
+                            <div>
+                                <div className={"row"}>
+                                    <div className={"col d-flex justify-content-center"}>
+                                        Are you sure you want to delete user "{userName}" with ID {userID}?
+                                    </div>
+                                </div>
+                                <div className={"row"}>
+                                    <div className={"col d-flex justify-content-center"}>
+                                        <p>For deletion, please type "confirm" below then click "Proceed".</p>
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div className={"row"}>
+                                    <div className={"col-10 d-flex justify-content-center"}>
+                                        <Input className="form-control-alternative" type="text" id="confirmationBox" onChange={this.handleChange} />
+                                    </div>
+                                    <div className={"col-2"}>
+                                        {(confirmationComplete)? <i className={"fas fa-check-circle"} style={{color: "green", fontSize: "32px"}} />
+                                            :
+                                            <i className={"fas fa-times-circle"} style={{color: "red", fontSize: "32px"}} />}
+                                    </div>
+                                </div>
                             </div>
-                            <br/>
-                        </div>
-                        <div className={"row"}>
-                            <div className={"col-10 d-flex justify-content-center"}>
-                                    <Input className="form-control-alternative" type="text" id="confirmationBox" onChange={this.handleChange} />
-                            </div>
-                            <div className={"col-2"}>
-                                {(confirmationComplete)? <i className={"fas fa-check-circle"} style={{color: "green", fontSize: "32px"}} />
-                                :
-                                    <i className={"fas fa-times-circle"} style={{color: "red", fontSize: "32px"}} />}
-                            </div>
-                        </div>
+                        }
                     </Modal.Body>
                     <Modal.Footer>
-                        <div className={"row"}>
-                            <div className={"col-6 d-flex justify-content-center"}>
-                                <Button
-                                color="primary"
-                                onClick={this.onCancel}
-                                >
-                                    Cancel
-                                </Button>
+                        {(isProcessing)?
+                            null
+                            :
+                            <div className={"row"}>
+                                <div className={"col-6 d-flex justify-content-center"}>
+                                    <Button
+                                        color="primary"
+                                        onClick={this.onCancel}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </div>
+                                <div className={"col-6 d-flex justify-content-center"}>
+                                    <Button
+                                        color="danger"
+                                        disabled={!confirmationComplete}
+                                        onClick={this.onProceed}
+                                    >
+                                        Proceed
+                                    </Button>
+                                </div>
                             </div>
-                            <div className={"col-6 d-flex justify-content-center"}>
-                                <Button
-                                    color="danger"
-                                    disabled={!confirmationComplete}
-                                    onClick={this.onProceed}
-                                >
-                                    Proceed
-                                </Button>
-                            </div>
-                        </div>
+                        }
                     </Modal.Footer>
                 </Modal>
             </div>
