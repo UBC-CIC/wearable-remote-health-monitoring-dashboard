@@ -1,11 +1,7 @@
 import * as React from "react";
 import {
     Badge,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
     Media,
-    UncontrolledDropdown,
     UncontrolledTooltip
 } from "reactstrap";
 import {retrieveImageService} from "../../../services/profilePhotoFetcher/profilePhotoFetcher";
@@ -13,14 +9,23 @@ import {retrieveImageService} from "../../../services/profilePhotoFetcher/profil
 
 
 class UserTableItem extends React.Component {
+    _isMounted = false;
 
     constructor(props) {
         super(props);
         this.state = {
             profilePhoto:  require("../../../assets/img/theme/blank-profile.png"),
         }
+    }
+
+    async componentDidMount() {
+        this._isMounted = true;
         const {  profileImg } = this.props;
-        this.fetchImage( profileImg );
+        await this.fetchImage( profileImg );
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     // fetch image from S3
@@ -28,9 +33,11 @@ class UserTableItem extends React.Component {
         if ( profileImg ) {
             try {
                 const imageData = await retrieveImageService(profileImg.key);
-                this.setState({
-                    profilePhoto: imageData,
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        profilePhoto: imageData,
+                    })
+                }
             } catch (err) {
                 console.log('error: ', err);
             }
@@ -108,40 +115,6 @@ class UserTableItem extends React.Component {
                             {heartRate}
                         </span>
                     </div>
-                </td>
-                <td className="text-right">
-                    <UncontrolledDropdown>
-                        <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={e => e.preventDefault()}
-                        >
-                            <i className="fas fa-ellipsis-v" />
-                        </DropdownToggle>
-                        <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                            >
-                                Locate User
-                            </DropdownItem>
-                            <DropdownItem
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                            >
-                                Emergency Contact
-                            </DropdownItem>
-                            <DropdownItem
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                            >
-                                Resolve Issue
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
                 </td>
             </tr>
         )

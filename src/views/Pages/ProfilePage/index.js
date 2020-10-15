@@ -41,6 +41,7 @@ import {updateUserInformation, updateUserInformationLocally} from "../../../acti
 import {retrieveImageService} from "../../../services/profilePhotoFetcher/profilePhotoFetcher";
 
 class Profile extends React.Component {
+  _isMounted = false;
 
   constructor(props) {
     super(props);
@@ -71,16 +72,27 @@ class Profile extends React.Component {
       deleteModalShow: false,
       profilePhotoModalShow: false,
     }
-    this.fetchImage(userProfile.profileImage);
+  }
+
+  async componentDidMount() {
+    this._isMounted = true;
+    const { originalProfile } = this.state;
+    await  this.fetchImage(originalProfile.profileImage);
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   fetchImage = async (profileImage) => {
     if (profileImage) {
       try {
         const imageData = await retrieveImageService(profileImage.key);
-        this.setState({
-          profilePhoto: imageData,
-        })
+        if (this._isMounted) {
+          this.setState({
+            profilePhoto: imageData,
+          })
+        }
       } catch (err) {
         console.log('error: ', err);
       }
@@ -150,6 +162,12 @@ class Profile extends React.Component {
     });
   };
 
+  // handles redirect to device page
+  switchToDevicePage = () => {
+    const {history} = this.props;
+    history.push("/admin/manage-devices");
+  };
+
   render() {
     const { originalProfile, id, firstName, lastName, age, facility, phoneNumber, email,
       streetAddress, city, stateProvince, country, postalZip, heartRate, additionalNotes, profilePhoto,
@@ -194,8 +212,8 @@ class Profile extends React.Component {
                         <Button
                             className="mr-4"
                             color="info"
-                            href="#pablo"
-                            onClick={e => e.preventDefault()}
+                            href=""
+                            onClick={this.switchToDevicePage}
                             size="sm"
                         >
                           Device Options
@@ -240,11 +258,18 @@ class Profile extends React.Component {
                           Last Known Location
                         </div>
                         <div>
-                          Latitude, Longitude
+                          Unknown
                         </div>
                         <div className="h5 mt-4">
-                          <i className="ni ni-check-bold mr-2" style={{"color": "green"}}/>
-                          Device #45235 connected and active
+                          {(originalProfile.device)?
+                              <i className="ni ni-check-bold mr-2" style={{"color": "green"}}/>
+                              :
+                              <i className="fas fa-times mr-2"  style={{"color": "red"}}/>
+                          }
+                          {(originalProfile.device)?
+                              <span>Device #{originalProfile.device.id} paired and {originalProfile.device.status}</span>
+                              :
+                              <span>No device paired</span>}
                         </div>
                         <hr className="my-4"/>
                         <h2>Additional Notes</h2>

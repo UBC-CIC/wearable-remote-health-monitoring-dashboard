@@ -21,6 +21,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
 // core components
+import ErrorBoundary from "./ErrorBoundary";
 import AdminNavbar from "../../components/Navbars/AdminNavbar.js";
 import AdminFooter from "../../components/Footers/AdminFooter.js";
 import Sidebar from "../../components/Sidebar/Sidebar.js";
@@ -32,6 +33,11 @@ import routes from "../../routes.js";
 
 class PageContainer extends React.Component {
 
+    componentDidMount() {
+        // redirect to homepage on refresh
+        const {history} = this.props;
+        history.push("/admin/index");
+    }
 
     componentDidUpdate(e) {
         document.documentElement.scrollTop = 0;
@@ -66,6 +72,7 @@ class PageContainer extends React.Component {
         return "Brand";
     };
 
+
     render() {
         const {notifications} = this.props;
         const notificationList = notifications.map(notification => {
@@ -92,7 +99,9 @@ class PageContainer extends React.Component {
                     />
                     {notificationList}
                     <Switch>
-                        {rts}
+                        <ErrorBoundary>
+                            {rts}
+                        </ErrorBoundary>
                         <Redirect from="*" to="/admin/index" />
                     </Switch>
                     <Container fluid>

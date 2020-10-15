@@ -42,6 +42,8 @@ class DeleteUserModal extends React.Component {
     onProceed = () => {
         const {deleteUserRequest, userID, history} = this.props;
         deleteUserRequest(userID);
+        // delete user image from S3
+
         // redirect to user management page after deleting user
         let path = '/admin/manage-users';
         history.push(path);

@@ -19,6 +19,9 @@ import {retrieveImageService} from "../../../services/profilePhotoFetcher/profil
 
 class UserManagementTableItem extends React.Component {
 
+    _isMounted = false;
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -27,8 +30,16 @@ class UserManagementTableItem extends React.Component {
             removeLocationModalShow: false,
             profilePhoto:  require("../../../assets/img/theme/blank-profile.png"),
         }
+    }
+
+    async componentDidMount() {
+        this._isMounted = true;
         const {  profileImg } = this.props;
-        this.fetchImage( profileImg );
+        await this.fetchImage( profileImg );
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     // fetch image from S3
@@ -36,9 +47,11 @@ class UserManagementTableItem extends React.Component {
         if ( profileImg ) {
             try {
                 const imageData = await retrieveImageService(profileImg.key);
-                this.setState({
-                    profilePhoto: imageData,
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        profilePhoto: imageData,
+                    })
+                }
             } catch (err) {
                 console.log('error: ', err);
             }
@@ -126,12 +139,6 @@ class UserManagementTableItem extends React.Component {
                                 onClick={this.profileRouter}
                             >
                                 View Profile
-                            </DropdownItem>
-                            <DropdownItem
-                                href="#pablo"
-                                onClick={e => e.preventDefault()}
-                            >
-                                Locate User
                             </DropdownItem>
                             <DropdownItem
                                 onClick={() => this.setDeleteModalShow(true)}

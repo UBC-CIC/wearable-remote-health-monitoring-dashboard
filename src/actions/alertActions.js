@@ -14,6 +14,10 @@ export const subscribeAlerts = () => {
                 next: alert => {
                     console.log("new alert: ", alert.value.data.onCreateAlert);
                     dispatch(newAlertReceived(alert.value.data.onCreateAlert));
+                },
+                error: err => {
+                    console.log("Alert subscription error", err);
+                    dispatch(subscribeAlertsFailure(err));
                 }
             })
         } catch (err) {
@@ -26,9 +30,13 @@ export const subscribeAlerts = () => {
 
 // Error/Connection closed, unset realtime connection status flag
 export const subscribeAlertsFailure = (err) => {
-    return {
-        type: "ALERT_SUBSCRIPTION_CLOSED",
-        payload: err
+    return (dispatch) => {
+        dispatch({type: "ALERT_SUBSCRIPTION_CLOSED", payload: err});
+        // send out app notification to refresh app
+        enqueueAppNotification({type: "error",
+            message: "Real Time connection error. Please check your internet connection and refresh the page."})
+        // attempt re-subscription
+        dispatch(subscribeAlerts());
     }
 }
 
