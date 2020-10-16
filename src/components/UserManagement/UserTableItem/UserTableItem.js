@@ -47,7 +47,7 @@ class UserManagementTableItem extends React.Component {
         if ( profileImg ) {
             try {
                 const imageData = await retrieveImageService(profileImg.key);
-                if (this._isMounted) {
+                if (this._isMounted && imageData) {
                     this.setState({
                         profilePhoto: imageData,
                     })

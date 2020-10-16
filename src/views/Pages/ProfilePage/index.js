@@ -87,7 +87,7 @@ class Profile extends React.Component {
     if (profileImage) {
       try {
         const imageData = await retrieveImageService(profileImage.key);
-        if (this._isMounted) {
+        if (this._isMounted && imageData) {
           this.setState({
             profilePhoto: imageData,
           })
