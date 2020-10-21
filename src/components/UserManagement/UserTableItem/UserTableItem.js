@@ -160,9 +160,21 @@ class UserManagementTableItem extends React.Component {
                                     </DropdownItem>
                             :
                             null}
-                            <DeleteUserModal show={deleteModalShow} userID={id} userName={name} imageKey={(profileImg)? profileImg.key : null} onHide={() => this.setDeleteModalShow(false)} />
-                            <AssignLocationModal show={assignLocationModalShow} userName={name} deviceID={(device)? device.id : ""} onHide={() => this.setAssignLocationModalShow(false)}  />
-                            <RemoveLocationModal show={removeLocationModalShow} userName={name} deviceID={(device)? device.id : ""} locationName={(device)? (device.geofence)? device.geofence.locationName : "N/A" : "N/A"} onHide={() => this.setRemoveLocationModalShow(false)} />
+                            <DeleteUserModal show={deleteModalShow} userID={id} userName={name}
+                                             imageKey={(profileImg)? profileImg.key : null}
+                                             device={(device)? device.id : null}
+                                             onHide={() => this.setDeleteModalShow(false)} />
+                            <AssignLocationModal
+                                show={assignLocationModalShow}
+                                userName={name}
+                                deviceID={(device)? device.id : ""}
+                                onHide={() => this.setAssignLocationModalShow(false)}  />
+                            <RemoveLocationModal
+                                show={removeLocationModalShow}
+                                userName={name}
+                                deviceID={(device)? device.id : ""}
+                                locationName={(device)? (device.geofence)? device.geofence.locationName : "N/A" : "N/A"}
+                                onHide={() => this.setRemoveLocationModalShow(false)} />
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </td>

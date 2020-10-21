@@ -14,6 +14,7 @@ class PairDeviceModal extends React.Component {
             availableUsers: [],
             selectedUserID: "",
         }
+        //this.populateFormFields();
     }
 
     componentDidMount() {
@@ -43,7 +44,7 @@ class PairDeviceModal extends React.Component {
         // set default value for select input (handleChange isn't triggered if first option is selected)
         if (availableUsers.length >= 1) {
             this.setState({
-                selectedUser: availableUsers[0].id,
+                selectedUserID: availableUsers[0].id,
             });
         }
     }

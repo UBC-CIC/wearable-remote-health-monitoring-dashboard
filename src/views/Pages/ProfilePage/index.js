@@ -551,8 +551,10 @@ class Profile extends React.Component {
                 </Col>
               </Row>
             </Container>
-            <DeleteUserModal show={deleteModalShow} userID={originalProfile.id} userName={firstName + " " + lastName}
+            <DeleteUserModal show={deleteModalShow} userID={originalProfile.id}
+                             userName={firstName + " " + lastName}
                              imageKey={(originalProfile.profileImage)? originalProfile.profileImage.key : null}
+                             device={(originalProfile.device)? originalProfile.device.id : null}
                              onHide={() => this.setDeleteModalShow(false)}/>
           </div>
       );

@@ -71,7 +71,7 @@ class ProfilePhotoModal extends React.Component {
                 region,
                 key,
             };
-            const inputData = {id: userID, profileImage: fileForUpload};
+            const inputData = {id: userID, profileImage: {bucket: bucket, region: region, key: key}};
             // add new photo information locally
             updateUserProfileImage(inputData);
             // updates in persistent storage

@@ -64,7 +64,7 @@ class DeleteUserModal extends React.Component {
     }
 
     render() {
-        const { show, onHide, userName, userID } = this.props;
+        const { show, onHide, userName, userID, device } = this.props;
         const {confirmationComplete, isProcessing} = this.state;
         return(
             <div>
@@ -102,27 +102,41 @@ class DeleteUserModal extends React.Component {
                             </div>
                             :
                             <div>
-                                <div className={"row"}>
-                                    <div className={"col d-flex justify-content-center"}>
-                                        Are you sure you want to delete user "{userName}" with ID {userID}?
+                                {(device)?
+                                <div>
+                                    <div className={"row"}>
+                                        <div className={"col d-flex justify-content-center"}>
+                                            This user's device must be unpaired before this user can be deleted.
+                                        </div>
                                     </div>
                                 </div>
-                                <div className={"row"}>
-                                    <div className={"col d-flex justify-content-center"}>
-                                        <p>For deletion, please type "confirm" below then click "Proceed".</p>
+                                    :
+                                    <div>
+                                        <div className={"row"}>
+                                            <div className={"col d-flex justify-content-center"}>
+                                                Are you sure you want to delete user "{userName}" with ID {userID}?
+                                            </div>
+                                        </div>
+                                        <div className={"row"}>
+                                            <div className={"col d-flex justify-content-center"}>
+                                                <p>For deletion, please type "confirm" below then click "Proceed".</p>
+                                            </div>
+                                            <br/>
+                                        </div>
+                                        <div className={"row"}>
+                                            <div className={"col-10 d-flex justify-content-center"}>
+                                                <Input className="form-control-alternative" type="text" id="confirmationBox" onChange={this.handleChange} />
+                                            </div>
+                                            <div className={"col-2"}>
+                                                {(confirmationComplete)? <i className={"fas fa-check-circle"} style={{color: "green", fontSize: "32px"}} />
+                                                    :
+                                                    <i className={"fas fa-times-circle"} style={{color: "red", fontSize: "32px"}} />}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br/>
-                                </div>
-                                <div className={"row"}>
-                                    <div className={"col-10 d-flex justify-content-center"}>
-                                        <Input className="form-control-alternative" type="text" id="confirmationBox" onChange={this.handleChange} />
-                                    </div>
-                                    <div className={"col-2"}>
-                                        {(confirmationComplete)? <i className={"fas fa-check-circle"} style={{color: "green", fontSize: "32px"}} />
-                                            :
-                                            <i className={"fas fa-times-circle"} style={{color: "red", fontSize: "32px"}} />}
-                                    </div>
-                                </div>
+
+                                }
+
                             </div>
                         }
                     </Modal.Body>

@@ -16,7 +16,7 @@ export const subscribeAlerts = () => {
                     dispatch(newAlertReceived(alert.value.data.onCreateAlert));
                 },
                 error: err => {
-                    console.log("Alert subscription error", err);
+                    console.log("Alert subscription error: ", err);
                     dispatch(subscribeAlertsFailure(err));
                 }
             })

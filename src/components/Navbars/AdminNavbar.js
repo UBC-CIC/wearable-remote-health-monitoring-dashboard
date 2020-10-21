@@ -19,6 +19,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import LogoutModal from "../Auth/LogoutModal/LogoutModal";
+import TutorialModal from "../Tutorial/TutorialModal/TutorialModal";
 
 
 // reactstrap components
@@ -30,7 +31,7 @@ import {
   Navbar,
   Nav,
   Container,
-  Media
+  Media, UncontrolledTooltip
 } from "reactstrap";
 
 class AdminNavbar extends React.Component {
@@ -39,6 +40,7 @@ class AdminNavbar extends React.Component {
     super(props);
     this.state = {
       logoutModalShow: false,
+      tutorialModalShow: false,
     }
   }
 
@@ -49,10 +51,17 @@ class AdminNavbar extends React.Component {
     });
   };
 
+  // Triggers the opening/closing of the tutorialModal
+  setTutorialModalShow = (bool) => {
+    this.setState({
+      tutorialModalShow: bool,
+    });
+  };
+
 
   render() {
     const { alertsConnected } = this.props;
-    const { logoutModalShow } = this.state;
+    const { logoutModalShow, tutorialModalShow } = this.state;
 
     return (
       <div>
@@ -64,11 +73,36 @@ class AdminNavbar extends React.Component {
             >
               {this.props.brandText}
             </Link>
+
             <div className="navbar-search navbar-search-dark text-white form-inline mr-3 d-none d-md-flex ml-lg-auto">
                {(alertsConnected)?
-                 <span>Realtime Status: <i className="fas fa-dot-circle" style={{color: "lightGreen"}}></i> Connected</span>
+                 <span id={"status"}>Realtime Status: <i className="fas fa-dot-circle" style={{color: "lightGreen"}}></i> Connected</span>
                  :
-                 <span>Realtime Status: <i className="fas fa-dot-circle" style={{color: "red"}}></i> Disconnected</span>}
+                 <span id={"status"}>Realtime Status: <i className="fas fa-dot-circle" style={{color: "red"}}></i> Disconnected</span>}
+              <UncontrolledTooltip
+                  delay={0}
+                  target={"status"}
+              >
+                {(alertsConnected)? "Normal" :
+                    "Disconnected from server. Please check your internet connection and reload this app."}
+              </UncontrolledTooltip>
+            </div>
+            <div className={"h2 text-white form-inline d-none d-md-flex ml-lg-auto"}>
+              <a href=""
+                 id={"helpModal"}
+                 onClick={(e) => {
+                   e.preventDefault();
+                   this.setTutorialModalShow(true);
+                 }}>
+                <i className={"fas fa-question-circle"} style={{color: "white"}} />
+              </a>
+              <UncontrolledTooltip
+                  delay={0}
+                  target={"helpModal"}
+              >
+                Click here for help
+              </UncontrolledTooltip>
+              <TutorialModal show={tutorialModalShow} onHide={() => this.setTutorialModalShow(false)} />
             </div>
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>

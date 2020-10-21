@@ -1,4 +1,8 @@
-type User @model {
+type User @model 
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]){
   id: ID!
   firstName: String!
   lastName: String!
@@ -14,13 +18,21 @@ type User @model {
   additionalNotes: String
 }
 
-type S3Object {
+type S3Object 
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]){
   bucket: String!
   region: String!
   key: String!
 }
 
-type Device @model {
+type Device @model
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]) {
   id: ID!
   userID: ID
   deviceOS: String
@@ -32,14 +44,22 @@ type Device @model {
 }
 
 type Location @model 
-@key(name: "byLocationName", fields: ["locationName"]) {
+@key(name: "byLocationName", fields: ["locationName"])
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]) {
   id: ID!
   locationName: String!
   boundary: [LatLon!]!
 }
 
-type Alert @model 
-@key(name: "byDevice", fields: ["deviceID", "createdAt"]) {
+type Alert @model (subscriptions: { level: public })
+@key(name: "byDevice", fields: ["deviceID", "createdAt"])
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]) {
   id: ID!
   deviceID: ID!
   type: String!
@@ -51,7 +71,11 @@ type Alert @model
 
 type DeviceData @model
 @key(name: "byDevice", fields: ["deviceID", "createdAt"])
-@key(name: "byDeviceAndObservationType", fields: ["deviceID", "observationType", "createdAt"]) {
+@key(name: "byDeviceAndObservationType", fields: ["deviceID", "observationType", "createdAt"])
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]) {
   id: ID!
   deviceID: ID!
   device: Device @connection(fields: ["deviceID"])
@@ -65,12 +89,20 @@ type DeviceData @model
 }
 
 
-type LatLon {
+type LatLon
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]) {
   lat: Float!
   lng: Float!
 }
 
-type Contact {
+type Contact
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]) {
   firstName: String!
   lastName: String!
   relationshipToUser: String
@@ -80,7 +112,11 @@ type Contact {
 }
 
 
-type Address {
+type Address
+@auth(rules: [
+  { allow: private, provider: iam },
+  { allow: owner }
+]) {
   streetAddress: String
   city: String
   stateProvince: String
