@@ -1,6 +1,7 @@
 type User @model 
 @auth(rules: [
-  { allow: private, provider: iam },
+  { allow:  private, provider: iam },
+  { allow:  private, provider: userPools }, 
   { allow: owner }
 ]){
   id: ID!
@@ -18,21 +19,19 @@ type User @model
   additionalNotes: String
 }
 
-type S3Object 
-@auth(rules: [
-  { allow: private, provider: iam },
-  { allow: owner }
-]){
+type S3Object
+@aws_iam @aws_cognito_user_pools {
   bucket: String!
   region: String!
   key: String!
 }
 
-type Device @model
+type Device @model 
 @auth(rules: [
-  { allow: private, provider: iam },
+  { allow:  private, provider: iam }, 
+  { allow:  private, provider: userPools }, 
   { allow: owner }
-]) {
+]){
   id: ID!
   userID: ID
   deviceOS: String
@@ -46,7 +45,8 @@ type Device @model
 type Location @model 
 @key(name: "byLocationName", fields: ["locationName"])
 @auth(rules: [
-  { allow: private, provider: iam },
+  { allow:  private, provider: iam }, 
+  { allow:  private, provider: userPools }, 
   { allow: owner }
 ]) {
   id: ID!
@@ -58,6 +58,7 @@ type Alert @model (subscriptions: { level: public })
 @key(name: "byDevice", fields: ["deviceID", "createdAt"])
 @auth(rules: [
   { allow: private, provider: iam },
+  { allow: private, provider: userPools },  
   { allow: owner }
 ]) {
   id: ID!
@@ -73,7 +74,8 @@ type DeviceData @model
 @key(name: "byDevice", fields: ["deviceID", "createdAt"])
 @key(name: "byDeviceAndObservationType", fields: ["deviceID", "observationType", "createdAt"])
 @auth(rules: [
-  { allow: private, provider: iam },
+  { allow: private, provider: iam }, 
+  { allow: private, provider: userPools }, 
   { allow: owner }
 ]) {
   id: ID!
@@ -89,20 +91,15 @@ type DeviceData @model
 }
 
 
+
 type LatLon
-@auth(rules: [
-  { allow: private, provider: iam },
-  { allow: owner }
-]) {
+@aws_iam @aws_cognito_user_pools {
   lat: Float!
   lng: Float!
 }
 
-type Contact
-@auth(rules: [
-  { allow: private, provider: iam },
-  { allow: owner }
-]) {
+type Contact 
+@aws_iam @aws_cognito_user_pools{
   firstName: String!
   lastName: String!
   relationshipToUser: String
@@ -112,11 +109,8 @@ type Contact
 }
 
 
-type Address
-@auth(rules: [
-  { allow: private, provider: iam },
-  { allow: owner }
-]) {
+type Address  
+@aws_iam @aws_cognito_user_pools{
   streetAddress: String
   city: String
   stateProvince: String

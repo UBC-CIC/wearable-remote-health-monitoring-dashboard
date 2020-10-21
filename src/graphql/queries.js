@@ -14,27 +14,6 @@ export const getUser = /* GraphQL */ `
         region
         key
       }
-      device {
-        id
-        userID
-        deviceOS
-        osVersion
-        deviceStatus
-        alerts {
-          nextToken
-        }
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        data {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       facility
       phoneNumber
       email
@@ -62,6 +41,27 @@ export const getUser = /* GraphQL */ `
       additionalNotes
       createdAt
       updatedAt
+      device {
+        id
+        userID
+        deviceOS
+        osVersion
+        deviceStatus
+        createdAt
+        updatedAt
+        geofence {
+          id
+          locationName
+          createdAt
+          updatedAt
+        }
+        alerts {
+          nextToken
+        }
+        data {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -83,15 +83,6 @@ export const listUsers = /* GraphQL */ `
           region
           key
         }
-        device {
-          id
-          userID
-          deviceOS
-          osVersion
-          deviceStatus
-          createdAt
-          updatedAt
-        }
         facility
         phoneNumber
         email
@@ -112,57 +103,17 @@ export const listUsers = /* GraphQL */ `
         additionalNotes
         createdAt
         updatedAt
+        device {
+          id
+          userID
+          deviceOS
+          osVersion
+          deviceStatus
+          createdAt
+          updatedAt
+        }
       }
       nextToken
-    }
-  }
-`;
-export const getDevice = /* GraphQL */ `
-  query GetDevice($id: ID!) {
-    getDevice(id: $id) {
-      id
-      userID
-      deviceOS
-      osVersion
-      deviceStatus
-      alerts {
-        items {
-          id
-          deviceID
-          type
-          description
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      geofence {
-        id
-        locationName
-        boundary {
-          lat
-          lng
-        }
-        createdAt
-        updatedAt
-      }
-      data {
-        items {
-          id
-          deviceID
-          observationType
-          observationUnit
-          observationValue
-          observationDescription
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -179,36 +130,71 @@ export const listDevices = /* GraphQL */ `
         deviceOS
         osVersion
         deviceStatus
-        alerts {
-          nextToken
-        }
+        createdAt
+        updatedAt
         geofence {
           id
           locationName
           createdAt
           updatedAt
         }
+        alerts {
+          nextToken
+        }
         data {
           nextToken
         }
-        createdAt
-        updatedAt
       }
       nextToken
     }
   }
 `;
-export const getLocation = /* GraphQL */ `
-  query GetLocation($id: ID!) {
-    getLocation(id: $id) {
+export const getDevice = /* GraphQL */ `
+  query GetDevice($id: ID!) {
+    getDevice(id: $id) {
       id
-      locationName
-      boundary {
-        lat
-        lng
-      }
+      userID
+      deviceOS
+      osVersion
+      deviceStatus
       createdAt
       updatedAt
+      geofence {
+        id
+        locationName
+        boundary {
+          lat
+          lng
+        }
+        createdAt
+        updatedAt
+      }
+      alerts {
+        items {
+          id
+          deviceID
+          type
+          description
+          createdAt
+          expirationTime
+          updatedAt
+        }
+        nextToken
+      }
+      data {
+        items {
+          id
+          deviceID
+          observationType
+          observationUnit
+          observationValue
+          observationDescription
+          createdAt
+          expirationTime
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -230,6 +216,20 @@ export const listLocations = /* GraphQL */ `
         updatedAt
       }
       nextToken
+    }
+  }
+`;
+export const getLocation = /* GraphQL */ `
+  query GetLocation($id: ID!) {
+    getLocation(id: $id) {
+      id
+      locationName
+      boundary {
+        lat
+        lng
+      }
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -279,27 +279,6 @@ export const getDeviceData = /* GraphQL */ `
     getDeviceData(id: $id) {
       id
       deviceID
-      device {
-        id
-        userID
-        deviceOS
-        osVersion
-        deviceStatus
-        alerts {
-          nextToken
-        }
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        data {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       location {
         lat
         lng
@@ -311,6 +290,27 @@ export const getDeviceData = /* GraphQL */ `
       createdAt
       expirationTime
       updatedAt
+      device {
+        id
+        userID
+        deviceOS
+        osVersion
+        deviceStatus
+        createdAt
+        updatedAt
+        geofence {
+          id
+          locationName
+          createdAt
+          updatedAt
+        }
+        alerts {
+          nextToken
+        }
+        data {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -324,15 +324,6 @@ export const listDeviceDatas = /* GraphQL */ `
       items {
         id
         deviceID
-        device {
-          id
-          userID
-          deviceOS
-          osVersion
-          deviceStatus
-          createdAt
-          updatedAt
-        }
         location {
           lat
           lng
@@ -344,6 +335,15 @@ export const listDeviceDatas = /* GraphQL */ `
         createdAt
         expirationTime
         updatedAt
+        device {
+          id
+          userID
+          deviceOS
+          osVersion
+          deviceStatus
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }

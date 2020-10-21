@@ -19,7 +19,11 @@
               "userPoolId": "authmhmpca83ec62"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     }
@@ -28,23 +32,6 @@
     "mhmps3": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
-    }
-  },
-  "function": {
-    "lambdaAlert": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "mhmp",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput"
-          ]
-        }
-      ]
     }
   }
 }

@@ -17,27 +17,6 @@ export const createUser = /* GraphQL */ `
         region
         key
       }
-      device {
-        id
-        userID
-        deviceOS
-        osVersion
-        deviceStatus
-        alerts {
-          nextToken
-        }
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        data {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       facility
       phoneNumber
       email
@@ -65,6 +44,27 @@ export const createUser = /* GraphQL */ `
       additionalNotes
       createdAt
       updatedAt
+      device {
+        id
+        userID
+        deviceOS
+        osVersion
+        deviceStatus
+        createdAt
+        updatedAt
+        geofence {
+          id
+          locationName
+          createdAt
+          updatedAt
+        }
+        alerts {
+          nextToken
+        }
+        data {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -84,27 +84,6 @@ export const updateUser = /* GraphQL */ `
         region
         key
       }
-      device {
-        id
-        userID
-        deviceOS
-        osVersion
-        deviceStatus
-        alerts {
-          nextToken
-        }
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        data {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       facility
       phoneNumber
       email
@@ -132,6 +111,27 @@ export const updateUser = /* GraphQL */ `
       additionalNotes
       createdAt
       updatedAt
+      device {
+        id
+        userID
+        deviceOS
+        osVersion
+        deviceStatus
+        createdAt
+        updatedAt
+        geofence {
+          id
+          locationName
+          createdAt
+          updatedAt
+        }
+        alerts {
+          nextToken
+        }
+        data {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -151,27 +151,6 @@ export const deleteUser = /* GraphQL */ `
         region
         key
       }
-      device {
-        id
-        userID
-        deviceOS
-        osVersion
-        deviceStatus
-        alerts {
-          nextToken
-        }
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        data {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       facility
       phoneNumber
       email
@@ -199,6 +178,27 @@ export const deleteUser = /* GraphQL */ `
       additionalNotes
       createdAt
       updatedAt
+      device {
+        id
+        userID
+        deviceOS
+        osVersion
+        deviceStatus
+        createdAt
+        updatedAt
+        geofence {
+          id
+          locationName
+          createdAt
+          updatedAt
+        }
+        alerts {
+          nextToken
+        }
+        data {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -213,6 +213,18 @@ export const createDevice = /* GraphQL */ `
       deviceOS
       osVersion
       deviceStatus
+      createdAt
+      updatedAt
+      geofence {
+        id
+        locationName
+        boundary {
+          lat
+          lng
+        }
+        createdAt
+        updatedAt
+      }
       alerts {
         items {
           id
@@ -224,16 +236,6 @@ export const createDevice = /* GraphQL */ `
           updatedAt
         }
         nextToken
-      }
-      geofence {
-        id
-        locationName
-        boundary {
-          lat
-          lng
-        }
-        createdAt
-        updatedAt
       }
       data {
         items {
@@ -249,8 +251,6 @@ export const createDevice = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -265,6 +265,18 @@ export const updateDevice = /* GraphQL */ `
       deviceOS
       osVersion
       deviceStatus
+      createdAt
+      updatedAt
+      geofence {
+        id
+        locationName
+        boundary {
+          lat
+          lng
+        }
+        createdAt
+        updatedAt
+      }
       alerts {
         items {
           id
@@ -276,16 +288,6 @@ export const updateDevice = /* GraphQL */ `
           updatedAt
         }
         nextToken
-      }
-      geofence {
-        id
-        locationName
-        boundary {
-          lat
-          lng
-        }
-        createdAt
-        updatedAt
       }
       data {
         items {
@@ -301,8 +303,6 @@ export const updateDevice = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -317,6 +317,18 @@ export const deleteDevice = /* GraphQL */ `
       deviceOS
       osVersion
       deviceStatus
+      createdAt
+      updatedAt
+      geofence {
+        id
+        locationName
+        boundary {
+          lat
+          lng
+        }
+        createdAt
+        updatedAt
+      }
       alerts {
         items {
           id
@@ -328,16 +340,6 @@ export const deleteDevice = /* GraphQL */ `
           updatedAt
         }
         nextToken
-      }
-      geofence {
-        id
-        locationName
-        boundary {
-          lat
-          lng
-        }
-        createdAt
-        updatedAt
       }
       data {
         items {
@@ -353,8 +355,6 @@ export const deleteDevice = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -477,27 +477,6 @@ export const createDeviceData = /* GraphQL */ `
     createDeviceData(input: $input, condition: $condition) {
       id
       deviceID
-      device {
-        id
-        userID
-        deviceOS
-        osVersion
-        deviceStatus
-        alerts {
-          nextToken
-        }
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        data {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       location {
         lat
         lng
@@ -509,6 +488,27 @@ export const createDeviceData = /* GraphQL */ `
       createdAt
       expirationTime
       updatedAt
+      device {
+        id
+        userID
+        deviceOS
+        osVersion
+        deviceStatus
+        createdAt
+        updatedAt
+        geofence {
+          id
+          locationName
+          createdAt
+          updatedAt
+        }
+        alerts {
+          nextToken
+        }
+        data {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -520,27 +520,6 @@ export const updateDeviceData = /* GraphQL */ `
     updateDeviceData(input: $input, condition: $condition) {
       id
       deviceID
-      device {
-        id
-        userID
-        deviceOS
-        osVersion
-        deviceStatus
-        alerts {
-          nextToken
-        }
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        data {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       location {
         lat
         lng
@@ -552,6 +531,27 @@ export const updateDeviceData = /* GraphQL */ `
       createdAt
       expirationTime
       updatedAt
+      device {
+        id
+        userID
+        deviceOS
+        osVersion
+        deviceStatus
+        createdAt
+        updatedAt
+        geofence {
+          id
+          locationName
+          createdAt
+          updatedAt
+        }
+        alerts {
+          nextToken
+        }
+        data {
+          nextToken
+        }
+      }
     }
   }
 `;
@@ -563,27 +563,6 @@ export const deleteDeviceData = /* GraphQL */ `
     deleteDeviceData(input: $input, condition: $condition) {
       id
       deviceID
-      device {
-        id
-        userID
-        deviceOS
-        osVersion
-        deviceStatus
-        alerts {
-          nextToken
-        }
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        data {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       location {
         lat
         lng
@@ -595,6 +574,27 @@ export const deleteDeviceData = /* GraphQL */ `
       createdAt
       expirationTime
       updatedAt
+      device {
+        id
+        userID
+        deviceOS
+        osVersion
+        deviceStatus
+        createdAt
+        updatedAt
+        geofence {
+          id
+          locationName
+          createdAt
+          updatedAt
+        }
+        alerts {
+          nextToken
+        }
+        data {
+          nextToken
+        }
+      }
     }
   }
 `;
