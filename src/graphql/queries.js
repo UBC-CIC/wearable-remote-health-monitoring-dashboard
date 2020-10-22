@@ -109,6 +109,10 @@ export const listUsers = /* GraphQL */ `
           deviceOS
           osVersion
           deviceStatus
+          geofence {
+            id
+            locationName
+        }
           createdAt
           updatedAt
         }
