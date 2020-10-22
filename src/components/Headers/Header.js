@@ -60,7 +60,7 @@ class Header extends React.Component {
                         <th scope="col">Time</th>
                         <th scope="col">Type</th>
                         <th scope="col">Summary</th>
-                        <th scope="col">Last Known Location</th>
+                        <th scope="col">Location</th>
                         <th scope="col">Actions</th>
                       </tr>
                       </thead>

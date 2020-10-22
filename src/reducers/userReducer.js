@@ -62,27 +62,37 @@ const removeDeviceHelper = (users, target) => {
 }
 
 const assignGeofenceHelper = (users, payload) => {
-    let newUsers = [...users];
-    newUsers.forEach(user => {
+    users.forEach(user => {
         if (user.device) {
             if (user.device.id === payload.id) {
                 user.device.geofence = payload.geofence;
             }
         }
     })
-    return newUsers;
+    return users;
 }
 
 const removeGeofenceHelper = (users, payload) => {
-    let newUsers = [...users];
-    newUsers.forEach(user => {
+    users.forEach(user => {
         if (user.device) {
             if (user.device.id === payload.id) {
                 user.device.geofence = null;
             }
         }
     })
-    return newUsers;
+    return users;
+}
+
+// clear device status
+const clearDeviceStatusHelper = (users, payload) => {
+    users.forEach(user => {
+        if (user.id === payload.userID) {
+            if (user.device) {
+                user.device.deviceStatus = "Normal";
+            }
+        }
+    })
+    return users;
 }
 
 // sort users by firstName
@@ -134,6 +144,9 @@ const userReducer = (users = initialUsers, action) => {
         }
         case "REMOVE_LOCATION": {
             return removeGeofenceHelper(newUsers, action.payload);
+        }
+        case "CLEAR_DEVICE_STATUS": {
+            return clearDeviceStatusHelper(newUsers, action.payload);
         }
         default:
             return newUsers;

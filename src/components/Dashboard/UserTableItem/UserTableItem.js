@@ -45,7 +45,7 @@ class UserTableItem extends React.Component {
     }
 
     render() {
-        const {name,id, heartRate } = this.props;
+        const {name,id, heartRate, device } = this.props;
         const { profilePhoto } = this.state;
         let statusClass = "bg-success";
         /*switch (status.code) {
@@ -106,7 +106,7 @@ class UserTableItem extends React.Component {
                 <td>
                     <Badge color="" className="badge-dot mr-4">
                         <i className={statusClass} />
-                        {/*status.description*/} Not yet implemented
+                         {(device)? device.deviceStatus : "N/A"}
                     </Badge>
                 </td>
                 <td>

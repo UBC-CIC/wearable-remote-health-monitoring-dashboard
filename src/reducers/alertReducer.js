@@ -5,7 +5,7 @@ const initialAlerts = [];
 // delete alert
 const deleteAlertHelper = (alerts, target) => {
     const index = alerts.findIndex(alert =>
-        alert.id === target.id
+        alert.id === target.alertID
     );
 
     if (index !== -1) {

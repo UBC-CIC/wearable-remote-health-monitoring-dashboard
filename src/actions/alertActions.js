@@ -1,7 +1,7 @@
 import { API, graphqlOperation } from 'aws-amplify';
 import {onCreateAlert} from "../graphql/subscriptions";
 import {listAlerts} from "../graphql/queries";
-import {deleteAlert} from "../graphql/mutations";
+import {deleteAlert, updateDevice} from "../graphql/mutations";
 import {enqueueAppNotification} from "./notificationActions";
 
 // ====================================---ALERT SUBSCRIPTION---==========================================
@@ -85,9 +85,7 @@ export const fetchAlertsSuccess = (payload) => {
 export const deleteAlertRequest = (payload) => {
     return (dispatch) => {
         dispatch({ type: "DELETE_ALERT_REQUEST", payload: payload });
-        API.graphql(graphqlOperation(deleteAlert, {input: {id: payload.id}})).then((response) => {
-            console.log(response);
-            dispatch(deleteAlertSuccess());
+        API.graphql(graphqlOperation(deleteAlert, {input: {id: payload.alertID}})).then((response) => {
         }).catch((err) => {
             console.log("Error deleting alert: ", err);
             dispatch(deleteAlertFailure(err));
@@ -102,11 +100,25 @@ export const deleteAlertFailure = (error) => {
         payload: error
     }
 }
+// ====================================---CLEAR DEVICE STATUS---==========================================
+
+// clear device status so that so that new alerts can be generated
+export const clearDeviceStatus = (payload) => {
+    return (dispatch) => {
+        dispatch({type: "CLEAR_DEVICE_STATUS", payload: payload});
+        API.graphql(graphqlOperation(updateDevice, {input: {id: payload.deviceID, deviceStatus: "Normal"}})).then((response) => {
+            dispatch(deleteAlertSuccess());
+        }).catch((err) => {
+            console.log("Error deleting alert: ", err);
+            dispatch(deleteAlertFailure(err));
+        })
+    }
+}
 
 // Respond to success condition
 export const deleteAlertSuccess = () => {
     return (dispatch) => {
         dispatch({type: "DELETE_ALERT_SUCCESS" });
-        enqueueAppNotification({type: "info", message: "Alert deleted successfully."})
+        enqueueAppNotification({type: "info", message: "Alert resolved successfully."})
     }
 }

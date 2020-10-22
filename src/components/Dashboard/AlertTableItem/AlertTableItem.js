@@ -1,7 +1,7 @@
 import * as React from "react";
 import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
 import {connect} from "react-redux";
-import {deleteAlertRequest} from "../../../actions/alertActions.js"
+import {deleteAlertRequest, clearDeviceStatus} from "../../../actions/alertActions.js"
 import moment from "moment";
 
 
@@ -34,8 +34,16 @@ class AlertTableItem extends React.Component{
     // Delete Alert
     onResolve = (e) => {
         e.preventDefault();
-        const {deleteAlertRequest, alert} = this.props;
-        deleteAlertRequest({id: alert.id});
+        const {deleteAlertRequest, clearDeviceStatus, alert} = this.props;
+        const {user} = this.state;
+        let deviceID = "";
+        // guard against edge case where device is deleted from the user before alert is cleared
+        if (user.device) {
+            deviceID = user.device.id;
+        }
+        let payload = {alertID: alert.id, deviceID: deviceID, userID: user.id};
+        deleteAlertRequest(payload);
+        clearDeviceStatus(payload);
     }
 
     render() {
@@ -87,4 +95,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {deleteAlertRequest})(AlertTableItem);
+export default connect(mapStateToProps, {deleteAlertRequest, clearDeviceStatus})(AlertTableItem);
