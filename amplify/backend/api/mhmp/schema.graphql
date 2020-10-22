@@ -35,12 +35,14 @@ type Device @model
   id: ID!
   userID: ID
   deviceOS: String
-  osVersion: String
-  deviceStatus: String 
+  deviceStatus: String
+  lastLocation: LatLon
+  lastHeartRate: Int
   alerts: [Alert] @connection(keyName: "byDevice", fields: ["id"])
   geofence: Location @connection
   data: [DeviceData] @connection(keyName: "byDevice", fields: ["id"])
 }
+
 
 type Location @model 
 @key(name: "byLocationName", fields: ["locationName"])
@@ -89,7 +91,6 @@ type DeviceData @model
   createdAt: String!
   expirationTime: Int!
 }
-
 
 
 type LatLon

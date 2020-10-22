@@ -96,8 +96,12 @@ export const onCreateUser = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {
@@ -160,8 +164,12 @@ export const onUpdateUser = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {
@@ -224,8 +232,12 @@ export const onDeleteUser = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {
@@ -250,8 +262,12 @@ export const onCreateDevice = /* GraphQL */ `
       id
       userID
       deviceOS
-      osVersion
       deviceStatus
+      lastLocation {
+        lat
+        lng
+      }
+      lastHeartRate
       createdAt
       updatedAt
       geofence {
@@ -299,8 +315,12 @@ export const onUpdateDevice = /* GraphQL */ `
       id
       userID
       deviceOS
-      osVersion
       deviceStatus
+      lastLocation {
+        lat
+        lng
+      }
+      lastHeartRate
       createdAt
       updatedAt
       geofence {
@@ -348,8 +368,12 @@ export const onDeleteDevice = /* GraphQL */ `
       id
       userID
       deviceOS
-      osVersion
       deviceStatus
+      lastLocation {
+        lat
+        lng
+      }
+      lastHeartRate
       createdAt
       updatedAt
       geofence {
@@ -453,8 +477,12 @@ export const onCreateDeviceData = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {
@@ -493,8 +521,12 @@ export const onUpdateDeviceData = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {
@@ -533,8 +565,12 @@ export const onDeleteDeviceData = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {

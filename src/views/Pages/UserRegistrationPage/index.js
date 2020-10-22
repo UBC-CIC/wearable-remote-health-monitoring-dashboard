@@ -72,13 +72,9 @@ class RegisterUser extends React.Component {
       streetAddress, city, stateProvince, country, postalZip, additionalNotes, emergencyContacts} = this.state;
     const {registerNewUser: registerUser , history} = this.props;
     let newUserID = uuidv4();
-    // checks that age is a number, if not set to null
-    let ageVal = age;
-    if (!Number.isInteger(ageVal)) {
-      ageVal = null;
-    }
+
     let newUser = {
-      id: newUserID, firstName: firstName, lastName: lastName, age: ageVal,
+      id: newUserID, firstName: firstName, lastName: lastName, age: age,
       facility: facility, phoneNumber: phoneNumber, email: email, address: {streetAddress: streetAddress,
         city: city, stateProvince: stateProvince, country: country, postalZip: postalZip},
       additionalNotes: additionalNotes, emergencyContacts: emergencyContacts

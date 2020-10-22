@@ -1,6 +1,6 @@
 {
   "auth": {
-    "mhmpca83ec62": {
+    "mhmpd928fe7a": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authmhmpca83ec62"
+              "userPoolId": "authmhmpd928fe7a"
             }
           },
           "additionalAuthenticationProviders": [
@@ -29,7 +29,7 @@
     }
   },
   "storage": {
-    "mhmps3": {
+    "mhmps3images": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }

@@ -45,8 +45,12 @@ export const getUser = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {
@@ -107,8 +111,12 @@ export const listUsers = /* GraphQL */ `
           id
           userID
           deviceOS
-          osVersion
           deviceStatus
+          lastLocation {
+            lat
+            lng
+           }
+          lastHeartRate
           geofence {
             id
             locationName
@@ -132,8 +140,12 @@ export const listDevices = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {
@@ -159,8 +171,12 @@ export const getDevice = /* GraphQL */ `
       id
       userID
       deviceOS
-      osVersion
       deviceStatus
+      lastLocation {
+        lat
+        lng
+      }
+      lastHeartRate
       createdAt
       updatedAt
       geofence {
@@ -298,8 +314,12 @@ export const getDeviceData = /* GraphQL */ `
         id
         userID
         deviceOS
-        osVersion
         deviceStatus
+        lastLocation {
+          lat
+          lng
+        }
+        lastHeartRate
         createdAt
         updatedAt
         geofence {
@@ -343,8 +363,8 @@ export const listDeviceDatas = /* GraphQL */ `
           id
           userID
           deviceOS
-          osVersion
           deviceStatus
+          lastHeartRate
           createdAt
           updatedAt
         }

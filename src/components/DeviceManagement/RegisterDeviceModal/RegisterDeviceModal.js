@@ -13,7 +13,6 @@ class RegisterDeviceModal extends React.Component {
         this.state = {
             deviceID: "",
             deviceOS: null,
-            osVersion: null,
             deviceIDUnique: false,
         }
     }
@@ -48,8 +47,8 @@ class RegisterDeviceModal extends React.Component {
     onAdd = (e) => {
         e.preventDefault();
         const {registerNewDevice, onHide} = this.props;
-        const {deviceID, deviceOS, osVersion} = this.state;
-        let newDevice = {id: deviceID, deviceStatus: "Inactive", deviceOS: deviceOS, osVersion: osVersion};
+        const {deviceID, deviceOS } = this.state;
+        let newDevice = {id: deviceID, deviceStatus: "Inactive", deviceOS: deviceOS };
         registerNewDevice(newDevice);
         onHide();
     }
@@ -107,7 +106,7 @@ class RegisterDeviceModal extends React.Component {
                             </div>
                         </div>
                         <div className={"row"}>
-                            <div className={"col-6 d-flex justify-content-center"}>
+                            <div className={"col d-flex justify-content-center"}>
                                 <FormGroup>
                                     <label
                                         className="form-control-label"
@@ -118,22 +117,6 @@ class RegisterDeviceModal extends React.Component {
                                     <Input
                                         className="form-control-alternative"
                                         id="deviceOS"
-                                        type="text"
-                                        onChange={this.handleChange}
-                                    />
-                                </FormGroup>
-                            </div>
-                            <div className={"col-6 d-flex justify-content-center"}>
-                                <FormGroup>
-                                    <label
-                                        className="form-control-label"
-                                        htmlFor="osVersion"
-                                    >
-                                        <span>OS Version</span>
-                                    </label>
-                                    <Input
-                                        className="form-control-alternative"
-                                        id="osVersion"
                                         type="text"
                                         onChange={this.handleChange}
                                     />
