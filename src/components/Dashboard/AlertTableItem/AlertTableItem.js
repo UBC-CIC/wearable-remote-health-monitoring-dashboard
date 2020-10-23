@@ -24,10 +24,7 @@ class AlertTableItem extends React.Component{
     findUser = () => {
         const {users, alert} = this.props;
         return users.find(user => {
-            if (user.device) {
-                return user.device.id === alert.deviceID;
-            } else
-                return false;
+            return user.id === alert.userID;
         });
     }
 

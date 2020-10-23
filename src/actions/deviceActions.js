@@ -2,6 +2,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { listDevices } from '../graphql/queries';
 import {createDevice, updateDevice, updateUser, deleteDevice } from '../graphql/mutations';
 import {enqueueAppNotification} from "./notificationActions";
+import { onUpdateAlert } from "../graphql/subscriptions";
 
 
 
@@ -255,4 +256,26 @@ export const removeLocationSuccess = () => {
         dispatch({ type: "REMOVE_LOCATION_SUCCESS"});
         dispatch(enqueueAppNotification({type: "info", message: "Location successfully unassigned!"}));
     }
+}
+
+// ================================---SUBSCRIBE TO REAL TIME DEVICE UPDATES---===========================
+
+// Subscribe to device updates
+export const subscribeDeviceUpdates = () => {
+    return (dispatch) => {
+        try {
+            API.graphql(graphqlOperation(onUpdateAlert)).subscribe({
+                next: device => {
+                    console.log("Updated device: ", device.value.data.onUpdateDevice);
+                },
+                error: err => {
+                    console.log("Device update subscription error: ", err);
+                }
+            })
+        } catch (err) {
+            console.log("Device update subscription error: ", err);
+        }
+
+    }
+
 }
