@@ -40,7 +40,7 @@ class UserManagement extends React.Component {
           <UserManagementTableItem
               key={uuidv4()}
               name={user.firstName + " " + user.lastName}
-              profileImg={(user.profileImage)? user.profileImage : null}
+              profileImg={(user.image)? user.image : null}
               id={user.id}
               device={user.device}
           />

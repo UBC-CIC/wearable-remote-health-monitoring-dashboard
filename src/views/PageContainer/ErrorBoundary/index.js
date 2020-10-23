@@ -27,10 +27,10 @@ class ErrorBoundary extends React.Component {
         })
     }
 
-    componentWillUnmount() {
+   /* componentWillUnmount() {
         const {history} = this.props;
         history.push("/admin/index");
-    }
+    }*/
 
     render() {
         const {errorInfo, error} = this.state;

@@ -37,11 +37,8 @@ import DeleteUserModal from "../../../components/UserProfile/DeleteUserModal/Del
 import ProfilePhotoModal from "../../../components/UserProfile/ProfilePhotoModal/ProfilePhotoModal";
 // actions
 import {updateUserInformation, updateUserInformationLocally} from "../../../actions/userActions";
-// services
-import {retrieveImageService} from "../../../services/profilePhotoFetcher/profilePhotoFetcher";
 
 class Profile extends React.Component {
-  _isMounted = false;
 
   constructor(props) {
     super(props);
@@ -73,31 +70,25 @@ class Profile extends React.Component {
     }
   }
 
-  async componentDidMount() {
-    this._isMounted = true;
+  componentDidMount() {
     const { originalProfile } = this.state;
-    await  this.fetchImage(originalProfile.profileImage);
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  fetchImage = async (profileImage) => {
-    if (profileImage) {
-      try {
-        const imageData = await retrieveImageService(profileImage.key);
-        if (this._isMounted && imageData) {
-          this.setState({
-            profilePhoto: imageData,
-          })
-        }
-      } catch (err) {
-        console.log('error: ', err);
-      }
+    if (originalProfile.image) {
+      this.setState({
+        profilePhoto: originalProfile.image,
+      })
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.users !== prevProps.users) {
+      const { originalProfile } = this.state;
+      if (originalProfile.image) {
+        this.setState({
+          profilePhoto: originalProfile.image,
+        })
+      }
+    }
+  }
 
   findUser = (id) => {
     const {users} = this.props;

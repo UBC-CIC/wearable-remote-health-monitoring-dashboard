@@ -2,6 +2,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { createUser, deleteUser, updateUser } from '../graphql/mutations';
 import { listUsers } from '../graphql/queries';
 import {enqueueAppNotification} from "./notificationActions";
+import {retrieveImageService} from "../services/profilePhotoFetcher/profilePhotoFetcher";
 
 
 // ===================================---FETCHING USERS---=======================================
@@ -29,9 +30,16 @@ export const fetchUsersFailure = (error) => {
 
 // Success condition, update local state with fetched user data, remove loading flag
 export const fetchUsersSuccess = (payload) => {
-    return {
-        type: "FETCH_USERS_SUCCESS",
-        payload: payload
+    return async (dispatch) => {
+        for (let user of payload) {
+            if (user.profileImage) {
+                const image = await retrieveImageService(user.profileImage.key);
+                if (image) {
+                    user.image = image;
+                }
+            }
+        }
+        dispatch({type: "FETCH_USERS_SUCCESS", payload: payload})
     }
 }
 
@@ -107,7 +115,7 @@ export const updateUserInformationLocally = (payload) => {
 
 // =====================================---DELETING A USER---=======================================
 
-// Delete user locally, and from DynamoDB. Also delete user profile image from S3 [future addition]
+// Delete user locally, and from DynamoDB.
 export const deleteUserRequest = (payload) => {
     return (dispatch) => {
         dispatch({ type: "DELETE_USER", payload: payload});
@@ -140,8 +148,8 @@ export const deleteUserSuccess = () => {
 
 // updates the user profile image information locally
 export const updateUserProfileImage = (payload) => {
-    return {
-        type: "UPDATE_USER_PROFILE_IMAGE",
-        payload: payload,
+    return async (dispatch) => {
+        payload.image = await retrieveImageService(payload.profileImage.key);
+        dispatch({type: "UPDATE_USER_PROFILE_IMAGE", payload: payload })
     }
 }

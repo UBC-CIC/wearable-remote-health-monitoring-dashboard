@@ -66,14 +66,7 @@ class ProfilePhotoModal extends React.Component {
             const key = `${uuid()}-${fileName}`;
             const bucket = process.env.REACT_APP_AWS_S3_BUCKET;
             const region = process.env.REACT_APP_AWS_S3_REGION;
-            const fileForUpload = {
-                bucket,
-                region,
-                key,
-            };
             const inputData = {id: userID, profileImage: {bucket: bucket, region: region, key: key}};
-            // add new photo information locally
-            updateUserProfileImage(inputData);
             // updates in persistent storage
             try {
                 // delete existing profile image in S3 if it exists
@@ -87,16 +80,17 @@ class ProfilePhotoModal extends React.Component {
                 });
                 // update profileImage in user
                 await API.graphql(graphqlOperation(updateUser, { input: inputData }));
+                // add new photo information locally
+                updateUserProfileImage(inputData);
                 // image upload successful
-                const {enqueueAppNotification, fetchImage} = this.props;
-                // fetch updated image for profile
-                fetchImage(fileForUpload);
+                const {enqueueAppNotification} = this.props;
                 enqueueAppNotification({type: "success", message: "Image updated successfully."});
             } catch (err) {
                 console.log('error: ', err)
             }
             this.setState({
                 imageProcessing: false,
+                imageSrc: null,
             });
             onHide();
         } catch (e) {

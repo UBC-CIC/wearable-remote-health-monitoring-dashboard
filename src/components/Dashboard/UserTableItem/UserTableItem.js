@@ -4,12 +4,10 @@ import {
     Media,
     UncontrolledTooltip
 } from "reactstrap";
-import {retrieveImageService} from "../../../services/profilePhotoFetcher/profilePhotoFetcher";
 
 
 
 class UserTableItem extends React.Component {
-    _isMounted = false;
 
     constructor(props) {
         super(props);
@@ -18,31 +16,15 @@ class UserTableItem extends React.Component {
         }
     }
 
-    async componentDidMount() {
-        this._isMounted = true;
-        const {  profileImg } = this.props;
-        await this.fetchImage( profileImg );
+    componentDidMount() {
+       const {  profileImg } = this.props;
+       if (profileImg) {
+           this.setState({
+               profilePhoto: profileImg,
+           })
+       }
     }
 
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
-    // fetch image from S3
-    fetchImage = async ( profileImg ) => {
-        if ( profileImg ) {
-            try {
-                const imageData = await retrieveImageService(profileImg.key);
-                if (this._isMounted && imageData) {
-                    this.setState({
-                        profilePhoto: imageData,
-                    })
-                }
-            } catch (err) {
-                console.log('error: ', err);
-            }
-        }
-    }
 
     render() {
         const {name,id, heartRate, device } = this.props;

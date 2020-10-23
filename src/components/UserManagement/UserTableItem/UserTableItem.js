@@ -13,13 +13,10 @@ import {
 } from "reactstrap";
 import AssignLocationModal from "../../LocationManagement/AssignLocationModal/AssignLocationModal";
 import RemoveLocationModal from "../../LocationManagement/RemoveLocationModal/RemoveLocationModal";
-import {retrieveImageService} from "../../../services/profilePhotoFetcher/profilePhotoFetcher";
 
 
 
 class UserManagementTableItem extends React.Component {
-
-    _isMounted = false;
 
 
     constructor(props) {
@@ -32,31 +29,15 @@ class UserManagementTableItem extends React.Component {
         }
     }
 
-    async componentDidMount() {
-        this._isMounted = true;
+    componentDidMount() {
         const {  profileImg } = this.props;
-        await this.fetchImage( profileImg );
-    }
-
-    componentWillUnmount() {
-        this._isMounted = false;
-    }
-
-    // fetch image from S3
-    fetchImage = async ( profileImg ) => {
-        if ( profileImg ) {
-            try {
-                const imageData = await retrieveImageService(profileImg.key);
-                if (this._isMounted && imageData) {
-                    this.setState({
-                        profilePhoto: imageData,
-                    })
-                }
-            } catch (err) {
-                console.log('error: ', err);
-            }
+        if (profileImg) {
+            this.setState({
+                profilePhoto: profileImg,
+            })
         }
     }
+
 
     // Triggers the opening/closing of the DeleteUserModal
     setDeleteModalShow = (bool) => {

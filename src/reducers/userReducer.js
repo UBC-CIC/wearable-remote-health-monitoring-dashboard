@@ -34,6 +34,7 @@ const updateUserProfileImageHelper = (users, target) => {
     users.forEach((user) => {
         if (user.id === target.id) {
             user.profileImage = target.profileImage;
+            user.image = target.image;
         }
     });
     return users;

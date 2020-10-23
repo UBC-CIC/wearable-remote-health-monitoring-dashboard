@@ -52,7 +52,6 @@ class DeleteUserModal extends React.Component {
         // delete user profile image in S3 if it exists
         try {
             if (imageKey) {
-                console.log("hit delete image block");
                 await Storage.remove(imageKey);
             }
         } catch (err) {
