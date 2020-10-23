@@ -59,12 +59,6 @@ export const getUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
       }
     }
   }
@@ -112,15 +106,7 @@ export const listUsers = /* GraphQL */ `
           userID
           deviceOS
           deviceStatus
-          lastLocation {
-            lat
-            lng
-           }
           lastHeartRate
-          geofence {
-            id
-            locationName
-        }
           createdAt
           updatedAt
         }
@@ -154,12 +140,6 @@ export const listDevices = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
       }
       nextToken
     }
@@ -188,32 +168,6 @@ export const getDevice = /* GraphQL */ `
         }
         createdAt
         updatedAt
-      }
-      alerts {
-        items {
-          id
-          deviceID
-          type
-          description
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      data {
-        items {
-          id
-          deviceID
-          observationType
-          observationUnit
-          observationValue
-          observationDescription
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
       }
     }
   }
@@ -257,7 +211,7 @@ export const getAlert = /* GraphQL */ `
   query GetAlert($id: ID!) {
     getAlert(id: $id) {
       id
-      deviceID
+      userID
       type
       description
       location {
@@ -279,7 +233,7 @@ export const listAlerts = /* GraphQL */ `
     listAlerts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        deviceID
+        userID
         type
         description
         location {
@@ -294,11 +248,12 @@ export const listAlerts = /* GraphQL */ `
     }
   }
 `;
-export const getDeviceData = /* GraphQL */ `
-  query GetDeviceData($id: ID!) {
-    getDeviceData(id: $id) {
+export const getData = /* GraphQL */ `
+  query GetData($id: ID!) {
+    getData(id: $id) {
       id
       deviceID
+      userID
       location {
         lat
         lng
@@ -306,48 +261,23 @@ export const getDeviceData = /* GraphQL */ `
       observationType
       observationUnit
       observationValue
-      observationDescription
       createdAt
       expirationTime
       updatedAt
-      device {
-        id
-        userID
-        deviceOS
-        deviceStatus
-        lastLocation {
-          lat
-          lng
-        }
-        lastHeartRate
-        createdAt
-        updatedAt
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
-      }
     }
   }
 `;
-export const listDeviceDatas = /* GraphQL */ `
-  query ListDeviceDatas(
-    $filter: ModelDeviceDataFilterInput
+export const listDatas = /* GraphQL */ `
+  query ListDatas(
+    $filter: ModelDataFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listDeviceDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         deviceID
+        userID
         location {
           lat
           lng
@@ -355,19 +285,9 @@ export const listDeviceDatas = /* GraphQL */ `
         observationType
         observationUnit
         observationValue
-        observationDescription
         createdAt
         expirationTime
         updatedAt
-        device {
-          id
-          userID
-          deviceOS
-          deviceStatus
-          lastHeartRate
-          createdAt
-          updatedAt
-        }
       }
       nextToken
     }

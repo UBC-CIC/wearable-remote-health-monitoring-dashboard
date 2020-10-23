@@ -38,9 +38,7 @@ type Device @model
   deviceStatus: String
   lastLocation: LatLon
   lastHeartRate: Int
-  alerts: [Alert] @connection(keyName: "byDevice", fields: ["id"])
   geofence: Location @connection
-  data: [DeviceData] @connection(keyName: "byDevice", fields: ["id"])
 }
 
 
@@ -57,14 +55,13 @@ type Location @model
 }
 
 type Alert @model (subscriptions: { level: public })
-@key(name: "byDevice", fields: ["deviceID", "createdAt"])
 @auth(rules: [
   { allow: private, provider: iam },
   { allow: private, provider: userPools },  
   { allow: owner }
 ]) {
   id: ID!
-  deviceID: ID!
+  userID: ID!
   type: String!
   description: String!
   location: LatLon
@@ -72,9 +69,9 @@ type Alert @model (subscriptions: { level: public })
   expirationTime: Int!
 }
 
-type DeviceData @model
-@key(name: "byDevice", fields: ["deviceID", "createdAt"])
-@key(name: "byDeviceAndObservationType", fields: ["deviceID", "observationType", "createdAt"])
+type Data @model
+@key(name: "byUserID", fields: ["userID", "createdAt"])
+@key(name: "byUserIDAndObservationType", fields: ["userID", "observationType", "createdAt"])
 @auth(rules: [
   { allow: private, provider: iam }, 
   { allow: private, provider: userPools }, 
@@ -82,12 +79,11 @@ type DeviceData @model
 ]) {
   id: ID!
   deviceID: ID!
-  device: Device @connection(fields: ["deviceID"])
+  userID: ID!
   location: LatLon
-  observationType: String
+  observationType: String!
   observationUnit: String
   observationValue: String
-  observationDescription: String
   createdAt: String!
   expirationTime: Int!
 }
@@ -100,7 +96,7 @@ type LatLon
 }
 
 type Contact 
-@aws_iam @aws_cognito_user_pools{
+@aws_iam @aws_cognito_user_pools {
   firstName: String!
   lastName: String!
   relationshipToUser: String
@@ -111,7 +107,7 @@ type Contact
 
 
 type Address  
-@aws_iam @aws_cognito_user_pools{
+@aws_iam @aws_cognito_user_pools {
   streetAddress: String
   city: String
   stateProvince: String

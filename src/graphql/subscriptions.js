@@ -5,7 +5,7 @@ export const onCreateAlert = /* GraphQL */ `
   subscription OnCreateAlert {
     onCreateAlert {
       id
-      deviceID
+      userID
       type
       description
       location {
@@ -22,7 +22,7 @@ export const onUpdateAlert = /* GraphQL */ `
   subscription OnUpdateAlert {
     onUpdateAlert {
       id
-      deviceID
+      userID
       type
       description
       location {
@@ -39,7 +39,7 @@ export const onDeleteAlert = /* GraphQL */ `
   subscription OnDeleteAlert {
     onDeleteAlert {
       id
-      deviceID
+      userID
       type
       description
       location {
@@ -110,12 +110,6 @@ export const onCreateUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
       }
     }
   }
@@ -177,12 +171,6 @@ export const onUpdateUser = /* GraphQL */ `
           locationName
           createdAt
           updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
         }
       }
     }
@@ -246,12 +234,6 @@ export const onDeleteUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
       }
     }
   }
@@ -280,32 +262,6 @@ export const onCreateDevice = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      alerts {
-        items {
-          id
-          deviceID
-          type
-          description
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      data {
-        items {
-          id
-          deviceID
-          observationType
-          observationUnit
-          observationValue
-          observationDescription
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -333,32 +289,6 @@ export const onUpdateDevice = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      alerts {
-        items {
-          id
-          deviceID
-          type
-          description
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      data {
-        items {
-          id
-          deviceID
-          observationType
-          observationUnit
-          observationValue
-          observationDescription
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -385,32 +315,6 @@ export const onDeleteDevice = /* GraphQL */ `
         }
         createdAt
         updatedAt
-      }
-      alerts {
-        items {
-          id
-          deviceID
-          type
-          description
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      data {
-        items {
-          id
-          deviceID
-          observationType
-          observationUnit
-          observationValue
-          observationDescription
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
       }
     }
   }
@@ -457,11 +361,12 @@ export const onDeleteLocation = /* GraphQL */ `
     }
   }
 `;
-export const onCreateDeviceData = /* GraphQL */ `
-  subscription OnCreateDeviceData {
-    onCreateDeviceData {
+export const onCreateData = /* GraphQL */ `
+  subscription OnCreateData {
+    onCreateData {
       id
       deviceID
+      userID
       location {
         lat
         lng
@@ -469,43 +374,18 @@ export const onCreateDeviceData = /* GraphQL */ `
       observationType
       observationUnit
       observationValue
-      observationDescription
       createdAt
       expirationTime
       updatedAt
-      device {
-        id
-        userID
-        deviceOS
-        deviceStatus
-        lastLocation {
-          lat
-          lng
-        }
-        lastHeartRate
-        createdAt
-        updatedAt
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
-      }
     }
   }
 `;
-export const onUpdateDeviceData = /* GraphQL */ `
-  subscription OnUpdateDeviceData {
-    onUpdateDeviceData {
+export const onUpdateData = /* GraphQL */ `
+  subscription OnUpdateData {
+    onUpdateData {
       id
       deviceID
+      userID
       location {
         lat
         lng
@@ -513,43 +393,18 @@ export const onUpdateDeviceData = /* GraphQL */ `
       observationType
       observationUnit
       observationValue
-      observationDescription
       createdAt
       expirationTime
       updatedAt
-      device {
-        id
-        userID
-        deviceOS
-        deviceStatus
-        lastLocation {
-          lat
-          lng
-        }
-        lastHeartRate
-        createdAt
-        updatedAt
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
-      }
     }
   }
 `;
-export const onDeleteDeviceData = /* GraphQL */ `
-  subscription OnDeleteDeviceData {
-    onDeleteDeviceData {
+export const onDeleteData = /* GraphQL */ `
+  subscription OnDeleteData {
+    onDeleteData {
       id
       deviceID
+      userID
       location {
         lat
         lng
@@ -557,35 +412,9 @@ export const onDeleteDeviceData = /* GraphQL */ `
       observationType
       observationUnit
       observationValue
-      observationDescription
       createdAt
       expirationTime
       updatedAt
-      device {
-        id
-        userID
-        deviceOS
-        deviceStatus
-        lastLocation {
-          lat
-          lng
-        }
-        lastHeartRate
-        createdAt
-        updatedAt
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
-      }
     }
   }
 `;

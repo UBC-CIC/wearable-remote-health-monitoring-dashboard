@@ -62,12 +62,6 @@ export const createUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
       }
     }
   }
@@ -132,12 +126,6 @@ export const updateUser = /* GraphQL */ `
           locationName
           createdAt
           updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
         }
       }
     }
@@ -204,12 +192,6 @@ export const deleteUser = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
       }
     }
   }
@@ -241,32 +223,6 @@ export const createDevice = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      alerts {
-        items {
-          id
-          deviceID
-          type
-          description
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      data {
-        items {
-          id
-          deviceID
-          observationType
-          observationUnit
-          observationValue
-          observationDescription
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -297,32 +253,6 @@ export const updateDevice = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      alerts {
-        items {
-          id
-          deviceID
-          type
-          description
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      data {
-        items {
-          id
-          deviceID
-          observationType
-          observationUnit
-          observationValue
-          observationDescription
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -352,32 +282,6 @@ export const deleteDevice = /* GraphQL */ `
         }
         createdAt
         updatedAt
-      }
-      alerts {
-        items {
-          id
-          deviceID
-          type
-          description
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
-      }
-      data {
-        items {
-          id
-          deviceID
-          observationType
-          observationUnit
-          observationValue
-          observationDescription
-          createdAt
-          expirationTime
-          updatedAt
-        }
-        nextToken
       }
     }
   }
@@ -440,7 +344,7 @@ export const createAlert = /* GraphQL */ `
   ) {
     createAlert(input: $input, condition: $condition) {
       id
-      deviceID
+      userID
       type
       description
       location {
@@ -460,7 +364,7 @@ export const updateAlert = /* GraphQL */ `
   ) {
     updateAlert(input: $input, condition: $condition) {
       id
-      deviceID
+      userID
       type
       description
       location {
@@ -480,7 +384,7 @@ export const deleteAlert = /* GraphQL */ `
   ) {
     deleteAlert(input: $input, condition: $condition) {
       id
-      deviceID
+      userID
       type
       description
       location {
@@ -493,14 +397,15 @@ export const deleteAlert = /* GraphQL */ `
     }
   }
 `;
-export const createDeviceData = /* GraphQL */ `
-  mutation CreateDeviceData(
-    $input: CreateDeviceDataInput!
-    $condition: ModelDeviceDataConditionInput
+export const createData = /* GraphQL */ `
+  mutation CreateData(
+    $input: CreateDataInput!
+    $condition: ModelDataConditionInput
   ) {
-    createDeviceData(input: $input, condition: $condition) {
+    createData(input: $input, condition: $condition) {
       id
       deviceID
+      userID
       location {
         lat
         lng
@@ -508,46 +413,21 @@ export const createDeviceData = /* GraphQL */ `
       observationType
       observationUnit
       observationValue
-      observationDescription
       createdAt
       expirationTime
       updatedAt
-      device {
-        id
-        userID
-        deviceOS
-        deviceStatus
-        lastLocation {
-          lat
-          lng
-        }
-        lastHeartRate
-        createdAt
-        updatedAt
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
-      }
     }
   }
 `;
-export const updateDeviceData = /* GraphQL */ `
-  mutation UpdateDeviceData(
-    $input: UpdateDeviceDataInput!
-    $condition: ModelDeviceDataConditionInput
+export const updateData = /* GraphQL */ `
+  mutation UpdateData(
+    $input: UpdateDataInput!
+    $condition: ModelDataConditionInput
   ) {
-    updateDeviceData(input: $input, condition: $condition) {
+    updateData(input: $input, condition: $condition) {
       id
       deviceID
+      userID
       location {
         lat
         lng
@@ -555,46 +435,21 @@ export const updateDeviceData = /* GraphQL */ `
       observationType
       observationUnit
       observationValue
-      observationDescription
       createdAt
       expirationTime
       updatedAt
-      device {
-        id
-        userID
-        deviceOS
-        deviceStatus
-        lastLocation {
-          lat
-          lng
-        }
-        lastHeartRate
-        createdAt
-        updatedAt
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
-      }
     }
   }
 `;
-export const deleteDeviceData = /* GraphQL */ `
-  mutation DeleteDeviceData(
-    $input: DeleteDeviceDataInput!
-    $condition: ModelDeviceDataConditionInput
+export const deleteData = /* GraphQL */ `
+  mutation DeleteData(
+    $input: DeleteDataInput!
+    $condition: ModelDataConditionInput
   ) {
-    deleteDeviceData(input: $input, condition: $condition) {
+    deleteData(input: $input, condition: $condition) {
       id
       deviceID
+      userID
       location {
         lat
         lng
@@ -602,35 +457,9 @@ export const deleteDeviceData = /* GraphQL */ `
       observationType
       observationUnit
       observationValue
-      observationDescription
       createdAt
       expirationTime
       updatedAt
-      device {
-        id
-        userID
-        deviceOS
-        deviceStatus
-        lastLocation {
-          lat
-          lng
-        }
-        lastHeartRate
-        createdAt
-        updatedAt
-        geofence {
-          id
-          locationName
-          createdAt
-          updatedAt
-        }
-        alerts {
-          nextToken
-        }
-        data {
-          nextToken
-        }
-      }
     }
   }
 `;
