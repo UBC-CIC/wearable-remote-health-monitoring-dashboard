@@ -54,6 +54,11 @@ class CreateLocation extends React.Component {
         }
     }
 
+    componentDidMount() {
+        document.documentElement.scrollTop = 0;
+        document.scrollingElement.scrollTop = 0;
+    }
+
     handleFormChange = (e) => {
         e.preventDefault();
         this.setState({

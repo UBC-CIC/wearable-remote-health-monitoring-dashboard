@@ -59,6 +59,11 @@ class RegisterUser extends React.Component {
     }
   }
 
+  componentDidMount() {
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
+  }
+
   handleChange = (e) => {
     e.preventDefault();
     this.setState({

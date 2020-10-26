@@ -31,6 +31,10 @@ import {v4 as uuidv4} from "uuid";
 
 class ManageLocations extends React.Component {
 
+  componentDidMount() {
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
+  }
 
   render() {
     const {locations} = this.props;

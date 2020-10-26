@@ -39,11 +39,11 @@ class PageContainer extends React.Component {
         history.push("/admin/index");
     }
 
-    componentDidUpdate(e) {
+    /*componentDidUpdate(e) {
         document.documentElement.scrollTop = 0;
         document.scrollingElement.scrollTop = 0;
         this.refs.mainContent.scrollTop = 0;
-    }
+    }*/
     getRoutes = routes => {
         return routes.map((prop, key) => {
             if (prop.layout === "/admin") {

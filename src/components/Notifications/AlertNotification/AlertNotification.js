@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import "./SideBar.css";
 import Toast from 'react-bootstrap/Toast';
 import moment from "moment";
+import "./SideBar.css";
 import {removeAlertNotification} from "../../../actions/notificationActions";
 
 
@@ -30,7 +30,7 @@ class AlertNotification extends React.Component{
                     </Toast.Header>
                     <Toast.Body>
                         <div className={"row"}>
-                            <div className={"col"}>
+                            <div className={"col d-flex"}>
                                 User: {user.firstName + " " + user.lastName}
                             </div>
                         </div>

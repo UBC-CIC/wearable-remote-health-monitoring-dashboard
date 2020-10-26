@@ -32,6 +32,12 @@ import UserManagementTableItem from "../../../components/UserManagement/UserTabl
 import {v4 as uuidv4} from "uuid";
 
 class UserManagement extends React.Component {
+
+  componentDidMount() {
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
+  }
+
   render() {
     const {users} = this.props;
     // map our list of users to the "Current Status" table

@@ -41,6 +41,8 @@ class DeviceManager extends React.Component {
   }
 
   componentDidMount() {
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
     // fetch associated users for each device
     this.pairUserDeviceInfo();
   }

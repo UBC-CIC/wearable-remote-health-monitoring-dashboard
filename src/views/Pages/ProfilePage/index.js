@@ -71,6 +71,8 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    document.documentElement.scrollTop = 0;
+    document.scrollingElement.scrollTop = 0;
     const { originalProfile } = this.state;
     if (originalProfile.image) {
       this.setState({
