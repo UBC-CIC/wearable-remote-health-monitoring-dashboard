@@ -5,6 +5,7 @@ import {
     UncontrolledTooltip
 } from "reactstrap";
 import HeartRate from "../../RealTimeData/HeartRate/HeartRate";
+import DeviceStatus from "../../RealTimeData/DeviceStatus/DeviceStatus";
 
 
 
@@ -30,31 +31,6 @@ class UserTableItem extends React.Component {
     render() {
         const {name,id, deviceID } = this.props;
         const { profilePhoto } = this.state;
-        let statusClass = "bg-success";
-        /*switch (status.code) {
-            case -1:{
-                statusClass = "bg-warning"
-                break;
-            }
-            case 0:{
-                statusClass = "bg-success"
-                break;
-            }
-            case 1:{
-                statusClass = "bg-warning"
-                break;
-            }
-            case 3:{
-                statusClass = "bg-info"
-                break;
-            }
-            case 4:{
-                statusClass = "bg-danger"
-                break;
-            }
-            default:
-                break;
-        }*/
         return (
             <tr>
                 <th scope="row">
@@ -88,8 +64,7 @@ class UserTableItem extends React.Component {
                 </td>
                 <td>
                     <Badge color="" className="badge-dot mr-4">
-                        <i className={statusClass} />
-                        {/* {(device)? device.deviceStatus : "N/A"}*/}
+                        <DeviceStatus deviceID={deviceID} />
                     </Badge>
                 </td>
                 <td>
