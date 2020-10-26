@@ -20,11 +20,13 @@ const alertReducer = (alerts = initialAlerts, action) => {
     switch (action.type) {
         case "FETCH_ALERTS_SUCCESS": {
             return action.payload.sort((a,b) => {
-                return b.createdAt - a.createdAt;
+                return Date.parse(b.createdAt) - Date.parse(a.createdAt);
             });
         }
         case "NEW_ALERT_RECEIVED": {
-            return [action.payload, ...newAlerts];
+            return [action.payload, ...newAlerts].sort((a,b) => {
+                return Date.parse(b.createdAt) - Date.parse(a.createdAt);
+            });
         }
         case "DELETE_ALERT_REQUEST": {
             return deleteAlertHelper(newAlerts, action.payload);

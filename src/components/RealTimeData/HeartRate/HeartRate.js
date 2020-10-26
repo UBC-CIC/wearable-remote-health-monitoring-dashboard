@@ -43,7 +43,10 @@ class HeartRate extends React.Component {
 
         return <div>
             {(deviceID !== "NONE")?
-                heartRate
+                (heartRate)?
+                    heartRate
+                    :
+                    "N/A"
                 :
                 "N/A"
             }
