@@ -4,6 +4,7 @@ import {
     Media,
     UncontrolledTooltip
 } from "reactstrap";
+import HeartRate from "../../RealTimeData/HeartRate/HeartRate";
 
 
 
@@ -27,7 +28,7 @@ class UserTableItem extends React.Component {
 
 
     render() {
-        const {name,id, heartRate, device } = this.props;
+        const {name,id, deviceID } = this.props;
         const { profilePhoto } = this.state;
         let statusClass = "bg-success";
         /*switch (status.code) {
@@ -88,13 +89,13 @@ class UserTableItem extends React.Component {
                 <td>
                     <Badge color="" className="badge-dot mr-4">
                         <i className={statusClass} />
-                         {(device)? device.deviceStatus : "N/A"}
+                        {/* {(device)? device.deviceStatus : "N/A"}*/}
                     </Badge>
                 </td>
                 <td>
                     <div className="d-flex align-items-center">
                         <span className="mr-2">
-                            {heartRate}
+                            <HeartRate deviceID={deviceID} />
                         </span>
                     </div>
                 </td>

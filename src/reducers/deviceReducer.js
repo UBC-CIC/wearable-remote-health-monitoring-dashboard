@@ -66,6 +66,18 @@ const clearDeviceStatusHelper = (devices, payload) => {
     return devices;
 }
 
+// handle device updates
+const updatedDeviceHelper = (devices, payload) => {
+    let newDevices = [];
+    devices.forEach(device => {
+        if (device.id === payload.id) {
+            device = {...payload};
+        }
+        newDevices.push(device);
+    })
+    return newDevices;
+}
+
 const deviceReducer = (devices = initialDevices, action) => {
     let newDeviceList = [...devices];
     switch (action.type) {
@@ -97,6 +109,9 @@ const deviceReducer = (devices = initialDevices, action) => {
         }
         case "CLEAR_DEVICE_STATUS": {
             return clearDeviceStatusHelper(newDeviceList, action.payload);
+        }
+        case "DEVICE_UPDATED": {
+            return updatedDeviceHelper(newDeviceList, action.payload);
         }
         default:
             return newDeviceList;

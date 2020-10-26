@@ -2,7 +2,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { listDevices } from '../graphql/queries';
 import {createDevice, updateDevice, updateUser, deleteDevice } from '../graphql/mutations';
 import {enqueueAppNotification} from "./notificationActions";
-import { onUpdateAlert } from "../graphql/subscriptions";
+import { onUpdateDevice } from "../graphql/subscriptions";
 
 
 
@@ -264,9 +264,10 @@ export const removeLocationSuccess = () => {
 export const subscribeDeviceUpdates = () => {
     return (dispatch) => {
         try {
-            API.graphql(graphqlOperation(onUpdateAlert)).subscribe({
+            API.graphql(graphqlOperation(onUpdateDevice)).subscribe({
                 next: device => {
                     console.log("Updated device: ", device.value.data.onUpdateDevice);
+                    dispatch({type: "DEVICE_UPDATED", payload: device.value.data.onUpdateDevice})
                 },
                 error: err => {
                     console.log("Device update subscription error: ", err);
