@@ -61,7 +61,7 @@ class HomePage extends React.Component {
               name={user.firstName + " " + user.lastName}
               profileImg={(user.image)? user.image : null}
               id={user.id}
-              deviceID={user.device.id}
+              deviceID={(user.device)? user.device.id: null}
               heartRate={0}
               profileURL={user.profileURL}
           />

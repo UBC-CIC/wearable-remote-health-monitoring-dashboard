@@ -122,7 +122,7 @@ export const disassociateDeviceWithUser = (payload) => {
         // Disassociate device locally
         dispatch({ type: "DISASSOCIATE_DEVICE", payload: payload});
         API.graphql(graphqlOperation(updateDevice, {input: {id: payload.deviceID,
-                userID: null}})).then((response) => {
+                userID: null, lastLocation: null, lastHeartRate: null, deviceStatus: "Inactive"}})).then((response) => {
             dispatch(disassociateDeviceSuccess(payload));
         }).catch((err) => {
             console.log("Error unpairing device: ", err);
