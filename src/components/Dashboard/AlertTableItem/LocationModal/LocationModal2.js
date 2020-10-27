@@ -1,11 +1,18 @@
 import * as React from "react";
 import Modal from "react-bootstrap/Modal";
 import {Button} from "reactstrap";
-import {Map,Marker,GoogleApiWrapper} from 'google-maps-react';
+import GoogleMap from "google-map-react";
 
 
-class LocationModal extends React.Component{
-    
+class LocationModalTwo extends React.Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            center: [49.263232, -123.25429],
+            zoom: 17,
+        }
+    }
 
     // handles cancelling/closing the form
     onCancel = (e) => {
@@ -14,13 +21,44 @@ class LocationModal extends React.Component{
         onHide();
     }
 
+    mapOptions = (maps) => {
+        return {
+            streetViewControl: true,
+            scaleControl: true,
+            fullscreenControl: false,
+            zoomControl: true,
+            clickableIcons: false,
+            mapTypeControl: true,
+            styles: [{
+                featureType: "poi.business",
+                elementType: "labels",
+                stylers: [{
+                    visibility: "on"
+                }]
+            }],
+            mapTypeControlOptions: {
+                style: maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: maps.ControlPosition.TOP_LEFT,
+                mapTypeIds: [
+                    maps.MapTypeId.ROADMAP,
+                    maps.MapTypeId.HYBRID
+                ]
+            },
+        }
+    }
+
+    apiActions = (map, maps) => {
+        const {location} = this.props;
+        let newMarker  = new maps.Marker({
+            map: map,
+            position: location
+        })
+        newMarker.setMap(map);
+    }
+
     render() {
         const { show, onHide, location } = this.props;
-        const containerStyle = {
-            position: 'relative',
-            width: '100%',
-            height: '100%'
-        }
+
         return(
             <div>
                 <Modal
@@ -42,18 +80,18 @@ class LocationModal extends React.Component{
                     <Modal.Body>
                         <div className={"row"} style={{width: "480px", height: "380px"}}>
                             <div className={"col d-flex justify-content-center"}>
-                                <Map google={this.props.google}
-                                     zoom={19}
-                                     containerStyle={containerStyle}
-                                     initialCenter={{
-                                         lat: location.lat,
-                                         lng: location.lng
-                                     }}
-                                >
-                                    <Marker
-                                        position={{lat: location.lat, lng: location.lng}}
-                                    />
-                                </Map>
+                                <GoogleMap
+                                    bootstrapURLKeys={{
+                                        key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+                                        libraries: ['drawing', 'geometry', 'places'],
+                                    }}
+                                    defaultCenter={location}
+                                    defaultZoom={19}
+                                    yesIWantToUseGoogleMapApiInternals
+                                    onGoogleApiLoaded={({ map, maps }) => this.apiActions(map, maps)}
+                                    options={this.mapOptions}
+                                />
+
                             </div>
                         </div>
                     </Modal.Body>
@@ -77,4 +115,4 @@ class LocationModal extends React.Component{
 }
 
 
-export default GoogleApiWrapper({apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY})(LocationModal);
+export default LocationModalTwo;

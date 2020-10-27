@@ -4,7 +4,10 @@ import Modal from "react-bootstrap/Modal";
 import {Button} from "reactstrap";
 import {Map,Marker,GoogleApiWrapper} from 'google-maps-react';
 
-
+/*
+* Description: Displays user's real-time location on a map
+* Required Input: device ID
+* */
 class MapModalContainer extends React.Component{
 
     constructor(props) {

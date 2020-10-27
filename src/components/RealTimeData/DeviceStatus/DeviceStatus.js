@@ -1,8 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Badge} from "reactstrap";
 
-
+/*
+* Description: Displays the user's device status in real-time
+* Required Input: device ID
+* */
 class DeviceStatus extends React.Component {
 
     constructor(props) {

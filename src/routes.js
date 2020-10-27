@@ -17,6 +17,7 @@
 */
 import HomePage from "./views/Pages/HomePage/";
 import Profile from "./views/Pages/ProfilePage";
+import DataVisualizer from "./views/Pages/UserDataVisualizerPage";
 import RegisterUser from "./views/Pages/UserRegistrationPage/";
 import DeviceManager from "./views/Pages/DeviceManagementPage";
 import CreateLocation from "./views/Pages/LocationCreationPage";
@@ -39,6 +40,14 @@ let routes = [
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
+    layout: "/admin",
+    exposed: false
+  },
+  {
+    path: "/data-visualizer",
+    name: "Data Visualizer",
+    icon: "fas fa-chart-line text-yellow",
+    component: DataVisualizer,
     layout: "/admin",
     exposed: false
   },

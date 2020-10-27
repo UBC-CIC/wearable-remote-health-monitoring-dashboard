@@ -17,7 +17,6 @@
 */
 import React from "react";
 import {connect} from "react-redux";
-import "./ProfilePage.css";
 // reactstrap components
 import {
   Button,
@@ -165,10 +164,12 @@ class Profile extends React.Component {
     });
   };
 
-  // handles redirect to device page
-  switchToDevicePage = () => {
-  /*  const {history} = this.props;
-    history.push("/admin/manage-devices");*/
+  // handles redirect to data visualizer page
+  switchToDataVisualizerPage = () => {
+    const {history} = this.props;
+    const {id} = this.state;
+    let path = "/admin/data-visualizer/".concat(id);
+    history.push(path);
   };
 
   render() {
@@ -216,10 +217,10 @@ class Profile extends React.Component {
                             className="mr-4"
                             color="info"
                             href=""
-                            onClick={this.switchToDevicePage}
+                            onClick={this.switchToDataVisualizerPage}
                             size="sm"
                         >
-                          Heart Rate
+                          View Data
                         </Button>
                         <Button
                             className="float-right"
@@ -246,8 +247,9 @@ class Profile extends React.Component {
                             <div>
                               <span
                                   className="heading">{(originalProfile.device) ?
-                                  <span><HeartRate deviceID={originalProfile.device.id} /> BPM</span>  : "N/A"}</span>
-                              <span className="description">Heart Rate</span>
+                                  <HeartRate deviceID={originalProfile.device.id} />  : "N/A"}
+                              </span>
+                              <span className="description">Heart Rate (BPM)</span>
                             </div>
                           </div>
                         </div>
@@ -279,12 +281,17 @@ class Profile extends React.Component {
                         </div>
                         <div className="h5 mt-4">
                           {(originalProfile.device)?
+                              (originalProfile.device.deviceStatus === "Location_Anomaly" ||
+                                  originalProfile.device.deviceStatus === "HeartRate_Anomaly" ||
+                                  originalProfile.device.deviceStatus === "Inactive"
+                              )?
+                                  <i className="fas fa-exclamation-triangle mr-2" style={{"color": "orange"}}/> :
                               <i className="ni ni-check-bold mr-2" style={{"color": "green"}}/>
                               :
                               <i className="fas fa-times mr-2"  style={{"color": "red"}}/>
                           }
                           {(originalProfile.device)?
-                              <span>Device #{originalProfile.device.id} paired and {originalProfile.device.status}</span>
+                              <span>Device paired with status: {originalProfile.device.deviceStatus}</span>
                               :
                               <span>No device paired</span>}
                         </div>
@@ -584,7 +591,6 @@ const mapStateToProps = (state) => {
   return {
     users: state.users,
     devices: state.devices,
-    isLoading: state.applicationStatus.startupLoading,
   };
 };
 

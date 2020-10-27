@@ -1,7 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 
-
+/*
+* Description: Displays real-time heart rate data
+* Required Input: device ID
+* */
 class HeartRate extends React.Component {
 
     constructor(props) {

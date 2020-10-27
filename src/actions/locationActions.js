@@ -42,7 +42,6 @@ export const addNewLocation = (payload) => {
     return (dispatch) => {
         dispatch({type: "ADD_NEW_LOCATION_REQUEST", payload: payload});
         API.graphql(graphqlOperation(createLocation, {input: payload})).then((response) => {
-            console.log(response);
             dispatch(addNewLocationSuccess());
         }).catch((err) => {
             console.log("Error adding new location: ", err);
@@ -74,7 +73,6 @@ export const deleteLocationRequest = (payload) => {
     return (dispatch) => {
         dispatch({type: "DELETE_LOCATION_REQUEST", payload: payload});
         API.graphql(graphqlOperation(deleteLocation, {input: payload})).then((response) => {
-            console.log(response);
             dispatch(deleteLocationSuccess());
         }).catch((err) => {
             console.log("Error deleting location: ", err);
