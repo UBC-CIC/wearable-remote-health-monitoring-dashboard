@@ -17,7 +17,7 @@
 */
 import React from "react";
 import {connect} from "react-redux";
-
+import "./ProfilePage.css";
 // reactstrap components
 import {
   Button,
@@ -35,6 +35,8 @@ import {
 import UserHeader from "../../../components/Headers/UserHeader.js";
 import DeleteUserModal from "../../../components/UserProfile/DeleteUserModal/DeleteUserModal";
 import ProfilePhotoModal from "../../../components/UserProfile/ProfilePhotoModal/ProfilePhotoModal";
+import HeartRate from "../../../components/RealTimeData/HeartRate/HeartRate";
+import MapModal from "../../../components/RealTimeData/MapModal/MapModal";
 // actions
 import {updateUserInformation, updateUserInformationLocally} from "../../../actions/userActions";
 
@@ -58,7 +60,6 @@ class Profile extends React.Component {
         stateProvince: userProfile.address.stateProvince,
         country: userProfile.address.country,
         postalZip: userProfile.address.postalZip,
-        heartRate: 0,
         additionalNotes: userProfile.additionalNotes,
         emergencyContacts: [],
       originalProfile: userProfile,
@@ -67,6 +68,7 @@ class Profile extends React.Component {
       profileInfoEdited: false,
       deleteModalShow: false,
       profilePhotoModalShow: false,
+      mapModalShow: false,
     }
   }
 
@@ -96,6 +98,8 @@ class Profile extends React.Component {
     const {users} = this.props;
     return users.find(user => user.id === id);
   }
+
+
 
   // Toggles profile edit mode on/off when "Edit/Save" button clicked. If changes were made, transmit them
   toggleEdit = (e) => {
@@ -154,16 +158,23 @@ class Profile extends React.Component {
     });
   };
 
+  // Triggers the opening/closing of the mapModal
+  setMapModalShow = (bool) => {
+    this.setState({
+      mapModalShow: bool,
+    });
+  };
+
   // handles redirect to device page
   switchToDevicePage = () => {
-    const {history} = this.props;
-    history.push("/admin/manage-devices");
+  /*  const {history} = this.props;
+    history.push("/admin/manage-devices");*/
   };
 
   render() {
     const { originalProfile, id, firstName, lastName, age, facility, phoneNumber, email,
-      streetAddress, city, stateProvince, country, postalZip, heartRate, additionalNotes, profilePhoto,
-      editMode, deleteModalShow, profilePhotoModalShow } = this.state;
+      streetAddress, city, stateProvince, country, postalZip, additionalNotes, profilePhoto,
+      editMode, deleteModalShow, profilePhotoModalShow, mapModalShow } = this.state;
       return (
           <div>
             <UserHeader userName={firstName + " " + lastName}/>
@@ -208,7 +219,7 @@ class Profile extends React.Component {
                             onClick={this.switchToDevicePage}
                             size="sm"
                         >
-                          Device Options
+                          Heart Rate
                         </Button>
                         <Button
                             className="float-right"
@@ -226,12 +237,16 @@ class Profile extends React.Component {
                         <div className="col">
                           <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                             <div>
-                              <span className="heading">N/A</span>
+                              <span className="heading">{(originalProfile.device)?
+                                  (originalProfile.device.geofence)? originalProfile.device.geofence.locationName : "N/A"
+                              :
+                              "N/A"}</span>
                               <span className="description">Location</span>
                             </div>
                             <div>
                               <span
-                                  className="heading">{(heartRate || heartRate === 0) ? heartRate + " BPM" : "N/A"}</span>
+                                  className="heading">{(originalProfile.device) ?
+                                  <span><HeartRate deviceID={originalProfile.device.id} /> BPM</span>  : "N/A"}</span>
                               <span className="description">Heart Rate</span>
                             </div>
                           </div>
@@ -250,7 +265,17 @@ class Profile extends React.Component {
                           Last Known Location
                         </div>
                         <div>
-                          Unknown
+                          {(originalProfile.device)?
+                              <Button
+                              size={"sm"}
+                              onClick={() => this.setMapModalShow(true)}
+                          >
+                            Locate User
+                          </Button> : "Location Data N/A. Please pair a device."}
+                          <MapModal show={mapModalShow}
+                                    deviceID={(originalProfile.device)? originalProfile.device.id :  null}
+                                    onHide={() => this.setMapModalShow(false)}
+                          />
                         </div>
                         <div className="h5 mt-4">
                           {(originalProfile.device)?
@@ -558,6 +583,7 @@ class Profile extends React.Component {
 const mapStateToProps = (state) => {
   return {
     users: state.users,
+    devices: state.devices,
     isLoading: state.applicationStatus.startupLoading,
   };
 };

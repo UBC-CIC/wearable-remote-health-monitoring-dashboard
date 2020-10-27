@@ -94,7 +94,7 @@ export const deleteLocationFailure = (error) => {
 // Respond to success condition
 export const deleteLocationSuccess = () => {
     return (dispatch) => {
-        dispatch({ type: "DELETE_LOCATION_SUCCES"});
+        dispatch({ type: "DELETE_LOCATION_SUCCESS"});
         dispatch(enqueueAppNotification({type: "info", message: "Location deleted successfully!"}));
     }
 }

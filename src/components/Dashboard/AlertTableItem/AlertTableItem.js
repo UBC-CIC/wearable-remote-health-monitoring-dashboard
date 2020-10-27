@@ -1,8 +1,10 @@
 import * as React from "react";
-import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
+import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
 import {connect} from "react-redux";
 import {deleteAlertRequest, clearDeviceStatus} from "../../../actions/alertActions.js"
 import moment from "moment";
+import LocationModal from "./LocationModal/LocationModal";
+import "./AlertTableItem.css";
 
 
 class AlertTableItem extends React.Component{
@@ -11,6 +13,7 @@ class AlertTableItem extends React.Component{
         super(props);
         this.state = {
             user: {},
+            locationModalShow: false,
         }
     }
 
@@ -27,6 +30,14 @@ class AlertTableItem extends React.Component{
             return user.id === alert.userID;
         });
     }
+
+    // Triggers the opening/closing of the locationModal
+    setLocationModalShow = (bool) => {
+        this.setState({
+            locationModalShow: bool,
+        });
+    };
+
 
     // Delete Alert
     onResolve = (e) => {
@@ -45,7 +56,7 @@ class AlertTableItem extends React.Component{
 
     render() {
      const {alert} = this.props;
-     const {user} = this.state;
+     const {user, locationModalShow} = this.state;
      const time = alert.createdAt;
         return(
             <tr>
@@ -57,7 +68,12 @@ class AlertTableItem extends React.Component{
                 </td>
                 <td>{alert.type}</td>
                 <td>{alert.description}</td>
-                <td>{(alert.location)? "N/A" : "Unknown"}</td>
+                <td>{(alert.location)? <button className={"locationBtn"} onClick={() => this.setLocationModalShow(true)}>View</button>
+                    :
+                    "Unknown"}
+                    <LocationModal show={locationModalShow} location={(alert.location)? alert.location : null}
+                              onHide={() => this.setLocationModalShow(false)} />
+                </td>
                 <td className="text-right">
                     <UncontrolledDropdown>
                         <DropdownToggle
