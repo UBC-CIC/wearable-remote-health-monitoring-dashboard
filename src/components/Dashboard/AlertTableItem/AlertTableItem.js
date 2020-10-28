@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 import {deleteAlertRequest, clearDeviceStatus} from "../../../actions/alertActions.js"
 import moment from "moment";
 import LocationModal from "./LocationModal/LocationModal";
-import LocationModalTwo from "./LocationModal/LocationModal2";
 import "./AlertTableItem.css";
 
 
@@ -74,7 +73,7 @@ class AlertTableItem extends React.Component{
                     "Unknown"}
                     {/*<LocationModal show={locationModalShow} location={(alert.location)? alert.location : null}
                               onHide={() => this.setLocationModalShow(false)} />*/}
-                    <LocationModalTwo show={locationModalShow} location={(alert.location)? alert.location : null}
+                    <LocationModal show={locationModalShow} location={(alert.location)? alert.location : null}
                                    onHide={() => this.setLocationModalShow(false)} />
                 </td>
                 <td className="text-right">

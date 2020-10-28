@@ -266,7 +266,6 @@ export const subscribeDeviceUpdates = () => {
         try {
             API.graphql(graphqlOperation(onUpdateDevice)).subscribe({
                 next: device => {
-                    console.log("Updated device: ", device.value.data.onUpdateDevice);
                     dispatch({type: "DEVICE_UPDATED", payload: device.value.data.onUpdateDevice})
                 },
                 error: err => {

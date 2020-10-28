@@ -7,7 +7,6 @@ import {
 } from "reactstrap";
 import DeleteLocationModal from "../DeleteLocationModal/DeleteLocationModal";
 import LocationMap from "./LocationMap/LocationMap";
-import LocationMapTwo from "./LocationMap/LocationMap2";
 import {v4 as uuidv4} from "uuid";
 import "./LocationTableItem.css";
 
