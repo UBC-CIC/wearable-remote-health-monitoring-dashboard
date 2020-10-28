@@ -16,40 +16,20 @@
 
 */
 import React from "react";
-import CreateRoomModal from "../RoomManagement/CreateRoomModal/CreateRoomModal";
-
-
 
 // reactstrap components
-import { Button, Container, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
-class RoomManagementHeader extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            createRoomModalShow: false,
-        }
-    }
-
-    // Triggers the opening/closing of the createRoomModal
-    setCreateRoomModalShow = (bool) => {
-        this.setState({
-            createRoomModalShow: bool,
-        });
-    };
-
-
+class DataVisualizerHeader extends React.Component {
   render() {
-      const {createRoomModalShow} = this.state;
     return (
-      <div>
+      <>
         <div
           className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
           style={{
             minHeight: "600px",
             backgroundImage:
-              "url(" + require("../../assets/img/theme/floor-plan.jpg") + ")",
+              "url(" + require("../../assets/img/theme/data.png") + ")",
             backgroundSize: "cover",
             backgroundPosition: "center top"
           }}
@@ -60,22 +40,14 @@ class RoomManagementHeader extends React.Component {
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="12" md="12">
-                <h1 className="display-2 text-white">Room Management Console</h1>
-                  <Button
-                      color="info"
-                      href="#"
-                      onClick={() => this.setCreateRoomModalShow(true)}
-                  >
-                      Add a Room
-                  </Button>
+                <h1 className="display-2 text-white">Data Visualizer</h1>
               </Col>
             </Row>
           </Container>
         </div>
-          <CreateRoomModal show={createRoomModalShow} onHide={() => this.setCreateRoomModalShow(false)}  />
-      </div>
+      </>
     );
   }
 }
 
-export default RoomManagementHeader;
+export default DataVisualizerHeader;

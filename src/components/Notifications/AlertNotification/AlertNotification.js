@@ -18,7 +18,7 @@ class AlertNotification extends React.Component{
 
     render() {
         const {alert, user} = this.props;
-        const time = alert.createdAt;
+        const time = alert.createdAt.slice(0, -1);
 
         return(
             <div className={"py-1"}>

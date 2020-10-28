@@ -33,6 +33,8 @@ import {
   Container,
   Media, UncontrolledTooltip
 } from "reactstrap";
+import { IconButton } from '@material-ui/core';
+
 
 class AdminNavbar extends React.Component {
 
@@ -67,12 +69,11 @@ class AdminNavbar extends React.Component {
       <div>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
           <Container fluid>
-            <Link
+            <div
               className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-              to="/"
             >
               {this.props.brandText}
-            </Link>
+            </div>
 
             <div className="navbar-search navbar-search-dark text-white form-inline mr-3 d-none d-md-flex ml-lg-auto">
                {(alertsConnected)?
@@ -88,14 +89,15 @@ class AdminNavbar extends React.Component {
               </UncontrolledTooltip>
             </div>
             <div className={"h2 text-white form-inline d-none d-md-flex ml-lg-auto"}>
-              <a href=""
-                 id={"helpModal"}
-                 onClick={(e) => {
-                   e.preventDefault();
-                   this.setTutorialModalShow(true);
-                 }}>
+              <IconButton aria-label={"help"}
+                          id={"helpModal"}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            this.setTutorialModalShow(true);
+                          }}
+              >
                 <i className={"fas fa-question-circle"} style={{color: "white"}} />
-              </a>
+              </IconButton>
               <UncontrolledTooltip
                   delay={0}
                   target={"helpModal"}

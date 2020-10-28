@@ -57,7 +57,7 @@ class AlertTableItem extends React.Component{
     render() {
      const {alert} = this.props;
      const {user, locationModalShow} = this.state;
-     const time = alert.createdAt;
+     const time = alert.createdAt.slice(0, -1);
         return(
             <tr>
                 <th scope="row">
@@ -71,8 +71,6 @@ class AlertTableItem extends React.Component{
                 <td>{(alert.location)? <button className={"locationBtn"} onClick={() => this.setLocationModalShow(true)}>View</button>
                     :
                     "Unknown"}
-                    {/*<LocationModal show={locationModalShow} location={(alert.location)? alert.location : null}
-                              onHide={() => this.setLocationModalShow(false)} />*/}
                     <LocationModal show={locationModalShow} location={(alert.location)? alert.location : null}
                                    onHide={() => this.setLocationModalShow(false)} />
                 </td>
