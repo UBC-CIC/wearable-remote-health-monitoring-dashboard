@@ -16,7 +16,6 @@
 
 */
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import LogoutModal from "../Auth/LogoutModal/LogoutModal";
 import TutorialModal from "../Tutorial/TutorialModal/TutorialModal";
