@@ -99,7 +99,6 @@ class CreateLocation extends React.Component {
         this.setState({
             boundary: points,
         });
-        console.log("updatePolygon");
     }
 
 

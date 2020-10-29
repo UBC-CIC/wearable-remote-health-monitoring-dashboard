@@ -1,23 +1,33 @@
 import React from "react";
 import {connect} from "react-redux";
-import { API } from 'aws-amplify';
-import {Card, Container, CardHeader, CardBody, Col} from "reactstrap";
+import {Card, Container, CardBody} from "reactstrap";
 import DataVisualizerHeader from "../../../components/Headers/DataVisualizerHeader";
-import {listDatas} from "../../../graphql/queries";
 import LineGraph from "../../../components/UserDataVisualizer/LineGraph/LineGraph";
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { withStyles } from '@material-ui/core/styles';
+import { retrieveUserDataService } from "../../../services/userDataFetcher/userDataFetcher.js";
+
+const useStyles = theme => ({
+    root: {
+        width: "100%",
+    },
+    bar: {
+        borderRadius: 4,
+        height: "10px",
+        filter: "drop-shadow(0 0 2px #4444dd)",
+    }
+});
 
 
-
-class DataVisualizer extends React.Component {
+class DataVisualizerComponent extends React.Component {
 
     _isMounted = false;
+
 
     constructor(props) {
         super(props);
         const {location } = this.props;
         let userID = location.pathname.replace(/.admin.data-visualizer./, "");
-        console.log("Data userID found :", userID);
         let userProfile = this.findUser(userID);
         this.state = {
             userID: userProfile.id,
@@ -26,7 +36,7 @@ class DataVisualizer extends React.Component {
             hasData: false,
             rawData: null,
             processedData: null,
-            isLoading: false,
+            isLoading: true,
             progress: 10,
         }
     }
@@ -39,14 +49,10 @@ class DataVisualizer extends React.Component {
     async componentDidMount() {
         const {userID} = this.state;
         this._isMounted = true;
-        if (this._isMounted && userID) {
-            this.setState({
-                isLoading: true,
-            })
-            await this.fetchUserData(userID);
-            this.setState({
-                isLoading: false,
-            })
+        try {
+           await this.fetchUserData(userID);
+        } catch (err) {
+            console.log("User data processing function call error: ", err);
         }
     }
 
@@ -58,29 +64,29 @@ class DataVisualizer extends React.Component {
         if (!this._isMounted) {
             return;
         }
+        const {dataType} = this.state;
         try {
-            let filter = {
-                 userID: {eq: userID},
-                 observationType: {eq: "heart_rate"}
-            }
 
-            API.graphql({query: listDatas, variables: {filter: filter}}).then((response) => {
-                const data = response.data.listDatas.items;
-                if (data.length !== 0) {
-                    this.setState({
-                        hasData: true
-                    })
-                } else {
-                    return;
-                }
+            let data = await retrieveUserDataService(userID, dataType);
+            if (!data) {
+                console.log("Error: Data could not be retrieved for this user.");
+                return;
+            }
+            if ((data.length !== 0) && this._isMounted) {
                 this.setState({
+                    hasData: true,
                     rawData: data,
                 })
-                console.log(data);
-                this.processData();
-            }).catch((err) => {
-                console.log("Error fetching user data: ", err);
-            })
+            } else {
+                if (this._isMounted) {
+                    this.setState({
+                        isLoading: false,
+                    })
+                }
+                return;
+            }
+
+            this.processData();
 
         } catch (err) {
             console.log("Sorry, an error occurred during data retrieval: ", err);
@@ -103,27 +109,31 @@ class DataVisualizer extends React.Component {
             rawData.forEach(record => {
                 data.push({x: new Date(record.createdAt.slice(0, -1)), y: parseInt(record.observationValue) });
                 progress += progressStep;
-                this.setState({
-                    progress: progress,
-                })
+                if (this._isMounted) {
+                    this.setState({
+                        progress: progress,
+                    })
+                }
             })
         }
         let processedData = [
             {
                 id: "heart_rate",
-                color: "hsl(0,100%,25%)",
+                color: "hsl(12,100%,46%)",
                 data: data,
             }
         ]
-        console.log("Proccessed Data: ", processedData);
-        this.setState({
-            processedData: processedData,
-            isLoading: false,
-        })
+        if (this._isMounted) {
+            this.setState({
+                processedData: processedData,
+                isLoading: false,
+            })
+        }
     }
 
     render() {
         const {processedData, hasData, isLoading, progress, dataType} = this.state;
+        const { classes } = this.props;
         return (
             <div>
                 {/*Header*/}
@@ -131,20 +141,33 @@ class DataVisualizer extends React.Component {
                 <DataVisualizerHeader />
                 </div>
                 {/*Page Content*/}
-                <div>
+                <Container className="mt--7" fluid>
                     <div className={"row"}>
                         <div className={"col d-flex justify-content-center"}>
                             <Card className="bg-secondary shadow">
                                 <CardBody>
                                     {(hasData && !isLoading)?
-                                        <LineGraph data={processedData} />
+                                        <div>
+                                            <div className={"row"}>
+                                                <div className={"col d-flex justify-content-center"}>
+                                                    <h1 className={"display-4"}>Heart Rate Over The Past 1 Hour</h1>
+                                                </div>
+                                            </div>
+                                            <div className={"row"}>
+                                                <div className={"col d-flex justify-content-center align-items-center"}>
+                                                    <LineGraph data={processedData} />
+                                                </div>
+                                            </div>
+                                        </div>
                                     :
                                         null
                                     }
                                     {(isLoading)?
                                         <div className={"row"} style={{width: "800px", height: "400px"}}>
                                             <div className={"col d-flex justify-content-center align-items-center"}>
-                                                <LinearProgress variant="determinate" value={progress} />
+                                                <div className={classes.root}>
+                                                    <LinearProgress variant="determinate" className={classes.bar} value={progress} />
+                                                </div>
                                             </div>
                                         </div>
                                         :
@@ -165,7 +188,7 @@ class DataVisualizer extends React.Component {
                             </Card>
                         </div>
                     </div>
-                </div>
+                </Container>
 
             </div>
         );
@@ -176,9 +199,10 @@ const mapStateToProps = (state) => {
     return {
         users: state.users,
         devices: state.devices,
-        isLoading: state.applicationStatus.startupLoading,
     };
 };
+
+const DataVisualizer = withStyles(useStyles())(DataVisualizerComponent);
 
 export default connect(mapStateToProps) (DataVisualizer);
 

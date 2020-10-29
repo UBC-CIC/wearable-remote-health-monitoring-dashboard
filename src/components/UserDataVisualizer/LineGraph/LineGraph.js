@@ -1,5 +1,6 @@
 import React from "react";
 import { ResponsiveLine } from '@nivo/line'
+import "./LineGraph.css";
 
 
 
@@ -7,41 +8,21 @@ class LineGraph extends React.Component {
 
     render() {
         const {data} = this.props;
-        let dummyData =[
 
-            {
-                id: "heart_rate",
-                color: "hsl(20, 70%, 50%)",
-                data: [
-                    {
-                        x: new Date(2020,10,29,8,10,10),
-                        y: 66
-                    },
-                    {
-                        x: new Date(2020,10,29,8,20,10),
-                        y: 77
-                    },
-                    {
-                        x: new Date(2020,10,29,8,30,10),
-                        y: 89
-                    }
-                ]
-            }
-        ]
         return(
-            <div style={{width: "800px", height: "400px"}}>
+            <div className={"graphWrapper"}>
                 <ResponsiveLine
                     data={data}
+                    colors={d => d.color}
                     margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
                     xScale={{ type: "time", precision: 'minute' }}
                     xFormat="time:%H:%M %p"
                     yScale={{ type: 'linear', min: 'auto', max: 'auto', stacked: false, reverse: false }}
-                    /*yFormat=" >-.2f"*/
                     axisTop={null}
                     axisRight={null}
                     axisBottom={{
                         orient: 'bottom',
-                        /*tickValues: "every 10 minutes",*/
+                        tickValues: "every 15 minutes",
                         tickSize: 5,
                         tickPadding: 5,
                         tickRotation: 0,
