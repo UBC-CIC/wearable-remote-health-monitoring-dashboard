@@ -107,7 +107,7 @@ class DataVisualizerComponent extends React.Component {
         let data = [];
         if (rawData) {
             rawData.forEach(record => {
-                data.push({x: new Date(record.createdAt.slice(0, -1)), y: parseInt(record.observationValue) });
+                data.push({x: new Date(record.createdAt), y: parseInt(record.observationValue) });
                 progress += progressStep;
                 if (this._isMounted) {
                     this.setState({
@@ -150,7 +150,7 @@ class DataVisualizerComponent extends React.Component {
                                         <div>
                                             <div className={"row"}>
                                                 <div className={"col d-flex justify-content-center"}>
-                                                    <h1 className={"display-4"}>Heart Rate Over The Past 1 Hour</h1>
+                                                    <h1 className={"display-4"}>Heart Rate Over The Past Hour</h1>
                                                 </div>
                                             </div>
                                             <div className={"row"}>
@@ -163,10 +163,17 @@ class DataVisualizerComponent extends React.Component {
                                         null
                                     }
                                     {(isLoading)?
-                                        <div className={"row"} style={{width: "800px", height: "400px"}}>
-                                            <div className={"col d-flex justify-content-center align-items-center"}>
-                                                <div className={classes.root}>
-                                                    <LinearProgress variant="determinate" className={classes.bar} value={progress} />
+                                        <div>
+                                            <div className={"row"}>
+                                                <div className={"col d-flex justify-content-center align-items-center"}>
+                                                    <h1>Loading data...</h1>
+                                                </div>
+                                            </div>
+                                            <div className={"row"} style={{width: "800px", height: "400px"}}>
+                                                <div className={"col d-flex justify-content-center align-items-center"}>
+                                                    <div className={classes.root}>
+                                                        <LinearProgress variant="determinate" className={classes.bar} value={progress} />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -57,7 +57,7 @@ class AlertTableItem extends React.Component{
     render() {
      const {alert} = this.props;
      const {user, locationModalShow} = this.state;
-     const time = alert.createdAt.slice(0, -1);
+     const time = alert.createdAt;
         return(
             <tr>
                 <th scope="row">
