@@ -34,4 +34,4 @@ To deploy this solution into your AWS Account please follow our [Deployment Guid
 * Nov 13, 2020: Initial release.
 
 # License
-This project is distributed under the  [MIT](https://github.com/UBC-CIC/Mobile_Health_Monitoring_Platform/blob/master/LICENSE.md) 
+This project is distributed under  [MIT](https://github.com/UBC-CIC/Mobile_Health_Monitoring_Platform/blob/master/LICENSE.md) 
