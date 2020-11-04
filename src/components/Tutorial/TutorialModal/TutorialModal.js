@@ -68,9 +68,6 @@ class TutorialModal extends React.Component{
                                     <li>
                                         To view/edit a user's profile, please select "View Profile" in the actions tab in the User Management Console table.
                                     </li>
-                                    <li>
-                                        To edit a user's profile, please click edit profile.
-                                    </li>
                                 </ol>
                             </div>
                         </div>
