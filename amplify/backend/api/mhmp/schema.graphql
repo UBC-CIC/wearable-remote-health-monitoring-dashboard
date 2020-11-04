@@ -71,6 +71,7 @@ type Alert @model (subscriptions: { level: public })
 
 type Data @model
 @key(name: "byUserID", fields: ["userID", "createdAt"])
+@key(name: "byDeviceID", fields: ["deviceID", "createdAt"])
 @key(name: "byUserIDAndObservationType", fields: ["userID", "observationType", "createdAt"])
 @auth(rules: [
   { allow: private, provider: iam }, 

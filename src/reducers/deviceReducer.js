@@ -89,6 +89,9 @@ const deviceReducer = (devices = initialDevices, action) => {
                 deviceStatus: action.payload.deviceStatus, deviceOS: action.payload.deviceOS,
                 osVersion: action.payload.osVersion, geofence: null, data: null}];
         }
+        case "NEW_DEVICE_FOUND": {
+            return [...newDeviceList, action.payload];
+        }
         case "ASSOCIATE_NEW_DEVICE": {
             return pairDeviceHelper(newDeviceList, action.payload);
         }
@@ -97,9 +100,6 @@ const deviceReducer = (devices = initialDevices, action) => {
         }
         case "DELETE_DEVICE": {
             return deleteDeviceHelper(newDeviceList, action.payload);
-        }
-        case "UNPAIR_DEVICE": {
-            return newDeviceList;
         }
         case "ASSIGN_LOCATION": {
             return assignGeofenceHelper(newDeviceList, action.payload);

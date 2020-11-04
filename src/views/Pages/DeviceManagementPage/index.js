@@ -31,6 +31,7 @@ import DeviceManagementHeader from "../../../components/Headers/DeviceManagement
 import {connect} from "react-redux";
 import DeviceTableItem from "../../../components/DeviceManagement/DeviceTableItem/DeviceTableItem";
 
+
 class DeviceManager extends React.Component {
 
   constructor(props) {
@@ -68,8 +69,6 @@ class DeviceManager extends React.Component {
   }
 
 
-
-
   render() {
     const {devicesList} = this.state;
     // map our list of devices to the device table
@@ -92,7 +91,11 @@ class DeviceManager extends React.Component {
             <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow">
                 <CardHeader className="border-0">
-                  <h3 className="mb-0">All Devices</h3>
+                  <Row className="align-items-center">
+                    <Col xs="8">
+                      <h3 className="mb-0">All Devices</h3>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">

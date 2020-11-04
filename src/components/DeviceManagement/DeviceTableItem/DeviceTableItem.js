@@ -8,6 +8,7 @@ import {
 import UnpairDeviceModal from "../UnpairDeviceModal/UnpairDeviceModal";
 import PairDeviceModal from "../PairDeviceModal/PairDeviceModal";
 import DeleteDeviceModal from "../DeleteDeviceModal/DeleteDeviceModal";
+import DeviceStatus from "../../RealTimeData/DeviceStatus/DeviceStatus";
 
 
 class DeviceTableItem extends React.Component {
@@ -62,7 +63,7 @@ class DeviceTableItem extends React.Component {
                     {device.id}
                 </th>
                 <td>{(device.deviceOS)? device.deviceOS : "Unknown"}</td>
-                <td>{(device.deviceStatus === null)? "N/A" : device.deviceStatus}</td>
+                <td>{(device.deviceStatus === null)? "N/A" : <DeviceStatus deviceID={device.id}/> }</td>
                 <td>{(associatedUserID !== "NONE")? associatedUserName : "NONE"}</td>
                 <td className="text-right">
                     <UncontrolledDropdown>

@@ -12,19 +12,21 @@ import {fetchDevices} from "./actions/deviceActions";
 import {fetchLocations} from "./actions/locationActions";
 import {fetchAlerts} from "./actions/alertActions";
 import {subscribeAlerts} from "./actions/alertActions";
-import {subscribeDeviceUpdates} from "./actions/deviceActions";
+import {subscribeDeviceUpdates, subscribeDeviceRegistration} from "./actions/deviceActions";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    const {fetchUsers, fetchDevices, fetchLocations, fetchAlerts, subscribeAlerts, subscribeDeviceUpdates} = this.props;
+    const {fetchUsers, fetchDevices, fetchLocations, fetchAlerts,
+        subscribeAlerts, subscribeDeviceUpdates, subscribeDeviceRegistration} = this.props;
     fetchUsers();
     fetchDevices();
     fetchLocations();
     fetchAlerts();
     subscribeAlerts();
     subscribeDeviceUpdates();
+    subscribeDeviceRegistration();
   }
 
   render() {
@@ -60,6 +62,7 @@ const mapDispatchToProps = {
     fetchAlerts,
     subscribeAlerts,
     subscribeDeviceUpdates,
+    subscribeDeviceRegistration
 };
 
 export default withAuthenticator(connect(mapStateToProps, mapDispatchToProps)(App));

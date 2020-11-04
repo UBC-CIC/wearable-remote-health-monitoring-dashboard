@@ -2,7 +2,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { listDevices } from '../graphql/queries';
 import {createDevice, updateDevice, updateUser, deleteDevice } from '../graphql/mutations';
 import {enqueueAppNotification} from "./notificationActions";
-import { onUpdateDevice } from "../graphql/subscriptions";
+import { onUpdateDevice, onCreateDevice } from "../graphql/subscriptions";
 
 
 
@@ -277,5 +277,25 @@ export const subscribeDeviceUpdates = () => {
         }
 
     }
+}
 
+// ================================---SUBSCRIBE TO REAL TIME DEVICE REGISTRATIONS---===========================
+
+// Subscribe to new device registrations
+export const subscribeDeviceRegistration = () => {
+    return (dispatch) => {
+        try {
+            API.graphql(graphqlOperation(onCreateDevice)).subscribe({
+                next: device => {
+                    dispatch({type: "NEW_DEVICE_FOUND", payload: device.value.data.onCreateDevice})
+                },
+                error: err => {
+                    console.log("Device registration subscription error: ", err);
+                }
+            })
+        } catch (err) {
+            console.log("Device registration subscription error: ", err);
+        }
+
+    }
 }

@@ -46,7 +46,11 @@ class DeviceStatus extends React.Component {
         let statusClass = "bg-success";
         switch (deviceStatus) {
             case "Inactive": {
-                statusClass = "bg-warning"
+                statusClass = "bg-yellow"
+                break;
+            }
+            case "Ready": {
+                statusClass = "bg-yellow"
                 break;
             }
             case "Location_Anomaly": {
@@ -58,7 +62,7 @@ class DeviceStatus extends React.Component {
                 break;
             }
             case "Low_Battery": {
-                statusClass = "bg-important"
+                statusClass = "bg-blue"
                 break;
             }
             default:

@@ -108,9 +108,9 @@ export const listUsers = /* GraphQL */ `
           deviceStatus
           lastHeartRate
           geofence {
-            id
-            locationName
-        }
+          id
+          locationName
+          }
           createdAt
           updatedAt
         }
