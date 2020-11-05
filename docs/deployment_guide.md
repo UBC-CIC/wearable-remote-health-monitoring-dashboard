@@ -145,7 +145,7 @@ We will create three different Lambda functions. One will process the data in ou
 
 ### C. Creating an Anomaly Detection Lambda Function
 
-1. Repeat steps **1-6, 8-9, and 11-14 of Part 3.2 B**. 
+1. Repeat steps **1-6, 8-9, and 11-14 of Part 3.2 B above**. 
 2. After finishing step 14 above, add the following environment variables:
 ```javascript
    Key: DATA_TABLE          Value: <Full Data Table Name From Step 13>
@@ -163,3 +163,16 @@ We will create three different Lambda functions. One will process the data in ou
 ---
 
 ### D. Creating a Device Activity Lambda Function
+
+1. Repeat steps **1-6, 8-9, and 11-14 of Part 3.2 B above**. 
+2. After finishing step 14 above, add the following environment variables:
+```javascript
+   Key: DATA_TABLE          Value: <Full Data Table Name From Step 13>
+   Key: DEVICE_TABLE        Value: <Full Device Table Name From Step 13>
+   Key: GRAPHQL_ENDPOINT    Value: <Your AppSync API URL From Step 12>
+   ```
+3. Click **Save**.
+4. From your Lambda function's page, scroll down to the *Function code* section. Select the *Actions tab* and choose **Upload a .zip file**. In the popup, upload the "index.js.zip" from the following folder of the MHMP Project: */backend/Lambdas/MHMP_DeviceStatusRefresh* 
+5. From your Lambda function's page, in the *Designer* section, click the **Add trigger** button. From the dropdown menu, select **EventBridge (CloudWatch Events)**.
+6. Next, under *Rule*, select **Create a new rule**. Enter a *Rule name*. Under *Rule type*, select **Schedule expression**. In the *Schedule expression* field, enter "rate(1 hour)". Select the *Enable trigger* option then click **Add**.
+
