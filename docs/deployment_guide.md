@@ -40,15 +40,25 @@ In this step we will use the Amplify console to deploy and build the front-end a
    ```
 10. Click **Save**.
 
-# Step 2: Deploy the Kinesis Data Streams
+# Step 2: Kinesis Data Stream and Firehose Deployment
 
 
 
-# Step 3: Deploy the Lambdas
+# Step 3: Lambda Functions Deployment
 ## 3.1: Creating the Layer
 When data is sent from a wearable device to the AWS IoT Core, it gets sent through the Kinesis Data Stream which then triggers a Lambda function for data processing. The Layer file contains the dependencies needed for all the Lambda functions. 
 
 📓 **Note**: If you haven’t cloned the repo yet, the following steps require the files to be saved locally in your computer.
 
+1. In the AWS Console, navigate to the AWS Lambda Services page, then select **Layers** under *Additional resources* in the left-hand menu.
 
-1. Navigate to the /backend/LambdaLayers/MHMP_NodeModules_Layer folder
+<img src="./images/deployment/DeploymentGuide-3.1.png"  width="500"/>
+
+2. Click on **Create Layer** and fill out the required fields. Select the "Upload a .zip file" option. Select the "nodejs.zip" file located at the */backend/LambdaLayers/MHMP_NodeModules_Layer* folder of the MHMP project. In the *Compatible runtimes* field, select "Node.js 12.x" and "Node.js 10.x". 
+
+<img src="./images/deployment/DeploymentGuide-3.1.2.png"  width="500"/>
+
+3. Click **Create**.
+
+## 3.2: Creating the Lambda Functions
+
