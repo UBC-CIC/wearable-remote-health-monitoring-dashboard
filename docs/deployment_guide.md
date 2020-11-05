@@ -114,3 +114,6 @@ We will create three different Lambda functions. One will process the data in ou
 
 6. Click **Add**.
 
+7. Next, from your Lambda function's page, in the *Designer* section, click the **Add trigger** button. In the dropdown, select **Kinesis**. Under *Kinesis stream*, select the Kinesis Data Stream that you created in Part 2 of this guide. Expand the *Additional settings* sections. Set *Retry attempts* to 1. Set *Maximum record age* to 21,600 seconds (6 hours). Select the **Enable trigger** option. click **Add**. 
+
+<img src="./images/deployment/DeploymentGuide-3.2.8.png"  width="500"/>
