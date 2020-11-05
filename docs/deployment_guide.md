@@ -63,7 +63,7 @@ When data is sent from a wearable device to the AWS IoT Core, it gets sent throu
 ## 3.2: Creating the Lambda Functions
 We will create three different Lambda functions. One will process the data in our Kinesis Data Stream and check for geofence/location anomalies, one will run every five minutes and check for heart rate anomalies, and another function will run hourly to check the device activity.
 
-### A. Create the Data Processing Lambda Function
+### A. Create a Lambda Role
 
 1. In the AWS Console, naviagte to the IAM Services page.
 2. In the left-hand menu, click **Roles** located under the *Access management* tab.
@@ -80,9 +80,17 @@ We will create three different Lambda functions. One will process the data in ou
 <img src="./images/deployment/DeploymentGuide-3.2.2.png"  width="500"/>
 
 9. In the *Visual editor* tab, click on **Choose a service**, then in the search field, type "DynamoDB" then click the *DynamoDB* option.
-10. Next, in the *Actions* section, under *Manual actions*, select the "All DynamoDB actions" option.
-11. Next, in the *Resources* section, select the *Specific* option.
+10. In the *Actions* section, under *Manual actions*, select the "All DynamoDB actions" option.
+11. In the *Resources* section, select the *Specific* option. Then select the "Any in this account" option for all fields.
 
+<img src="./images/deployment/DeploymentGuide-3.2.3.png"  width="500"/>
+
+12. Click **Review policy**. Select a name for the policy then click **Create Policy**.
+13. Now, in the *Permissions* tab of the role, click **Add inline policy** to add another policy.
+14. In the *Visual editor* tab, click **Choose a Service**, then search for *AppSync*. Click on **AppSync**.
+15. In the *Actions* section, under *Access Level*, select the *List*, and *Read* options. Under the *Write* option, select the *GraphQL* option.
+
+<img src="./images/deployment/DeploymentGuide-3.2.4.png"  width="500"/>
 
 
 7. In the Lambda Services page of the AWS Console, click on the **Create Function** button.
