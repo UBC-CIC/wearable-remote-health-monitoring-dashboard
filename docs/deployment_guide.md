@@ -6,7 +6,8 @@ Before you deploy, you must have the following in place:
 *  [Amplify CLI 4.13.1 or greater installed and configured](https://aws-amplify.github.io/docs/cli-toolchain/quickstart#quickstart) 
 *  Please create a new Google Maps JavaScript API Key by following the instructions here: https://developers.google.com/maps/documentation/javascript/get-api-key
    
-   Then enable the following APIs:
+   Please navigate to your project on the [Google Cloud Platform Console](https://console.cloud.google.com/). Then click on the top left menu button and select **APIs and Services**. Click on the **+ ENABLE APIS AND SERVICES** button at the top of the page. 
+   Then search for and enable the following APIs:
       - Maps Javascript API
       - Places API
 
