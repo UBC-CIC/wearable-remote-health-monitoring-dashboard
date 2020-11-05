@@ -50,15 +50,33 @@ When data is sent from a wearable device to the AWS IoT Core, it gets sent throu
 
 📓 **Note**: If you haven’t cloned the repo yet, the following steps require the files to be saved locally in your computer.
 
-1. In the AWS Console, navigate to the AWS Lambda Services page, then select **Layers** under *Additional resources* in the left-hand menu.
+1. In the AWS Console, navigate to the AWS Lambda Services page, then click **Layers** under *Additional resources* in the left-hand menu.
 
 <img src="./images/deployment/DeploymentGuide-3.1.png"  width="500"/>
 
-2. Click on **Create Layer** and fill out the required fields. Select the "Upload a .zip file" option. Select the "nodejs.zip" file located at the */backend/LambdaLayers/MHMP_NodeModules_Layer* folder of the MHMP project. In the *Compatible runtimes* field, select "Node.js 12.x" and "Node.js 10.x". 
+2. Click on **Create Layer** and fill out the required fields. Select the "Upload a .zip file" option. Upload the "nodejs.zip" file located at the */backend/LambdaLayers/MHMP_NodeModules_Layer* folder of the MHMP project. This zip file contains the node modules that are required for the Lambda functions we will create in the following steps. Finally, in the *Compatible runtimes* field, select "Node.js 12.x" and "Node.js 10.x". 
 
 <img src="./images/deployment/DeploymentGuide-3.1.2.png"  width="500"/>
 
 3. Click **Create**.
 
 ## 3.2: Creating the Lambda Functions
+We will create three different Lambda functions. One will process the data in our Kinesis Data Stream and check for geofence/location anomalies, one will run every five minutes and check for heart rate anomalies, and another function will run hourly to check the device activity.
+
+### A. Create the Data Processing Lambda Function
+
+1. In the AWS Console, naviagte to the IAM Services page.
+2. In the left-hand menu, click **Roles** located under the *Access management* tab.
+3. Click **Create role**.
+4. Under *Select type of trusted entity*, choose **AWS Service**. Under *Choose a use case*, select **Lambda**. Click **Next: Permissions**.
+5. In the Search field, type "AWSLambdaKinesis" then select the **AWSLambdaKinesisExecutionRole** policy option. Click **Next: Tags** then **Next: Review**.
+
+<img src="./images/deployment/DeploymentGuide-3.2.1.png"  width="500"/>
+
+6. Choose a *Role name* and 
+
+7. In the Lambda Services page of the AWS Console, click on the **Create Function** button.
+8. Select the **Author from scratch** option. Choose a Function name. Select *Node.js 12.x* as the Runtime. Expand the *Change default execution role* section. Select  
+
+
 
