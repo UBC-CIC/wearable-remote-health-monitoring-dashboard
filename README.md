@@ -1,14 +1,3 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
-## Setup Instructions
-
-Please create a new Google Maps JavaScript API Key by following the instructions here: https://developers.google.com/maps/documentation/javascript/get-api-key
-
-Then enable the following APIs:
-- Maps Javascript API
-- Places API
-
 # MHMP Web Application
 The Mobile Health Monitoring Platform (MHMP) is a prototype that aims to provide real-time information of patients remotley monitored via WearOS and WatchOS wearable devices.  
 
