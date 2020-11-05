@@ -63,6 +63,8 @@ When data is sent from a wearable device to the AWS IoT Core, it gets sent throu
 ## 3.2: Creating the Lambda Functions
 We will create three different Lambda functions. One will process the data in our Kinesis Data Stream and check for geofence/location anomalies, one will run every five minutes and check for heart rate anomalies, and another function will run hourly to check the device activity.
 
+---
+
 ### A. Create a Lambda Role
 
 1. In the AWS Console, naviagte to the IAM Services page.
@@ -95,6 +97,8 @@ We will create three different Lambda functions. One will process the data in ou
 16. In the *Resources* section, select the **Specific** option, then select the "Any in this account" option for all fields.
 72. Click **Review policy**. Select a name for the policy then click **Create Policy**.
 
+---
+
 ### B. Creating a Data Processing Lambda Function
 
 1. In the Lambda Services page of the AWS Console, click on the **Create Function** button.
@@ -117,3 +121,23 @@ We will create three different Lambda functions. One will process the data in ou
 7. Next, from your Lambda function's page, in the *Designer* section, click the **Add trigger** button. In the dropdown, select **Kinesis**. Under *Kinesis stream*, select the Kinesis Data Stream that you created in Part 2 of this guide. Expand the *Additional settings* sections. Set *Retry attempts* to 1. Set *Maximum record age* to 21,600 seconds (6 hours). Select the **Enable trigger** option. click **Add**. 
 
 <img src="./images/deployment/DeploymentGuide-3.2.8.png"  width="500"/>
+
+8. From your Lambda function's page, scroll down to the *Basic settings* section and select **Edit**.
+9. Increase the *Timeout* from 3 seconds to 1 minute. Click **Save**.
+
+<img src="./images/deployment/DeploymentGuide-3.2.9.png"  width="500"/>
+
+10. From your Lambda function's page, scroll down to thee *Function code* section. Select the *Actions tab* and choose **Upload a .zip file**. In the popup, upload the "index.js.zip" from the following folder of the MHMP Project: */backend/Lambdas/MHMP_DataRecord_Processing* 
+11. In a duplicate browser tab, navigate to the AWS AppSync Service page in the AWS Console. Click on the API with a name starting with "mhmp". 
+12. In the left-hand menu, select **Settings** and take note of the API URL under *API Details*. You will need this URL for the setting the Lambda's enviroment variables in the following steps.
+13. In another duplicate browser tab, navigate to the AWS DynamoDB Service page in the AWS Console. In the left-hand menu, click **Tables**. Take note of the following tables startig with "Alert-", "Data-", "Device-", "Location-", and "User-". You will need the full names of these tables for setting the Lambda's enviroment variables in the following steps.
+11. From your Lambda function's page, scroll down to the *Environment variables* section and click **Manage environment variables**.
+12. Add the following environment variables:
+```javascript
+   Key: DATA_TABLE          Value: <Full Data Table Name From Step 13>
+   Key: DEVICE_TABLE        Value: <Full Device Table Name From Step 13>
+   Key: LOCATION_TABLE      Value: <Full Location Table Name From Step 13>
+   Key: GRAPHQL_ENDPOINT    Value: <Your AppSync API URL From Step 12>
+   ```
+13. Click **Save**.
+
