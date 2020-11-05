@@ -127,17 +127,39 @@ We will create three different Lambda functions. One will process the data in ou
 
 <img src="./images/deployment/DeploymentGuide-3.2.9.png"  width="500"/>
 
-10. From your Lambda function's page, scroll down to thee *Function code* section. Select the *Actions tab* and choose **Upload a .zip file**. In the popup, upload the "index.js.zip" from the following folder of the MHMP Project: */backend/Lambdas/MHMP_DataRecord_Processing* 
+10. From your Lambda function's page, scroll down to the *Function code* section. Select the *Actions tab* and choose **Upload a .zip file**. In the popup, upload the "index.js.zip" from the following folder of the MHMP Project: */backend/Lambdas/MHMP_DataRecord_Processing* 
 11. In a duplicate browser tab, navigate to the AWS AppSync Service page in the AWS Console. Click on the API with a name starting with "mhmp". 
 12. In the left-hand menu, select **Settings** and take note of the API URL under *API Details*. You will need this URL for the setting the Lambda's enviroment variables in the following steps.
 13. In another duplicate browser tab, navigate to the AWS DynamoDB Service page in the AWS Console. In the left-hand menu, click **Tables**. Take note of the following tables startig with "Alert-", "Data-", "Device-", "Location-", and "User-". You will need the full names of these tables for setting the Lambda's enviroment variables in the following steps.
-11. From your Lambda function's page, scroll down to the *Environment variables* section and click **Manage environment variables**.
-12. Add the following environment variables:
+14. From your Lambda function's page, scroll down to the *Environment variables* section and click **Manage environment variables**.
+15. Add the following environment variables:
 ```javascript
    Key: DATA_TABLE          Value: <Full Data Table Name From Step 13>
    Key: DEVICE_TABLE        Value: <Full Device Table Name From Step 13>
    Key: LOCATION_TABLE      Value: <Full Location Table Name From Step 13>
    Key: GRAPHQL_ENDPOINT    Value: <Your AppSync API URL From Step 12>
    ```
-13. Click **Save**.
+16. Click **Save**.
 
+---
+
+### C. Creating an Anomaly Detection Lambda Function
+
+1. Repeat steps **1-6, 8-9, and 11-14 of Part 3.2 B**. 
+2. After finishing step 14 above, add the following environment variables:
+```javascript
+   Key: DATA_TABLE          Value: <Full Data Table Name From Step 13>
+   Key: DEVICE_TABLE        Value: <Full Device Table Name From Step 13>
+   Key: USER_TABLE          Value: <Full User Table Name From Step 13>
+   Key: GRAPHQL_ENDPOINT    Value: <Your AppSync API URL From Step 12>
+   ```
+3. Click **Save**.
+4. From your Lambda function's page, scroll down to the *Function code* section. Select the *Actions tab* and choose **Upload a .zip file**. In the popup, upload the "index.js.zip" from the following folder of the MHMP Project: */backend/Lambdas/MHMP_AnomalyDetectionHelper* 
+5. From your Lambda function's page, in the *Designer* section, click the **Add trigger** button. From the dropdown menu, select **EventBridge (CloudWatch Events)**.
+6. Next, under *Rule*, select **Create a new rule**. Enter a *Rule name*. Under *Rule type*, select **Schedule expression**. In the *Schedule expression* field, enter "rate(5 minutes)". Select the *Enable trigger* option then click **Add**.
+
+<img src="./images/deployment/DeploymentGuide-3.2.10.png"  width="500"/>
+
+---
+
+### D. Creating a Device Activity Lambda Function
