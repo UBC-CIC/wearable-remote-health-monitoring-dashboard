@@ -29,7 +29,7 @@ In this step we will use the Amplify console to deploy and build the front-end a
    ```javascript
    Variable: REACT_APP_AWS_S3_BUCKET        Value: <Name Of The S3 Bucket You Noted Down In The Previous Step>
    Variable: REACT_APP_AWS_S3_REGION        Value: ca-central-1
-   Variable: REACT_APP_GOOGLE_MAPS_API_KEY  Value: <Your Google Maps API Key You Created Earlier>
+   Variable: REACT_APP_GOOGLE_MAPS_API_KEY  Value: <The Google Maps API Key You Created Earlier>
    ```
 10. Click **Save**.
 
