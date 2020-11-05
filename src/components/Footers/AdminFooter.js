@@ -53,7 +53,7 @@ class Footer extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink
-                    href="https://github.com/AamirL1011/lifeguard-demo/blob/master/ATTRIBUTIONS.md"
+                    href="https://github.com/UBC-CIC/Mobile_Health_Monitoring_Platform/blob/master/ATTRIBUTIONS.md"
                     rel="noopener noreferrer"
                     target="_blank"
                 >
@@ -62,7 +62,7 @@ class Footer extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink
-                  href="https://github.com/AamirL1011/lifeguard-demo/blob/master/LICENSE.md"
+                  href="https://github.com/UBC-CIC/Mobile_Health_Monitoring_Platform/blob/master/LICENSE.md"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
