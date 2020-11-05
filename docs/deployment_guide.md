@@ -73,7 +73,17 @@ We will create three different Lambda functions. One will process the data in ou
 
 <img src="./images/deployment/DeploymentGuide-3.2.1.png"  width="500"/>
 
-6. Choose a *Role name* and 
+6. Choose a *Role name* then click **Create role**.
+7. In the *Roles* page, search for your newly created role and click on it.
+8. In the *Permissions* tab, click **Add inline policy**.
+
+<img src="./images/deployment/DeploymentGuide-3.2.2.png"  width="500"/>
+
+9. In the *Visual editor* tab, click on **Choose a service**, then in the search field, type "DynamoDB" then click the *DynamoDB* option.
+10. Next, in the *Actions* section, under *Manual actions*, select the "All DynamoDB actions" option.
+11. Next, in the *Resources* section, select the *Specific* option.
+
+
 
 7. In the Lambda Services page of the AWS Console, click on the **Create Function** button.
 8. Select the **Author from scratch** option. Choose a Function name. Select *Node.js 12.x* as the Runtime. Expand the *Change default execution role* section. Select  
