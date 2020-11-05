@@ -26,9 +26,10 @@ In this step we will use the Amplify console to deploy and build the front-end a
 7. Copy the bucket name Amplify created.  You will need this information for setting the environemnt variables in the next step.
 8. In the left-hand menu under *App Settings*, click on **Environment Variables** then **Manage variables**.
 9. Please add the following environment variables:
-   - Variable: REACT_APP_AWS_S3_BUCKET        Value: 
-   - Variable: REACT_APP_AWS_S3_REGION        Value: ca-central-1
-   - Variable: REACT_APP_GOOGLE_MAPS_API_KEY  Value: <Your Google Maps API Key You Created Earlier>
-   
-9. Click **Save**.
+   ```javascript
+   Variable: REACT_APP_AWS_S3_BUCKET        Value: <Name Of The S3 Bucket You Noted Down In The Previous Step>
+   Variable: REACT_APP_AWS_S3_REGION        Value: ca-central-1
+   Variable: REACT_APP_GOOGLE_MAPS_API_KEY  Value: <Your Google Maps API Key You Created Earlier>
+   ```
+10. Click **Save**.
 
