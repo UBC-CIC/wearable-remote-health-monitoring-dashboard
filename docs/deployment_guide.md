@@ -95,10 +95,22 @@ We will create three different Lambda functions. One will process the data in ou
 16. In the *Resources* section, select the **Specific** option, then select the "Any in this account" option for all fields.
 72. Click **Review policy**. Select a name for the policy then click **Create Policy**.
 
-### B. Create a Data Processing Lambda Function
+### B. Creating a Data Processing Lambda Function
 
 1. In the Lambda Services page of the AWS Console, click on the **Create Function** button.
-2. Select the **Author from scratch** option. Choose a Function name. Select *Node.js 12.x* as the Runtime. Expand the *Change default execution role* section.   
+2. Select the **Author from scratch** option. Choose a Function name. Select *Node.js 12.x* as the Runtime. Expand the *Change default execution role* section. Select the **Use an existing role** option, then under *Existing role*, select the role you created in the previous section.  
 
+<img src="./images/deployment/DeploymentGuide-3.2.5.png"  width="500"/>
 
+3. Click **Create function**.
+
+4. In your Lambda function's page, under the *Configuration* tab, in the *Designer* section, click on the **Layers** image. Scroll down to the *Layers* section, then click **Add a layer**. 
+
+<img src="./images/deployment/DeploymentGuide-3.2.6.png"  width="500"/>
+
+5. Click the **Custom layers** option, then select the layer you created in step 3.1 from the dropdown. Select the "1" option under the *Version* dropdown.
+
+<img src="./images/deployment/DeploymentGuide-3.2.7.png"  width="500"/>
+
+6. Click **Add**.
 
