@@ -18,8 +18,8 @@ In this step we will use the Amplify console to deploy and build the front-end a
 [![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/Mobile_Health_Monitoring_Platform)
 
 1. **1-click deployment** button above. Make sure to start the deployment before continuing. 
-2. Go to the [Amplify Console](https://console.aws.amazon.com/amplify/home) 
-3. Select the **MHMP** app
+2. Go to the [Amplify Console](https://console.aws.amazon.com/amplify/home).
+3. Select the **MHMP** app.
 4. Wait until **Provision, Build, Deploy and Verify** are all green. 
 5. Click on the **Backend environments** tab.
 6. Click on **File storage**.
@@ -40,3 +40,15 @@ In this step we will use the Amplify console to deploy and build the front-end a
    ```
 10. Click **Save**.
 
+# Step 2: Deploy the Kinesis Data Streams
+
+
+
+# Step 3: Deploy the Lambdas
+## 3.1: Creating the Layer
+When data is sent from a wearable device to the AWS IoT Core, it gets sent through the Kinesis Data Stream which then triggers a Lambda function for data processing. The Layer file contains the dependencies needed for all the Lambda functions. 
+
+📓 **Note**: If you haven’t cloned the repo yet, the following steps require the files to be saved locally in your computer.
+
+
+1. Navigate to the /backend/LambdaLayers/MHMP_NodeModules_Layer folder
