@@ -2,99 +2,38 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 
 ## Setup Instructions
-- Create a .env.local file in the root folder that contains the following:
- ```javascript
- REACT_APP_GOOGLE_MAPS_API_KEY=[Your API Key Here]
- ```
 
 Please create a new Google Maps JavaScript API Key by following the instructions here: https://developers.google.com/maps/documentation/javascript/get-api-key
 
 Then enable the following APIs:
 - Maps Javascript API
 - Places API
-- Geocoding API
 
-## Development only instructions
-Please use Chrome with the redux dev tool chrome extension and the react chrome extension installed. The app will not start otherwise. 
-If you wish, you can get around this by replacing the following lines in the index.js file located at the src folder level:
+# MHMP Web Application
+The Mobile Health Monitoring Platform (MHMP) is a prototype that aims to provide real-time information of patients remotley monitored via WearOS and WatchOS wearable devices.  
 
-Replace This:
-```javascript
-const store = createStore(
-    reducers, compose(applyMiddleware(thunk),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-);
-```
-With this:
-```javascript
-const store = createStore(
-    reducers, applyMiddleware(thunk)
-);
-```
+## Stack
 
-## Available Scripts
+* **Front-end** - ReactJS on NodeJS as the core framework, [Argon Dashboard](https://github.com/creativetimofficial/argon-dashboard-react) for UI, Amplify for Auth UI component and AWS integration.
+* **Data** - All data is saved in Amazon S3 and Amazon DynamoDB.
+* **Auth** - Cognito provides JSON Web Tokens (JWT) and along with AppSync fine-grained authorization on what data types users can access.
+* **Data Processing** - In the back-end, there are three Lambda functions. One that processes incoming data through a Kinesis Data Stream, one that checks for heart rate anoamlies, and one that checks for device activity. 
 
-In the project directory, you can run:
+## High level architecture
 
-### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+# Deployment
+To deploy this solution into your AWS Account please follow our [Deployment Guide](./docs/deployment_guide.md)
 
-### `npm test`
+# Use
+For help using this solution please follow our [User Guide](./docs/user_guide.md)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Authors
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Changelog
+* Nov 13, 2020: Initial release.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+# License
+This project is distributed under  [MIT](https://github.com/UBC-CIC/Mobile_Health_Monitoring_Platform/blob/master/LICENSE.md) 
