@@ -24,7 +24,9 @@ In this step we will use the Amplify console to deploy and build the front-end a
 5. Click on the **Backend environments** tab.
 6. Click on **File storage**.
 7. Copy the bucket name Amplify created.  You will need this information for setting the environemnt variables in the next step.
+
 <img src="./images/deployment/DeploymentGuide-1.png"  width="500"/>
+
 8. In the left-hand menu under *App Settings*, click on **Environment Variables** then **Manage variables**.
 9. Please add the following environment variables:
    ```javascript
