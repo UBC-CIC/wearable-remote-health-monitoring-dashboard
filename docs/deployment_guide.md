@@ -28,6 +28,10 @@ In this step we will use the Amplify console to deploy and build the front-end a
 <img src="./images/deployment/DeploymentGuide-1.png"  width="500"/>
 
 8. In the left-hand menu under *App Settings*, click on **Environment Variables** then **Manage variables**.
+
+<img src="./images/deployment/DeploymentGuide-2.png"  width="500"/>
+
+
 9. Please add the following environment variables:
    ```javascript
    Variable: REACT_APP_AWS_S3_BUCKET        Value: <Name Of The S3 Bucket You Noted Down In The Previous Step>
