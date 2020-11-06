@@ -60,6 +60,51 @@ Data received from the wearable devices is direct through a Kinesis Data Stream.
 <img src="./images/deployment/DeploymentGuide-2.1.3.png"  width="500"/>
 
 
+## 2.2: Creating the Kinesis Data Firehose
+This service takes data from the Kinesis Data Stream and 
+
+1. Go to the S3 service page in the AWS Console and click **Create bucket**. We will create a new S3 bucket that will hold all our saved data from Firehose.
+2. Choose a descriptive name for your bucket. Select **Canada (Central) ca-central-1** in the *Region* dropdown. Under *Bucket settings for Block Public Access*, select the **Block all public access** option.
+
+<img src="./images/deployment/DeploymentGuide-2.2.1.png"  width="500"/>
+
+3. In the *Default encryption* section, choose **Enable** under the *Server-side encryption* field. Under the *Encryption key type* field, select the **Amazon S3 key (SSE-S3)** option.
+
+<img src="./images/deployment/DeploymentGuide-2.2.2.png"  width="500"/>
+
+4. Click **Create bucket**.
+5. Now navigate to the AWS Glue service page in the AWS Console. Select **Databases** from the left-hand menu, then click **Add database**. In the popup, choose a name then click **Create**.
+6. Now click on your newly created database from the list in the *Databases* page. Next, click on **Tables in ...** (replace "..." with your database name).
+
+<img src="./images/deployment/DeploymentGuide-2.2.4.png"  width="500"/>
+
+7. Next, from the *Add tables* dropdown, select **Add table manually**. 
+
+<img src="./images/deployment/DeploymentGuide-2.2.5.png"  width="500"/>
+
+8. Enter a name, then from the *Database* dropdown, select the database you created in step 5 above. Click **Next**.
+9. Under the *Select the type of source* field, select the **S3** option. Under the *Data is located in* field, select **Specified path in my account** then click on the folder button to browse your list of S3 buckets. Select the name of the S3 bucket you created in step 4 above. Then click **Select**, followed by **Next**.
+
+<img src="./images/deployment/DeploymentGuide-2.2.6.png"  width="500"/>
+
+10. Next, on the *Choose a data format* page, under the *Classification* field, select **Parquet**. Click **Next**.
+11. Next, on the *Schema* page, click **Add column** to add new columns. Add the following columns then click **Next**:
+```javascript
+   Column name: deviceid      Data type: string
+   Column name: deviceos      Data type: string
+   Column name: time          Data type: timestamp
+   Column name: heart_rate    Data type: int
+   Column name: latitude      Data type: string
+   Column name: longitude      Data type: string
+```
+12. Click **Finish**. 
+13. Now navigate to the AWS Kinesis service page in the AWS Console. In the left-hand menu, select **Data Firehose**. Then, click **Create delivery stream**.
+14. Choose a name. In the *Choose a source* section, under the *Source* field, select **Kinesis Data Stream**. From the Kinesis data stream dropdown menu that appears, select the data stream you created in step **2.1** above. Click **Next**.
+
+<img src="./images/deployment/DeploymentGuide-2.2.3.png"  width="500"/>
+
+15. On the *Process records* page..
+
 ---
 
 # Step 3: Lambda Functions Deployment
