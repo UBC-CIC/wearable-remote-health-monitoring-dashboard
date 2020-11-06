@@ -10,6 +10,7 @@ The Mobile Health Monitoring Platform (MHMP) is a prototype that aims to provide
 
 ## High level architecture
 
+<img src="./docs/images/other/architecture_diagram.png"  width="500"/>
 
 
 # Deployment
