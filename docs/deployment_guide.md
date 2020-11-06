@@ -40,9 +40,15 @@ In this step we will use the Amplify console to deploy and build the front-end a
    ```
 10. Click **Save**.
 
+---
+
 # Step 2: Kinesis Data Stream and Firehose Deployment
+## 2.1: Creating the Kinesis Data Stream
+Data received from the wearable devices is direct through a Kinesis Data Stream. From there, a copy of the data is pushed through Kinesis Firehose for long-term storage in an S3 based data lake for future analysis. Additionally, the data in the Kinesis Data Stream triggers a Lambda function (we will create this in a later step) that will process the data.
 
+1. 
 
+---
 
 # Step 3: Lambda Functions Deployment
 ## 3.1: Creating the Layer
