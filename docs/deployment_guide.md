@@ -171,7 +171,7 @@ We will create three different Lambda functions. One will process the data in ou
 ### B. Creating a Data Processing Lambda Function
 
 1. In the Lambda Services page of the AWS Console, click on the **Create Function** button.
-2. Select the **Author from scratch** option. Choose a Function name. Select *Node.js 12.x* as the Runtime. Expand the *Change default execution role* section. Select the **Use an existing role** option, then under *Existing role*, select the role you created in the previous section.  
+2. Select the **Author from scratch** option. Choose a Function name. Select *Node.js 12.x* as the Runtime. Expand the *Change default execution role* section. Select the **Use an existing role** option, then under *Existing role*, select the role you created in the previous section **(3.2 A)***.  
 
 <img src="./images/deployment/DeploymentGuide-3.2.5.png"  width="500"/>
 
