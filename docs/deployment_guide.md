@@ -46,7 +46,19 @@ In this step we will use the Amplify console to deploy and build the front-end a
 ## 2.1: Creating the Kinesis Data Stream
 Data received from the wearable devices is direct through a Kinesis Data Stream. From there, a copy of the data is pushed through Kinesis Firehose for long-term storage in an S3 based data lake for future analysis. Additionally, the data in the Kinesis Data Stream triggers a Lambda function (we will create this in a later step) that will process the data.
 
-1. 
+1. Navigate to the Amazon Kinesis Service page in the AWS Console. In the left-hand menu, select **Data streams**.
+
+<img src="./images/deployment/DeploymentGuide-2.1.1.png"  width="500"/>
+
+2. Choose a name for your data stream. In the *Number of open shards* field, type "1". Click **Create data stream**.
+3. Next, on your Data Stream's page, select the *Configuration* tab then scroll down to the *Encryption* section. Click **Edit** in the *Encryption* section.
+
+<img src="./images/deployment/DeploymentGuide-2.1.2.png"  width="500"/>
+
+4. Select **Enable server-side encryption**, then choose the **Use AWS managed CMK** option. Click **Save changes**.
+
+<img src="./images/deployment/DeploymentGuide-2.1.3.png"  width="500"/>
+
 
 ---
 
