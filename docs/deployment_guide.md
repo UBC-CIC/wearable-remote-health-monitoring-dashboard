@@ -103,7 +103,11 @@ This service takes data from the Kinesis Data Stream and
 
 <img src="./images/deployment/DeploymentGuide-2.2.3.png"  width="500"/>
 
-15. On the *Process records* page..
+15. On the *Process records* step, under the *Convert record format* section, select **Enable** for *Record format conversion*, then choose **Apache Parquet** as the *Output format*. Next, from the *AWS Glue region* dropdown, select **Canada (Central)**. From the *AWS Glue database* dropdown select the databse you created in step **5** above. From the *AWS Glue table* dropdown, select the table you created in step **7** above. Under the *AWS Glue table version* drowpdown, select **Latest**. Now click **Next**.
+
+<img src="./images/deployment/DeploymentGuide-2.2.7.png"  width="500"/>
+
+16. On the *Choose a destination* step, select **Amazon S3**. Under the *S3 destination* section, choose the S3 bucket you created in step **4** above from the dropdown. Click **Next**.
 
 ---
 
