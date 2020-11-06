@@ -108,6 +108,8 @@ This service takes data from the Kinesis Data Stream and
 <img src="./images/deployment/DeploymentGuide-2.2.7.png"  width="500"/>
 
 16. On the *Choose a destination* step, select **Amazon S3**. Under the *S3 destination* section, choose the S3 bucket you created in step **4** above from the dropdown. Click **Next**.
+17. On the *Configure settings* step, in the *S3 compression and encryption* section, select **Enabled** for the *S3 encryption* field. For the *KMS master key* field, select **(Default)aws/s3**. Click **Next**.
+18. Review your selections then click **Create delivery stream**.
 
 ---
 
