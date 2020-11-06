@@ -25,4 +25,14 @@ After logging in, the system will fetch required data from the backend after whi
 <img src="./images/user_guide/UserGuide-2.0.0.png"  width="500"/>
 
 ### Alerts
-Alerts can be dismissed by clicking on the actions tab and clicking **Marked As Resolved**. This not only deletes the alert, but it resets the user's status to normal. This is important because once a heart rate or location alert is received, no new alerts will be generated until the status of the user is cleared. A map view of the user's location at the time the alert was generated can be viewed by clicking **View** in an alert entry. 
+Alerts can be dismissed by clicking on the actions tab and clicking **Marked As Resolved**. This not only deletes the alert, but it resets the user's status to normal. This is important because once a heart rate or location alert is received, no new alerts will be generated until the status of the user is cleared. 
+
+A map view of the user's location at the time the alert was generated can be viewed by clicking **View** in an alert entry. 
+
+<img src="./images/user_guide/UserGuide-2.0.2.png"  width="500"/>
+
+
+The *Realtime Status* at the top of the dashboard indicates that the real-time alert system is functioning correctly if it is green and displays *Connected*. Disruptions such as an internet connection loss will result in the real-time alert system beign cancelled. This will be indicated by the *Realtime Status* displaying a red dot and *Disconnected* message. Please check your internet connection and refresh the application to troubleshoot and re-establish the real-time connection.
+
+<img src="./images/user_guide/UserGuide-2.0.1.png"  width="500"/>
+
