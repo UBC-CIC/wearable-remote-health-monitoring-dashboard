@@ -69,3 +69,27 @@ You can view a graph of the patient's historical heart rate data over the last o
 
 ### Deleting a User
 You can also delete a user by clicking **Delete User** from either the user's profile page or from the *Actions* tab in the User Management page. Please ensure that you have unpaired any device associated with the user before attempting a deletion. You will be blocked from deleting a user if they have a device paired to them.
+
+---
+
+## Device Management
+Clicking on the *Manage Devices* button from the left-hand navigation bar will take you to the device management page.
+
+<img src="./images/user_guide/UserGuide-4.0.0.png"  width="500"/>
+
+### Registering a Device
+Devices can be registered manually or automatically. By clicking **Register a Device**, the unique Device ID that corresponds to the wearable device should be inputted. This information can be found after installing the companion application onto the wearable device. Alternatively, once the moblile device is set-up and starts sending data to the AWS IoT Core, it will be registered automatically if it hasn't been registered already.
+
+Once a device is registered, the device status will be set to *Inactive* if registered manually, or *Ready* if registered automatically. More information on the function of the device status can be found below.
+
+### Device Status
+The device status is synonymous with the "status" of users displayed on the dashboard's homepage. This provides important information about the state of the device or its user.
+The following is a breakdown of the possible device states:
+  - Ready: The device has been registered and is actively sending data.
+  - Inactive: The device has not sent data in the past hour. This could possbily indicate a malfunction or depleted battery if the device is currently set-up correctly and         paired with a user.
+  - Normal: The device is actively sending data.
+  - Location_Anomaly: A location anomaly has been detected for the user associated with the device. No new location alerts will be dispatched until the device status has been cleared manually (marking an lert as resolved from the dashboard). 
+  - HeartRate_Anomaly: A heart rate anomaly has been detected for the user associated with the device. No new heart rate or location alerts will be dispatched until the device status has been cleared. Please note that heart rate alerts have been given priority over location based alerts.
+
+
+
