@@ -89,7 +89,7 @@ The following is a breakdown of the possible device states:
   - Inactive: The device has not sent data in the past hour. This could possbily indicate a malfunction or depleted battery if the device is currently set-up correctly and         paired with a user.
   - Normal: The device is actively sending data.
   - Location_Anomaly: A location anomaly has been detected for the user associated with the device. No new location alerts will be dispatched until the device status has been cleared manually (marking an lert as resolved from the dashboard). 
-  - HeartRate_Anomaly: A heart rate anomaly has been detected for the user associated with the device. No new heart rate or location alerts will be dispatched until the device status has been cleared. Please note that heart rate alerts have been given priority over location based alerts.
+  - HeartRate_Anomaly: A heart rate anomaly has been detected for the user associated with the device. No new heart rate or location alerts will be dispatched until the device status has been cleared. Please note that heart rate alerts have been given priority over location based alerts (ie. once the status has been set to HeartRate_Anomaly, the status is not updated to reflect a following Location_Anomaly).
 
 
 
