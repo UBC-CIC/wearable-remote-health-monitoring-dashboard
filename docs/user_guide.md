@@ -46,7 +46,7 @@ The *Realtime Status* at the top of the dashboard indicates that the real-time a
 ---
 
 ## User Management
-Clicking on the *Manage Users* button from the left-hand navigation bar will take you to the user management page.
+Clicking on the **Manage Users** button from the left-hand navigation bar will take you to the user management page.
 
 ### Registering a User
 
@@ -73,7 +73,7 @@ You can also delete a user by clicking **Delete User** from either the user's pr
 ---
 
 ## Device Management
-Clicking on the *Manage Devices* button from the left-hand navigation bar will take you to the device management page.
+Clicking on the **Manage Devices** button from the left-hand navigation bar will take you to the device management page.
 
 <img src="./images/user_guide/UserGuide-4.0.0.png"  width="500"/>
 
@@ -102,4 +102,22 @@ To pair a device to a user, click on the appropriate *Actions* tab from the tabl
 ### Unpair a Device from a User
 To unpair a device, simply click **Unpair Device** from the *Actions* tab and follow the prompt.
 
+---
 
+## Location Management
+Clicking on the **Manage Locations** button from the left-hand navigation bar will take you to the location management page. A *Location* is essentially a geofence that defines the geographic boundaries of a particular location. A location can be assigned to a user, and an alert will be generated if the user breaches the location perimeter.
+
+<img src="./images/user_guide/UserGuide-5.0.0.png"  width="500"/>
+
+### Creating a New Location
+Clicking on the **Create a Location** button will take you to new page where you can draw the boundaries of your new location.
+
+<img src="./images/user_guide/UserGuide-5.0.1.png"  width="500"/>
+
+To find a particular place on the map, enter the address of the location you would like to add ("Step 1" input field). This will prompt a list of predicted valid addresses from which you can choose from (results are biased towards your current location). You can also find the location you are looking for by simply panning the map to the desired area.  
+
+<img src="./images/user_guide/UserGuide-5.0.2.png"  width="500"/>
+
+The next step is to draw the boundaries of your desired geofence on the map. To initiate this, simply click the map at a point of your desired geofence then add more dots to form the boundaries. You must draw a valid polygon in order to create a location. The *Boundaries Drawn?* indicator will turn green once you have drawn a valid polygon. You can restart the drawing anytime by simply clicking **Redraw**.
+
+<img src="./images/user_guide/UserGuide-5.0.3.png"  width="500"/>
