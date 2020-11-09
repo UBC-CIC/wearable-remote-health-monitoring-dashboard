@@ -17,6 +17,11 @@ This user guide contains a brief tutorial to get you started using the provided 
 
 <img src="./images/user_guide/UserGuide-1.0.2.png"  width="400"/>
 
+### Logging Out
+To log out, click on the top right menu button then click **Logout**. 
+
+<img src="./images/user_guide/UserGuide-1.0.3.png"  width="400"/>
+
 ---
 
 ## UI
