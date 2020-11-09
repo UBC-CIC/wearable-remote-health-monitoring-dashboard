@@ -62,7 +62,7 @@ Once you've registered the new user, you can view their profile by clicking on t
 From the user's profile page, you can edit their personal information by clicking **Edit Profile**. After making changes, ensure that you click the **Save Changes** button to save your update. Youy can also find the user's real-time location on a map by clicking **Locate User** from the right-hand panel. 
 
 ### Data Visualization
-You can view a graph of the patient's historical heart rate data over the last one hour period by clicking **View Data**. This functionality can be extended to other data types (eg. O2 levels) if desired but currently only heart rate visualization has been implemented. 
+You can view a graph of the patient's historical heart rate data over the last one hour period by clicking **View Data** from the user's profile page. This functionality can be extended to other data types (eg. O2 levels) if desired but currently only heart rate visualization has been implemented. 
 
 <img src="./images/user_guide/UserGuide-3.0.2.png"  width="500"/>
 
@@ -121,3 +121,15 @@ To find a particular place on the map, enter the address of the location you wou
 The next step is to draw the boundaries of your desired geofence on the map. To initiate this, simply click the map at a point of your desired geofence then add more dots to form the boundaries. You must draw a valid polygon in order to create a location. The *Boundaries Drawn?* indicator will turn green once you have drawn a valid polygon. You can restart the drawing anytime by simply clicking **Redraw**.
 
 <img src="./images/user_guide/UserGuide-5.0.3.png"  width="500"/>
+
+### Deleting a Location
+To delete a location, simply click **Delete Location** from the *Actions* tab in the *Location Management* page. Before deleting a location, we reccommend that you remove the location from any users that have been assigned to it.
+
+### Adding a Location/Geofence to a User
+To assign a location/geofence to a user, the user must first have a device paired with them. From the *User Management* page, select the *Actions* tab for the appropriate user, then click **Assign a Location**. A pop-up will be shown with a list of locations you've created.
+
+### Removing a Location from a User
+To remove a location from a user, simply click **Remove Location** from the *Actions* tab in the *User Management* page. 
+
+
+
