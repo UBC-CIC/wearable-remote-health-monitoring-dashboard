@@ -80,16 +80,26 @@ Clicking on the *Manage Devices* button from the left-hand navigation bar will t
 ### Registering a Device
 Devices can be registered manually or automatically. By clicking **Register a Device**, the unique Device ID that corresponds to the wearable device should be inputted. This information can be found after installing the companion application onto the wearable device. Alternatively, once the moblile device is set-up and starts sending data to the AWS IoT Core, it will be registered automatically if it hasn't been registered already.
 
-Once a device is registered, the device status will be set to *Inactive* if registered manually, or *Ready* if registered automatically. More information on the function of the device status can be found below.
+Once a device is registered, the device status will be set to *Inactive* if registered manually, or *Ready* if registered automatically. More information on the function of the device status can be found in the *Device Status* section below.
+
+### Deleting a Device
+Devices can only be deleted after they have first been unpaired from an associated user. Once a device is unpaired, it can be deleted by simply clicking **Delete Device** from the *Actions* tab and following the prompt.
 
 ### Device Status
 The device status is synonymous with the "status" of users displayed on the dashboard's homepage. This provides important information about the state of the device or its user.
 The following is a breakdown of the possible device states:
-  - Ready: The device has been registered and is actively sending data.
-  - Inactive: The device has not sent data in the past hour. This could possbily indicate a malfunction or depleted battery if the device is currently set-up correctly and         paired with a user.
-  - Normal: The device is actively sending data.
-  - Location_Anomaly: A location anomaly has been detected for the user associated with the device. No new location alerts will be dispatched until the device status has been cleared manually (marking an lert as resolved from the dashboard). 
-  - HeartRate_Anomaly: A heart rate anomaly has been detected for the user associated with the device. No new heart rate or location alerts will be dispatched until the device status has been cleared. Please note that heart rate alerts have been given priority over location based alerts (ie. once the status has been set to HeartRate_Anomaly, the status is not updated to reflect a following Location_Anomaly).
+  - **Ready**: The device has been registered and is actively sending data.
+  - **Inactive**: The device has not sent data in the past hour. This could possbily indicate a malfunction or depleted battery if the device is currently set-up correctly and         paired with a user.
+  - **Normal**: The device is actively sending data.
+  - **Location_Anomaly**: A location anomaly has been detected for the user associated with the device. No new location alerts will be dispatched until the device status has been cleared manually (marking an lert as resolved from the dashboard). 
+  - **HeartRate_Anomaly**: A heart rate anomaly has been detected for the user associated with the device. No new heart rate or location alerts will be dispatched until the device status has been cleared. Please note that heart rate alerts have been given priority over location based alerts (ie. once the status has been set to HeartRate_Anomaly, the status is not updated to reflect a following Location_Anomaly).
 
+### Pairing a Device to a User
+To pair a device to a user, click on the appropriate *Actions* tab from the table and click **Pair Device**. This will prompt a pop-up from which you can select a user to pair the device with. Please note that only one device can be paired to a user at a time.
+
+<img src="./images/user_guide/UserGuide-4.0.1.png"  width="500"/>
+
+### Unpair a Device from a User
+To unpair a device, simply click **Unpair Device** from the *Actions* tab and follow the prompt.
 
 
