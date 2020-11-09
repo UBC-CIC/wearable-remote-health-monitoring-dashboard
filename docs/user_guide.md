@@ -48,5 +48,24 @@ The *Realtime Status* at the top of the dashboard indicates that the real-time a
 ## User Management
 Clicking on the *Manage Users* button from the left-hand navigation bar will take you to the user management page.
 
+#### Registering a User
+
 <img src="./images/user_guide/UserGuide-3.0.0.png"  width="500"/>
 
+From here, you'll find a link to register a new user in the system. For user registration, first and last names are required fields, all others are optional. 
+
+#### User Profile
+Once you've registered the new user, you can view their profile by clicking on the appropriate actions tab and selecting *View Profile*. 
+
+<img src="./images/user_guide/UserGuide-3.0.1.png"  width="500"/>
+
+From the user's profile page, you can edit their personal information by clicking **Edit Profile**. After making changes, ensure that you click the **Save Changes** button to save your update. Youy can also find the user's real-time location on a map by clicking **Locate User** from the right-hand panel. 
+
+#### Data Visualization
+You can view a graph of the patient's historical heart rate data over the last one hour period by clicking **View Data**. This functionality can be extended to other data types (eg. O2 levels) if desired but currently only heart rate visualization has been implemented. 
+
+<img src="./images/user_guide/UserGuide-3.0.2.png"  width="500"/>
+
+
+#### Deleting a User
+You can also delete a user by clicking **Delete User** from either the user's profile page or from the *Actions* tab in the User Management page. Please ensure that you have unpaired any device associated with the user before attempting a deletion. You will be blocked from deleting a user if they have a device paired to them.
