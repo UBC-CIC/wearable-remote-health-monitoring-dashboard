@@ -7,15 +7,15 @@ This user guide contains a brief tutorial to get you started using the provided 
 
 1. When first opening the application, you will be greeted with the login screen powered by Amazon Cognito. Please click **Create account** if you have not yet created one.
 
-<img src="./images/user_guide/UserGuide-1.0.0.png"  width="500"/>
+<img src="./images/user_guide/UserGuide-1.0.0.png"  width="400"/>
 
 2. Please fill out the *Username* field with your email address. This is the username you will need to login. Fill out the rest of the form then click **CREATE ACCOUNT**.
 
-<img src="./images/user_guide/UserGuide-1.0.1.png"  width="500"/>
+<img src="./images/user_guide/UserGuide-1.0.1.png"  width="400"/>
 
 3. You should then receive a verification code delivered to the email address you selected. Please note that it could take up to a few minutes to recieve this verification code. Once received, enter the verification code and click **CONFIRM**.
 
-<img src="./images/user_guide/UserGuide-1.0.2.png"  width="500"/>
+<img src="./images/user_guide/UserGuide-1.0.2.png"  width=4500"/>
 
 ---
 
@@ -35,7 +35,7 @@ A map view of the user's location at the time the alert was generated can be vie
 
 Additionally, an alert notification will appear on the left sidebar. This sidebar is persistant on any page of the application so that the admin user can be notified of new alerts no matter where they are in the application.
 
-<img src="./images/user_guide/UserGuide-2.0.4.png"  width="500"/>
+<img src="./images/user_guide/UserGuide-2.0.4.png"  width="300"/>
 
 
 #### Real-time Alert Subscription Status
