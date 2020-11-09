@@ -15,7 +15,7 @@ This user guide contains a brief tutorial to get you started using the provided 
 
 3. You should then receive a verification code delivered to the email address you selected. Please note that it could take up to a few minutes to recieve this verification code. Once received, enter the verification code and click **CONFIRM**.
 
-<img src="./images/user_guide/UserGuide-1.0.2.png"  width=4500"/>
+<img src="./images/user_guide/UserGuide-1.0.2.png"  width="400"/>
 
 ---
 
