@@ -59,18 +59,18 @@ class UserManagement extends React.Component {
         <Container className="mt--7" fluid>
           <Row className="mt-5">
             <Col className="mb-5 mb-xl-0" xl="12">
-              <Card className="shadow">
+              <Card className="shadow table-container">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">All Users</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                   <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Assigned Device</th>
-                    <th scope="col">Assigned Location</th>
-                    <th scope="col">Actions</th>
+                    <th className={"th-class"} scope="col">Name</th>
+                    <th className={"th-class"} scope="col">Image</th>
+                    <th className={"th-class"} scope="col">Assigned Device</th>
+                    <th className={"th-class"} scope="col">Assigned Location</th>
+                    <th className={"th-class"} scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>

@@ -49,19 +49,19 @@ class Header extends React.Component {
               {/* Card Header for HomePage -- place Alerts here */}
               <Row>
                 <Col lg="12" xl="12">
-                  <Card className="shadow">
+                  <Card className="shadow table-container">
                     <CardHeader className="border-0">
                       <h3 className="mb-0">Alerts</h3>
                     </CardHeader>
                     <Table className="align-items-center table-flush" responsive>
                       <thead className="thead-light">
                       <tr>
-                        <th scope="col">User</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Summary</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Actions</th>
+                        <th className={"th-class"} scope="col">User</th>
+                        <th className={"th-class"} scope="col">Time</th>
+                        <th className={"th-class"} scope="col">Type</th>
+                        <th className={"th-class"} scope="col">Summary</th>
+                        <th className={"th-class"} scope="col">Location</th>
+                        <th className={"th-class"} scope="col">Actions</th>
                       </tr>
                       </thead>
                       <tbody>

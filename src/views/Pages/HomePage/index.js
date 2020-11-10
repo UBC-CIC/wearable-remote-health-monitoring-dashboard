@@ -19,6 +19,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 
+
 import Header from "../../../components/Headers/Header.js";
 
 
@@ -82,17 +83,17 @@ class HomePage extends React.Component {
           </Row>
           <Row className="mt-5">
             <Col className="mb-5 mb-xl-0" xl="12">
-              <Card className="shadow">
+              <Card className="shadow table-container">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">Current User Status</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                   <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Heart Rate (BPM)</th>
+                    <th className={"th-class"} scope="col">Name</th>
+                    <th className={"th-class"} scope="col">Image</th>
+                    <th className={"th-class"} scope="col">Status</th>
+                    <th className={"th-class"} scope="col">Heart Rate (BPM)</th>
                   </tr>
                   </thead>
                   <tbody>

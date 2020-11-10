@@ -89,7 +89,7 @@ class DeviceManager extends React.Component {
         <Container className="mt--7" fluid>
           <Row className="mt-5">
             <Col className="mb-5 mb-xl-0" xl="12">
-              <Card className="shadow">
+              <Card className="shadow table-container">
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
@@ -100,11 +100,11 @@ class DeviceManager extends React.Component {
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                   <tr>
-                    <th scope="col">Device ID</th>
-                    <th scope="col">Device OS</th>
-                    <th scope="col">Device Status</th>
-                    <th scope="col">Associated User</th>
-                    <th scope="col">Actions</th>
+                    <th className={"th-class"} scope="col">Device ID</th>
+                    <th className={"th-class"} scope="col">Device OS</th>
+                    <th className={"th-class"} scope="col">Device Status</th>
+                    <th className={"th-class"} scope="col">Associated User</th>
+                    <th className={"th-class"} scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>

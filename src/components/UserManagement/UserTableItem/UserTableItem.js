@@ -72,11 +72,9 @@ class UserManagementTableItem extends React.Component {
         return (
             <tr>
                 <th scope="row">
-                    <Media className="align-items-center">
                             <span className="mb-0 text-sm">
                                 {name}
                             </span>
-                    </Media>
                 </th>
                 <td>
                     <div className="avatar-group">

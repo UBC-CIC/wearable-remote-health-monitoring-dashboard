@@ -51,17 +51,17 @@ class ManageLocations extends React.Component {
         <Container className="mt--7" fluid>
           <Row className="mt-5">
             <Col className="mb-5 mb-xl-0" xl="12">
-              <Card className="shadow">
+              <Card className="shadow table-container">
                 <CardHeader className="border-0">
                   <h3 className="mb-0">All Locations</h3>
                 </CardHeader>
                 <Table className="align-items-center table-flush" responsive>
                   <thead className="thead-light">
                   <tr>
-                    <th scope="col">Location Name</th>
-                    <th scope="col">Map</th>
-                    <th scope="col">Boundary Points</th>
-                    <th scope="col">Actions</th>
+                    <th className={"th-class"} scope="col">Location Name</th>
+                    <th className={"th-class"} scope="col">Map</th>
+                    <th className={"th-class"} scope="col">Boundary Points</th>
+                    <th className={"th-class"} scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>

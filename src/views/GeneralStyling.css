@@ -1,0 +1,11 @@
+.table-container {
+    overflow: auto !important;
+    max-height: 400px !important;
+}
+
+.th-class {
+    position: sticky !important;
+    top: 0 !important;
+    opacity: 100% !important;
+    z-index: 99 !important;
+}

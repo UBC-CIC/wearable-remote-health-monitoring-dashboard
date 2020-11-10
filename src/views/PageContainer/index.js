@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
+import "../GeneralStyling.css";
 // core components
 import ErrorBoundary from "./ErrorBoundary";
 import AdminNavbar from "../../components/Navbars/AdminNavbar.js";
