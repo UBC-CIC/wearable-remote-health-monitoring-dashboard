@@ -46,7 +46,70 @@ In this step we will use the Amplify console to deploy and build the front-end a
 ## 2.1: Creating the Kinesis Data Stream
 Data received from the wearable devices is direct through a Kinesis Data Stream. From there, a copy of the data is pushed through Kinesis Firehose for long-term storage in an S3 based data lake for future analysis. Additionally, the data in the Kinesis Data Stream triggers a Lambda function (we will create this in a later step) that will process the data.
 
-1. 
+1. Navigate to the Amazon Kinesis Service page in the AWS Console. In the left-hand menu, select **Data streams**.
+
+<img src="./images/deployment/DeploymentGuide-2.1.1.png"  width="500"/>
+
+2. Choose a name for your data stream. In the *Number of open shards* field, type "1". Click **Create data stream**.
+3. Next, on your Data Stream's page, select the *Configuration* tab then scroll down to the *Encryption* section. Click **Edit** in the *Encryption* section.
+
+<img src="./images/deployment/DeploymentGuide-2.1.2.png"  width="500"/>
+
+4. Select **Enable server-side encryption**, then choose the **Use AWS managed CMK** option. Click **Save changes**.
+
+<img src="./images/deployment/DeploymentGuide-2.1.3.png"  width="500"/>
+
+
+## 2.2: Creating the Kinesis Data Firehose
+This service takes data from the Kinesis Data Stream and 
+
+1. Go to the S3 service page in the AWS Console and click **Create bucket**. We will create a new S3 bucket that will hold all our saved data from Firehose.
+2. Choose a descriptive name for your bucket. Select **Canada (Central) ca-central-1** in the *Region* dropdown. Under *Bucket settings for Block Public Access*, select the **Block all public access** option.
+
+<img src="./images/deployment/DeploymentGuide-2.2.1.png"  width="500"/>
+
+3. In the *Default encryption* section, choose **Enable** under the *Server-side encryption* field. Under the *Encryption key type* field, select the **Amazon S3 key (SSE-S3)** option.
+
+<img src="./images/deployment/DeploymentGuide-2.2.2.png"  width="500"/>
+
+4. Click **Create bucket**.
+5. Now navigate to the AWS Glue service page in the AWS Console. Select **Databases** from the left-hand menu, then click **Add database**. In the popup, choose a name then click **Create**.
+6. Now click on your newly created database from the list in the *Databases* page. Next, click on **Tables in ...** (replace "..." with your database name).
+
+<img src="./images/deployment/DeploymentGuide-2.2.4.png"  width="500"/>
+
+7. Next, from the *Add tables* dropdown, select **Add table manually**. 
+
+<img src="./images/deployment/DeploymentGuide-2.2.5.png"  width="500"/>
+
+8. Enter a name, then from the *Database* dropdown, select the database you created in step 5 above. Click **Next**.
+9. Under the *Select the type of source* field, select the **S3** option. Under the *Data is located in* field, select **Specified path in my account** then click on the folder button to browse your list of S3 buckets. Select the name of the S3 bucket you created in step 4 above. Then click **Select**, followed by **Next**.
+
+<img src="./images/deployment/DeploymentGuide-2.2.6.png"  width="500"/>
+
+10. Next, on the *Choose a data format* page, under the *Classification* field, select **Parquet**. Click **Next**.
+11. Next, on the *Schema* page, click **Add column** to add new columns. Add the following columns then click **Next**:
+```javascript
+   Column name: deviceid      Data type: string
+   Column name: deviceos      Data type: string
+   Column name: time          Data type: timestamp
+   Column name: heart_rate    Data type: int
+   Column name: latitude      Data type: string
+   Column name: longitude      Data type: string
+```
+12. Click **Finish**. 
+13. Now navigate to the AWS Kinesis service page in the AWS Console. In the left-hand menu, select **Data Firehose**. Then, click **Create delivery stream**.
+14. Choose a name. In the *Choose a source* section, under the *Source* field, select **Kinesis Data Stream**. From the Kinesis data stream dropdown menu that appears, select the data stream you created in step **2.1** above. Click **Next**.
+
+<img src="./images/deployment/DeploymentGuide-2.2.3.png"  width="500"/>
+
+15. On the *Process records* step, under the *Convert record format* section, select **Enable** for *Record format conversion*, then choose **Apache Parquet** as the *Output format*. Next, from the *AWS Glue region* dropdown, select **Canada (Central)**. From the *AWS Glue database* dropdown select the databse you created in step **5** above. From the *AWS Glue table* dropdown, select the table you created in step **7** above. Under the *AWS Glue table version* drowpdown, select **Latest**. Now click **Next**.
+
+<img src="./images/deployment/DeploymentGuide-2.2.7.png"  width="500"/>
+
+16. On the *Choose a destination* step, select **Amazon S3**. Under the *S3 destination* section, choose the S3 bucket you created in step **4** above from the dropdown. Click **Next**.
+17. On the *Configure settings* step, in the *S3 compression and encryption* section, select **Enabled** for the *S3 encryption* field. For the *KMS master key* field, select **(Default)aws/s3**. Click **Next**.
+18. Review your selections then click **Create delivery stream**.
 
 ---
 
@@ -108,7 +171,7 @@ We will create three different Lambda functions. One will process the data in ou
 ### B. Creating a Data Processing Lambda Function
 
 1. In the Lambda Services page of the AWS Console, click on the **Create Function** button.
-2. Select the **Author from scratch** option. Choose a Function name. Select *Node.js 12.x* as the Runtime. Expand the *Change default execution role* section. Select the **Use an existing role** option, then under *Existing role*, select the role you created in the previous section.  
+2. Select the **Author from scratch** option. Choose a Function name. Select *Node.js 12.x* as the Runtime. Expand the *Change default execution role* section. Select the **Use an existing role** option, then under *Existing role*, select the role you created in the previous section **(3.2 A)***.  
 
 <img src="./images/deployment/DeploymentGuide-3.2.5.png"  width="500"/>
 
