@@ -59,15 +59,28 @@ const fetchDevices = async (documentClient) => {
             }
         };
 
-        documentClient.scan(params, function(err, data) {
+        let scannedDevices = [];
+        documentClient.scan(params, onScan);
+
+        function onScan(err, data) {
             if (err) {
                 console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
                 // successful response
-                resolve(data.Items);
+                // add each returned item to our array
+                data.Items.forEach((item) =>  scannedDevices.push(item));
+                // check if any more items exists
+                if (typeof data.LastEvaluatedKey != "undefined") {
+                    params.ExclusiveStartKey = data.LastEvaluatedKey;
+                    // run the scan again from the lastEvaluatedKey
+                    documentClient.scan(params, onScan);
+                } else {
+                    // No more devices to be fetched, we can resolve with our results
+                    resolve( scannedDevices);
+                }
             }
-        });
+        }
     });
 }
 

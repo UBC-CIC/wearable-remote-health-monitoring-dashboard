@@ -48,7 +48,7 @@ exports.handler = async (event) => {
 
 // fetches users that have an associated device
 const fetchUsersHelper = async (documentClient) => {
-    return new Promise(function(resolve, reject) {
+    return new Promise(async function(resolve, reject) {
         // search parameters
         let params = {
             TableName: process.env.USER_TABLE,
@@ -59,15 +59,29 @@ const fetchUsersHelper = async (documentClient) => {
             }
         };
 
-        documentClient.scan(params, function(err, data) {
+        let scannedUsers = [];
+
+        documentClient.scan(params, onScan);
+
+        function onScan(err, data) {
             if (err) {
                 console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
                 // successful response
-                resolve(data.Items);
+                // add each returned item to our array
+                data.Items.forEach((item) => scannedUsers.push(item));
+                // check if any more items exists
+                if (typeof data.LastEvaluatedKey != "undefined") {
+                    params.ExclusiveStartKey = data.LastEvaluatedKey;
+                    // run the scan again from the lastEvaluatedKey
+                    documentClient.scan(params, onScan);
+                } else {
+                    // No more users to be fetched, we can resolve with our results
+                    resolve(scannedUsers);
+                }
             }
-        });
+        }
     });
 }
 
@@ -106,16 +120,29 @@ const fetchData = async (documentClient, userID, observationType) => {
             }
         };
 
+        let queryData = [];
 
-        documentClient.query(params, function(err, data) {
+        documentClient.query(params, onQuery);
+
+        function onQuery(err, data) {
             if (err) {
                 console.log(err, err.stack); // an error occurred
                 reject(err);
             } else {
                 // successful response
-                resolve(data.Items);
+                // add each returned item to our array
+                data.Items.forEach((item) => queryData.push(item));
+                // check if any more items exists
+                if (typeof data.LastEvaluatedKey != "undefined") {
+                    params.ExclusiveStartKey = data.LastEvaluatedKey;
+                    // run the query again from the lastEvaluatedKey
+                    documentClient.query(params, onQuery);
+                } else {
+                    // No more data to be fetched, we can resolve with our results
+                    resolve(queryData);
+                }
             }
-        });
+        }
 
     });
 }
