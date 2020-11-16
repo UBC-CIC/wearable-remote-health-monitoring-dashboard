@@ -7,7 +7,6 @@ import {
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
-    Media,
     UncontrolledDropdown,
     UncontrolledTooltip
 } from "reactstrap";
