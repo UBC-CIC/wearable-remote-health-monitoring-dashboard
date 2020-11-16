@@ -4,9 +4,9 @@
 }
 
 .th-class {
-    position: sticky !important;
+    position: sticky!important;
     top: 0 !important;
-    opacity: 100% !important;
+    opacity: 1 !important;
     z-index: 99 !important;
 }
 
