@@ -22,7 +22,6 @@ const initiateProcessing = async (payload) => {
     let latitude = obj.latitude;
     let longitude = obj.longitude;
     let time = obj.time;
-    let location = {lat: latitude, lng: longitude};
 
     //============================---Device Data Retrieval and Validation---======================
 
@@ -71,12 +70,6 @@ const initiateProcessing = async (payload) => {
 
     //==============================---Handle Data Dump---=======================================
 
-    // Check that latitude/longitude are not null/undefined
-    if (latitude && longitude) {
-        // Create Data record for location data in DynamoDB
-        await dumpData({deviceID: deviceID, userID: deviceData.userID, location: location, observationType: "location",
-            createdAt: time});
-    }
 
     // Create Data record for heart rate data in DynamoDB
     await dumpData({deviceID: deviceID, userID: deviceData.userID, observationType: "heart_rate",

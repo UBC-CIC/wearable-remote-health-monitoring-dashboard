@@ -32,7 +32,7 @@ const dumpData = async (data) => {
 
         // Set params based on observationType
         switch (observationType) {
-            case "location": {
+            case "location": { // example of observationType specific data storage
                 params.Item.observationType = observationType;
                 params.Item.location = location;
                 break;
