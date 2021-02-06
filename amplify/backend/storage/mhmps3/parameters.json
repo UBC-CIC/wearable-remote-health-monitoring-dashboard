@@ -1,5 +1,5 @@
 {
-    "bucketName": "mhmp-user-profile-images",
+    "bucketName": "whd-bucket",
     "authPolicyName": "s3_amplify_b1c6542d",
     "unauthPolicyName": "s3_amplify_b1c6542d",
     "authRoleName": {
