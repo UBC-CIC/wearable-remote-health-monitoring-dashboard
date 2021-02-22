@@ -1,11 +1,11 @@
 {
-    "AppSyncApiName": "whd",
-    "DynamoDBBillingMode": "PAY_PER_REQUEST",
-    "DynamoDBEnableServerSideEncryption": false,
-    "AuthCognitoUserPoolId": {
-        "Fn::GetAtt": [
-            "authmhmp7d4ef3c9",
-            "Outputs.UserPoolId"
-        ]
-    }
+  "AppSyncApiName": "whd",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authmhmp7d4ef3c9",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

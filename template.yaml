@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-    "Wearable Health Monitoring Solution (WHMP) \n"
+    "Wearable Health Monitoring Solution (whd) \n"
 
 Globals:
   Function:
@@ -15,6 +15,8 @@ Globals:
       - !Ref CoreLayer
 
 Parameters: 
+    s3Bucket:
+      Type: String
     DataTable:
       Type: String
     UserTable:
@@ -23,7 +25,6 @@ Parameters:
       Type: String
 
 Resources:
-
   Bucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -37,7 +38,7 @@ Resources:
   BucketParameter:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: /whmp/bucket
+      Name: /whd/bucket
       Type: String
       Value: !Ref Bucket
       Description: Bucket Name
@@ -45,7 +46,7 @@ Resources:
   CoreLayer:
       Type: AWS::Serverless::LayerVersion
       Properties:
-        Description: WHMP layers
+        Description: whd layers
         ContentUri: ./layers/layer.zip
         CompatibleRuntimes:
           - nodejs12.x
@@ -71,7 +72,7 @@ Resources:
             TableName:
               !Ref DeviceTable
         - SSMParameterReadPolicy:
-            ParameterName: "whmp*"
+            ParameterName: "whd*"
       Environment:
         Variables:
           DataTable: !Ref DataTable
@@ -100,7 +101,7 @@ Resources:
             TableName:
               !Ref DeviceTable
         - SSMParameterReadPolicy:
-            ParameterName: "whmp*"
+            ParameterName: "whd*"
       Environment:
         Variables:
           DataTable: !Ref DataTable
@@ -126,7 +127,7 @@ Resources:
             TableName:
               !Ref DeviceTable
         - SSMParameterReadPolicy:
-            ParameterName: "whmp*"
+            ParameterName: "whd*"
       Environment:
         Variables:
           DataTable: !Ref DataTable
@@ -207,7 +208,7 @@ Resources:
         Properties:
             TopicRulePayload:
                 RuleDisabled: 'false'
-                Sql: !Sub 'SELECT * FROM "${AWS::StackName}" WHERE heart_rate > 50'
+                Sql: !Sub 'SELECT * FROM wearablehealth WHERE heart_rate > 50'
                 Actions:
                     - Kinesis:
                         RoleArn: !Sub '${IoTTopicRuleRole.Arn}'
@@ -245,7 +246,7 @@ Resources:
   DeliveryStreamParameter:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: /whmp/deliverystream
+      Name: /whd/deliverystream
       Type: String
       Value: !Ref DeliveryStream
       Description: Kinesis Firehose Name
